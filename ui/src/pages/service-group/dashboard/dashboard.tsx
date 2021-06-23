@@ -23,8 +23,8 @@ import { HUD } from "components";
 import { paths } from "../../../containers-paths";
 
 export const Dashboard = () => {
-  const { serviceGroupId = "" } = useParams<{ serviceGroupId?: string; buildVersion?: string }>();
-  const plugins = useAdminConnection<Plugin[]>(`/groups/${serviceGroupId}/plugins`) || [];
+  const { groupId = "" } = useParams<{ groupId?: string; buildVersion?: string }>();
+  const plugins = useAdminConnection<Plugin[]>(`/groups/${groupId}/plugins`) || [];
   const installedPlugins = plugins.filter((plugin) => !plugin.available);
   return (
     <div tw="mt-5 px-6">

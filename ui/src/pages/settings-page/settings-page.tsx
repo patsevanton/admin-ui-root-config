@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { routes } from "common";
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { AgentSettings } from "./agent-settings";
@@ -22,11 +23,11 @@ export const SettingsPage = () => (
   <Switch>
     <Route
       component={AgentSettings}
-      path="/agent/:agentId/settings/:tab"
+      path={[routes.agentGeneralSettings, routes.agentPluginsSettings, routes.agentSystemSettings]}
     />
     <Route
       component={ServiceGroupSettings}
-      path="/service-group/:serviceGroupId/settings/:tab"
+      path={[routes.serviceGroupGeneralSettings, routes.serviceGroupSystemSettings, routes.serviceGroupPluginsSettings]}
     />
   </Switch>
 );

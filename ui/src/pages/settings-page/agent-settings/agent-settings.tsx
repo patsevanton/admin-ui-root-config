@@ -24,11 +24,11 @@ import { TabsPanel, Tab, PageHeader } from "components";
 import { useAdminConnection } from "hooks";
 import { PluginsSettingsTab, SystemSettingsForm } from "modules";
 import { Agent } from "types/agent";
+import { getPagePath, routes } from "common";
 import { GeneralSettingsForm } from "./general-settings-form";
 import { JsSystemSettingsForm } from "./js-system-settings-form";
 import { AgentStatusToggle } from "../../agents-page/agent-status-toggle";
 import { UnSaveChangeModal } from "../un-save-changes-modal";
-import { getPath } from "../../../common/get-path";
 
 export const AgentSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
@@ -53,23 +53,23 @@ export const AgentSettings = () => {
         )}
       />
       <div tw="px-6">
-        <TabsPanel>
-          <Tab name="general" to={getPath({ name: "agentSettings", params: { agentId, tab: "general" } })}>General</Tab>
-          <Tab name="system" to={getPath({ name: "agentSettings", params: { agentId, tab: "system" } })}>System</Tab>
-          <Tab name="plugins" to={getPath({ name: "agentSettings", params: { agentId, tab: "plugins" } })}>Plugins</Tab>
+        <TabsPanel path="/agents/:agentId/:tab">
+          <Tab name="general-settings" to={getPagePath({ name: "agentGeneralSettings", params: { agentId } })}>General</Tab>
+          <Tab name="system-settings" to={getPagePath({ name: "agentSystemSettings", params: { agentId } })}>System</Tab>
+          <Tab name="plugins-settings" to={getPagePath({ name: "agentPluginsSettings", params: { agentId } })}>Plugins</Tab>
         </TabsPanel>
       </div>
       <Switch>
         <Route
-          path="/agent/:agentId/settings/system"
+          path={routes.agentSystemSettings}
           render={() => <SystemSettings agent={agent} setPristineSettings={setPristineSettings} />}
         />
         <Route
-          path="/agent/:agentId/settings/plugins"
+          path={routes.agentPluginsSettings}
           render={() => <PluginsSettingsTab agent={agent} />}
         />
         <Route
-          path="/agent/:agentId/settings/general"
+          path={routes.agentGeneralSettings}
           render={() => <GeneralSettingsForm agent={agent} setPristineSettings={setPristineSettings} />}
         />
       </Switch>

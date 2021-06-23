@@ -22,7 +22,7 @@ import { AGENT_STATUS } from "common/constants";
 import { capitalize, snakeToSpaces } from "utils";
 import { AgentStatus } from "types/agent-status";
 import LogoSvg from "./logo.svg";
-import { getPath } from "../../../common/get-path";
+import { getPagePath, routes } from "../../../common/get-page-path";
 
 interface Props {
   agentName?: string;
@@ -83,7 +83,7 @@ const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => 
 export const PluginHeader = ({ agentName, agentStatus }: Props) => {
   const { location: { pathname } } = useHistory();
   const { params: { agentId = "" } = {} } = matchPath<{ buildVersion: string; agentId: string }>(pathname, {
-    path: "/agent/:agentId/:buildVersion",
+    path: routes.agentDashboard,
   }) || {};
 
   return (
@@ -107,7 +107,7 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
         </div>
         <SettingsButton
           tw="link"
-          to={getPath({ name: "agentSettings", params: { agentId, tab: "general" } })}
+          to={getPagePath({ name: "agentGeneralSettings", params: { agentId } })}
           disabled={agentStatus === AGENT_STATUS.OFFLINE}
           data-test="plugin-header:settings-button"
         >

@@ -21,6 +21,7 @@ import tw, { styled } from "twin.macro";
 
 import { LoginLayout } from "layouts";
 import { TOKEN_KEY, TOKEN_HEADER } from "common/constants";
+import { routes } from "../../common";
 
 const SignInForm = styled.div`
   ${tw`flex flex-col gap-y-6 mt-6`}
@@ -51,7 +52,7 @@ export const LoginPage = () => {
 
   useLayoutEffect(() => {
     if (localStorage.getItem(TOKEN_KEY)) {
-      push("/");
+      push(routes.agentsTable);
     }
   }, []);
 

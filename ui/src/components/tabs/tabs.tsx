@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 import React, { Children, cloneElement, ReactElement } from "react";
-import { Link, useParams } from "react-router-dom";
+import {
+  Link, matchPath, useLocation,
+} from "react-router-dom";
 import tw, { styled, css } from "twin.macro";
 
 interface Props {
   children: ReactElement | ReactElement[];
+  path: string;
 }
 
-export const TabsPanel = (props: Props) => {
-  const { children } = props;
-  const { tab } = useParams<{ tab: string }>();
-
+export const TabsPanel = ({ path, children }: Props) => {
+  const { pathname } = useLocation();
+  const { params: { tab = "" } = {} } = matchPath<{ tab?: string }>(pathname, { path }) || {};
   return (
     <div tw="flex">
       {Children.map(children, (child: ReactElement, index: number) =>

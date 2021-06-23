@@ -32,10 +32,10 @@ import {
 import { useAgent } from "hooks";
 import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from "modules";
 import { Agent } from "types/agent";
+import { getPagePath } from "common";
 import { JavaGeneralRegistrationForm } from "./java-general-registration-form";
 import { JsGeneralRegistrationForm } from "./js-general-registration-form";
 import { JsSystemRegistrationForm } from "./js-system-registration-form";
-import { getPath } from "../../common/get-path";
 
 export const AgentRegistrationPage = () => {
   const { agentId = "" } = useParams<{ agentId: string }>();
@@ -74,14 +74,14 @@ export const AgentRegistrationPage = () => {
             if (isMounted.current) {
               if (data.plugins?.length === 1) {
                 const [plugin] = data.plugins;
-                push(`/full-page/${agentId}/${buildVersion}/${plugin}/dashboard${plugin === "test2code" ? "/methods" : ""}`);
+                push(getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: plugin.id || "" } }));
               } else {
-                push(`/full-page/${agentId}/${buildVersion}/dashboard`);
+                push(getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } }));
               }
             }
           } else {
             await preregisterOfflineAgent(data);
-            push(getPath({ name: "agentsTable" }));
+            push(getPagePath({ name: "agentsTable" }));
           }
         }}
         onSuccessMessage={agentId ? "Agent has been registered" : "Offline agent has been preregistered"}

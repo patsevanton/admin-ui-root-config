@@ -15,4 +15,4 @@
  */
 export { configureAxios, defaultAdminSocket } from "./connection";
 export { TOKEN_HEADER, TOKEN_KEY } from "./constants";
-export { getPath } from "./get-path";
+export { getPagePath, routes } from "./get-page-path";

@@ -22,6 +22,7 @@ import { PageHeader, Stub } from "components";
 import { useAdminConnection } from "hooks";
 import { Agent } from "types/agent";
 import { ServiceGroup } from "types/service-group";
+import { getPagePath } from "common";
 import { AgentsTable } from "./agents-table";
 import NoAgentsSvg from "./no-agents.svg";
 
@@ -43,7 +44,7 @@ export const AgentsPage = () => {
         title="Agents"
         itemsCount={agentsList.length}
         actions={(
-          <Link to="/preregister/offline-agent">
+          <Link to={getPagePath({ name: "agentPreregistration" })}>
             <Button className="flex gap-x-2" secondary size="large">
               <Icons.Register />
               <span>Preregister Offline Agent</span>

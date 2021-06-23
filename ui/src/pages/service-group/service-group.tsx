@@ -16,7 +16,7 @@
 import React from "react";
 import "twin.macro";
 import {
-  useParams, useLocation, matchPath, Route,
+  useParams, Route,
 } from "react-router-dom";
 import { Icons } from "@drill4j/ui-kit";
 
@@ -27,52 +27,45 @@ import { Plugin } from "types/plugin";
 import { ServiceGroup as ServiceGroupType } from "types/service-group";
 import { useAdminConnection } from "hooks";
 import { Agent } from "types/agent";
+import { getPagePath, routes } from "common";
 import { ServiceGroupHeader } from "./service-group-header";
-import { Sidebar } from "../agent/sidebar";
+import { Sidebar, Link } from "../agent/sidebar";
 import { Dashboard } from "./dashboard";
 
-interface Link {
-  id: string;
-  link: string;
-  name: keyof typeof Icons;
-  computed?: boolean;
-}
-
-const getPluginsList = (serviceGroupId: string, plugins: Plugin[]): Link[] => [
-  {
-    id: "service-group-dashboard",
-    link: `service-group-full-page/${serviceGroupId}/service-group-dashboard`,
-    name: "Dashboard",
-  },
-  ...plugins.map(({ id = "", name = "" }) => ({
-    id,
-    link: `service-group-full-page/${serviceGroupId}/${id}`,
-    name: name as keyof typeof Icons,
-  })),
-];
-
 export const ServiceGroup = () => {
-  const { serviceGroupId = "" } = useParams<{ serviceGroupId: string, pluginId: string }>();
-  const { pathname } = useLocation();
-  const plugins = useAdminConnection<Plugin[]>(`/groups/${serviceGroupId}/plugins`) || [];
-  const { name = "" } = useAdminConnection<ServiceGroupType>(`/groups/${serviceGroupId}`) || {};
+  const { groupId = "" } = useParams<{ groupId: string, pluginId: string }>();
+  const plugins = useAdminConnection<Plugin[]>(`/groups/${groupId}/plugins`) || [];
+  const { name = "" } = useAdminConnection<ServiceGroupType>(`/groups/${groupId}`) || {};
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
-  const agentCount = agentsList.filter((agent) => agent.group === serviceGroupId).length;
+  const agentCount = agentsList.filter((agent) => agent.group === groupId).length;
 
-  const path = "/:page/:serviceGroupId/:activeLink";
-  const { params: { activeLink = "" } = {} } = matchPath<{ activeLink: string }>(pathname, {
-    path,
-  }) || {};
+  const pluginsList: Link[] = [
+    {
+      id: "service-group-dashboard",
+      name: "Dashboard",
+      path: getPagePath({ name: "serviceGroupDashboard", params: { groupId } }),
+    },
+    ...plugins.map(({ id = "", name: pluginName = "" }) => ({
+      id,
+      name: pluginName as keyof typeof Icons,
+      path: getPagePath({ name: "serviceGroupPlugin", params: { groupId, pluginId: id } }),
+    })),
+  ];
 
   return (
     <PluginsLayout
-      sidebar={activeLink && <Sidebar links={getPluginsList(serviceGroupId, plugins)} matchParams={{ path }} />}
+      sidebar={(
+        <Sidebar
+          links={pluginsList}
+          matchParams={{ path: routes.serviceGroupDashboard }}
+        />
+      )}
       toolbar={<Toolbar breadcrumbs={<Breadcrumbs />} />}
       header={<ServiceGroupHeader name={name} agentsCount={agentCount} />}
       footer={<Footer />}
     >
       <div tw="w-full h-full">
-        <Route path="/service-group/:serviceGroupId/dashboard" component={Dashboard} />
+        <Route path={routes.serviceGroupDashboard} component={Dashboard} />
       </div>
     </PluginsLayout>
   );

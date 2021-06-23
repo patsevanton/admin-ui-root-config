@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 export { Sidebar } from "./sidebar";
+export type { Link } from "./sidebar";

@@ -24,15 +24,15 @@ import { TabsPanel, Tab, PageHeader } from "components";
 import { PluginsSettingsTab, SystemSettingsForm } from "modules";
 import { useAdminConnection } from "hooks";
 import { ServiceGroupEntity } from "types/service-group-entity";
+import { getPagePath, routes } from "common";
 import { ServiceGroupGeneralSettingsForm } from "./service-group-general-settings-form";
 import { UnSaveChangeModal } from "../un-save-changes-modal";
-import { getPath } from "../../../common/get-path";
 
 export const ServiceGroupSettings = () => {
   const [pristineSettings, setPristineSettings] = useState(true);
   const [nextLocation, setNextLocation] = useState("");
-  const { serviceGroupId = "", tab = "" } = useParams<{ serviceGroupId: string; tab: string}>();
-  const serviceGroup = useAdminConnection<ServiceGroupEntity>(`/api/groups/${serviceGroupId}`) || {};
+  const { groupId = "", tab = "" } = useParams<{ groupId: string; tab: string}>();
+  const serviceGroup = useAdminConnection<ServiceGroupEntity>(`/api/groups/${groupId}`) || {};
 
   useEffect(() => {
     setPristineSettings(true);
@@ -49,23 +49,23 @@ export const ServiceGroupSettings = () => {
         )}
       />
       <div tw="px-6">
-        <TabsPanel>
-          <Tab name="general" to={getPath({ name: "serviceGroupSettings", params: { serviceGroupId, tab: "general" } })}>General</Tab>
-          <Tab name="system" to={getPath({ name: "serviceGroupSettings", params: { serviceGroupId, tab: "system" } })}>System</Tab>
-          <Tab name="plugins" to={getPath({ name: "serviceGroupSettings", params: { serviceGroupId, tab: "plugins" } })}>Plugins</Tab>
+        <TabsPanel path="/agent/group/:groupId/:tab">
+          <Tab name="general-settings" to={getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId } })}>General</Tab>
+          <Tab name="system-settings" to={getPagePath({ name: "serviceGroupSystemSettings", params: { groupId } })}>System</Tab>
+          <Tab name="plugins-settings" to={getPagePath({ name: "serviceGroupPluginsSettings", params: { groupId } })}>Plugins</Tab>
         </TabsPanel>
       </div>
       <Switch>
         <Route
-          path="/service-group/:serviceGroupId/settings/system"
+          path={routes.serviceGroupSystemSettings}
           render={() => <SystemSettingsForm agent={serviceGroup} setPristineSettings={setPristineSettings} isServiceGroup />}
         />
         <Route
-          path="/service-group/:serviceGroupId/settings/plugins"
+          path={routes.serviceGroupPluginsSettings}
           render={() => <PluginsSettingsTab agent={serviceGroup} />}
         />
         <Route
-          path="/service-group/:serviceGroupId/settings/general"
+          path={routes.serviceGroupGeneralSettings}
           render={() => <ServiceGroupGeneralSettingsForm serviceGroup={serviceGroup} setPristineSettings={setPristineSettings} />}
         />
       </Switch>

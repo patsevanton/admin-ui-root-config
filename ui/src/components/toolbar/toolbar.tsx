@@ -21,6 +21,7 @@ import tw, { styled } from "twin.macro";
 import { TOKEN_KEY } from "common/constants";
 import { Notification } from "types/notificaiton";
 import { useAdminConnection } from "hooks";
+import { getPagePath } from "common";
 import { NotificationsSidebar } from "./notifications-sidebar";
 
 interface Props {
@@ -66,7 +67,7 @@ export const Toolbar = ({ breadcrumbs }: Props) => {
             className="link"
             onClick={() => {
               localStorage.removeItem(TOKEN_KEY);
-              push("/login");
+              push(getPagePath({ name: "login" }));
             }}
             data-test="toolbar:sign-out"
           >

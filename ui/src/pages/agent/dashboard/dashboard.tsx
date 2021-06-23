@@ -29,7 +29,7 @@ export const Dashboard = () => {
   const installedPlugins = plugins.filter((plugin) => !plugin.available);
 
   return (
-    <div tw="mt-5 px-6">
+    <div tw="w-full mt-5 px-6">
       <div tw="mb-7 text-24 leading-32 font-light">Dashboard</div>
       {installedPlugins.map(({ id = "" }) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

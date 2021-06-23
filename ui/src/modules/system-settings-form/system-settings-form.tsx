@@ -21,7 +21,7 @@ import { matchPath, useLocation } from "react-router-dom";
 import {
   Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button,
 } from "@drill4j/ui-kit";
-import { Form, Field } from "react-final-form";
+import { Form, Field, FormRenderProps } from "react-final-form";
 import "twin.macro";
 import { useFormHandleSubmit } from "@drill4j/react-hooks";
 
@@ -82,7 +82,7 @@ export const SystemSettingsForm = ({
         }),
       ) as any}
       render={(props) => {
-        const ref = useFormHandleSubmit(props);
+        const ref = useFormHandleSubmit(props as FormRenderProps);
         const {
           handleSubmit, submitting, invalid, values,
         } = props || {};

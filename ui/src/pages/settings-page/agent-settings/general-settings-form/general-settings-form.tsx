@@ -16,7 +16,7 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { matchPath, useLocation } from "react-router-dom";
-import { Form, Field } from "react-final-form";
+import { Form, Field, FormRenderProps } from "react-final-form";
 import { useFormHandleSubmit } from "@drill4j/react-hooks";
 
 import {
@@ -64,8 +64,9 @@ export const GeneralSettingsForm = ({ agent, setPristineSettings }: Props) => {
         sizeLimit({ name: "description", min: 3, max: 256 }),
       ) as any}
       render={(props) => {
-        const ref = useFormHandleSubmit(props);
+        const ref = useFormHandleSubmit(props as FormRenderProps);
         const {
+
           handleSubmit, submitting, invalid, values,
         } = props || {};
         const pristine = isPristine(agent, values);

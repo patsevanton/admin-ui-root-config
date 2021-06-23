@@ -16,7 +16,7 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import { matchPath, useLocation } from "react-router-dom";
-import { Form, Field } from "react-final-form";
+import { Form, Field, FormRenderProps } from "react-final-form";
 
 import {
   Button, GeneralAlerts, Icons, Spinner, Tooltip,
@@ -29,7 +29,7 @@ import {
 import { NotificationManagerContext } from "notification-manager";
 import { Agent } from "types/agent";
 import { isPristine } from "utils";
-import { useFormHandleSubmit } from "../../../../../../react-hooks";
+import { useFormHandleSubmit } from "@drill4j/react-hooks";
 
 interface Props {
   agent: Agent;
@@ -61,7 +61,7 @@ export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
         !agent.group && required("systemSettings.targetHost", "Target Host"),
       ) as any}
       render={(props) => {
-        const ref = useFormHandleSubmit(props);
+        const ref = useFormHandleSubmit(props as FormRenderProps);
         const {
           handleSubmit, submitting, invalid, values,
         } = props || {};

@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 import { useEffect, useRef } from "react";
-import { AnyObject, FormRenderProps } from "react-final-form";
-
-interface Props {
-  handleSubmit: (
-    event?: Partial<
-      Pick<React.SyntheticEvent, 'preventDefault' | 'stopPropagation'>
-      >
-  ) => Promise<AnyObject | undefined> | undefined;
-  invalid: boolean;
-  pristine: boolean;
-  submitting: boolean;
-}
+import { FormRenderProps } from "react-final-form";
 
 export function useFormHandleSubmit({
   handleSubmit, invalid, pristine, submitting,

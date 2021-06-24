@@ -21,7 +21,7 @@ import tw, { styled } from "twin.macro";
 import { AGENT_STATUS } from "common/constants";
 import { Agent } from "types/agent";
 import { ServiceGroupAgents } from "types/service-group-agents";
-import { getPagePath } from "../../../../common/get-page-path";
+import { getPagePath } from "common";
 
 interface Props {
   agent?: Agent;

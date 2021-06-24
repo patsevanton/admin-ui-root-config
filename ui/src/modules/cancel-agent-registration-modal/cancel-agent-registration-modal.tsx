@@ -17,7 +17,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Popup } from "@drill4j/ui-kit";
 import "twin.macro";
-import { getPagePath } from "../../common/get-page-path";
+
+import { getPagePath } from "common";
 
 interface Props {
   isOpen: boolean;

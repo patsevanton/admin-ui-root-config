@@ -19,10 +19,10 @@ import { Spinner, Icons } from "@drill4j/ui-kit";
 import tw, { styled, css } from "twin.macro";
 
 import { AGENT_STATUS } from "common/constants";
+import { getPagePath, routes } from "common";
 import { capitalize, snakeToSpaces } from "utils";
 import { AgentStatus } from "types/agent-status";
 import LogoSvg from "./logo.svg";
-import { getPagePath, routes } from "../../../common/get-page-path";
 
 interface Props {
   agentName?: string;

@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 import React from "react";
-import { Route, Switch, useParams } from "react-router-dom";
+import {
+  Route, Switch, useParams, Link as LinkComponent,
+} from "react-router-dom";
 import { Icons } from "@drill4j/ui-kit";
+import "twin.macro";
 
 import { useAgent } from "hooks";
-import { Breadcrumbs } from "modules";
 import { PluginsLayout } from "layouts";
 import { Footer, Toolbar } from "components";
 import { getPagePath, routes } from "common";
@@ -26,6 +28,10 @@ import { Dashboard } from "./dashboard";
 import { Sidebar, Link } from "./sidebar";
 import { Plugin } from "./plugin";
 import { PluginHeader } from "./plugin-header";
+
+const Breadcrumbs = () => (
+  <LinkComponent tw="link" to={getPagePath({ name: "agentsTable" })}>Agents</LinkComponent>
+);
 
 export const AgentPage = () => {
   const { agentId = "", buildVersion = "" } = useParams<{ agentId?: string; buildVersion?: string; }>();

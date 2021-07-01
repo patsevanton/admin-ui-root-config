@@ -13,10 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function get<T>(obj?: any, path?: string): T {
-  if (!path || !path.length) {
-    return obj;
-  }
-  const [head, ...tail] = path.split(".");
-  return get(obj && obj[head], tail.join("."));
+
+interface Message {
+  type: "SUCCESS" | "ERROR" | "WARNING" | "INFO";
+  text: string;
 }
+
+export const sendNotificationEvent = (message: Message) => {
+  const event = new CustomEvent<Message>("notification", {
+    detail: {
+      text: message.text,
+      type: message.type,
+    },
+  });
+  document.dispatchEvent(event);
+};

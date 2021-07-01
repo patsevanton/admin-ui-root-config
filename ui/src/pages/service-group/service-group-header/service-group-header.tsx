@@ -18,6 +18,7 @@ import { useParams, Link } from "react-router-dom";
 import { Icons } from "@drill4j/ui-kit";
 import "twin.macro";
 
+import { getPagePath } from "common";
 import LogoSvg from "./service-group-logo.svg";
 
 interface Props {
@@ -26,7 +27,7 @@ interface Props {
 }
 
 export const ServiceGroupHeader = ({ agentsCount, name }: Props) => {
-  const { id = "" } = useParams<{ id: string }>();
+  const { groupId = "" } = useParams<{ groupId: string }>();
 
   return (
     <div tw="flex items-center w-full h-28">
@@ -38,7 +39,7 @@ export const ServiceGroupHeader = ({ agentsCount, name }: Props) => {
             Agents&nbsp;<span tw="text-monochrome-default">{agentsCount}</span>
           </div>
         </div>
-        <Link tw="link" to={`/agents/service-group/${id}/settings/general`}>
+        <Link tw="link" to={getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId } })}>
           <Icons.Settings
             width={32}
             height={32}

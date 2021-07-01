@@ -25,8 +25,9 @@ import {
 } from "pages";
 import { TypographyStyles, LayoutStyles, FontsStyles } from "global-styles";
 import { Footer, PrivateRoute, Sidebar } from "components";
-import { configureAxios } from "common";
+import { configureAxios, routes } from "common";
 import { AppLayout } from "layouts";
+
 import { NotificationManager } from "./notification-manager";
 
 import "./index.css";
@@ -44,10 +45,10 @@ const Root = () => (
     <LayoutStyles />
     <NotificationManager />
     <Switch>
-      <Route exact path="/login" component={LoginPage} />
-      <PrivateRoute path={["/agent/:agentId/:buildVersion/dashboard", "/agent/:agentId/:buildVersion/plugin"]} component={AgentPage} />
+      <Route exact path={routes.login} component={LoginPage} />
+      <PrivateRoute path={[routes.agentPlugin, routes.agentDashboard]} component={AgentPage} />
       <PrivateRoute
-        path={["/service-group/:serviceGroupId/dashboard", "/service-group/:serviceGroupId/plugin"]}
+        path={[routes.serviceGroupPlugin, routes.serviceGroupDashboard]}
         component={ServiceGroup}
       />
       <AppLayout
@@ -55,11 +56,15 @@ const Root = () => (
         footer={<Footer />}
       >
         <Switch>
-          <PrivateRoute exact path={["/", "/notification-sidebar"]} component={AgentsPage} />
-          <PrivateRoute path={["/agent/:agentId/settings/:tab", "/service-group/:serviceGroupId/settings/:tab"]} component={SettingsPage} />
-          <PrivateRoute exact path="/agent/:agentId/registration" component={AgentRegistrationPage} />
-          <PrivateRoute exact path="/service-group/:serviceGroupId/registration" component={ServiceGroupRegistrationPage} />
-          <PrivateRoute path="/preregister/offline-agent" component={AgentRegistrationPage} />
+          <PrivateRoute exact path={[routes.agentsTable, `${routes.agentsTable}/notification-sidebar`]} component={AgentsPage} />
+          <PrivateRoute
+            path={[routes.agentGeneralSettings, routes.agentPluginsSettings, routes.agentSystemSettings,
+              routes.serviceGroupGeneralSettings, routes.serviceGroupSystemSettings, routes.serviceGroupPluginsSettings]}
+            component={SettingsPage}
+          />
+          <PrivateRoute exact path={routes.agentRegistration} component={AgentRegistrationPage} />
+          <PrivateRoute exact path={routes.serviceGroupRegistration} component={ServiceGroupRegistrationPage} />
+          <PrivateRoute path={routes.agentPreregistration} component={AgentRegistrationPage} />
         </Switch>
       </AppLayout>
     </Switch>

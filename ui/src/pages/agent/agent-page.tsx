@@ -14,52 +14,53 @@
  * limitations under the License.
  */
 import React from "react";
-import { Route } from "react-router-dom";
+import {
+  Route, Switch, useParams, Link as LinkComponent,
+} from "react-router-dom";
 import { Icons } from "@drill4j/ui-kit";
+import "twin.macro";
 
-import { Plugin as PluginType } from "types/plugin";
 import { useAgent } from "hooks";
-import { Breadcrumbs } from "modules";
 import { PluginsLayout } from "layouts";
 import { Footer, Toolbar } from "components";
+import { getPagePath, routes } from "common";
 import { Dashboard } from "./dashboard";
-import { Sidebar } from "./sidebar";
+import { Sidebar, Link } from "./sidebar";
 import { Plugin } from "./plugin";
 import { PluginHeader } from "./plugin-header";
 
-interface Link {
-  id: string;
-  link: string;
-  name: keyof typeof Icons;
-  computed: boolean;
-}
-
-const getPluginsLinks = (plugins: PluginType[] = []): Link[] => [
-  {
-    id: "dashboard",
-    link: "dashboard",
-    name: "Dashboard",
-    computed: true,
-  },
-  ...plugins.map(({ id = "", name }) => ({
-    id,
-    link: id === "test2code" ? `${id}/dashboard/methods` : `${id}/dashboard`,
-    name: name as keyof typeof Icons,
-    computed: true,
-  })),
-];
+const Breadcrumbs = () => (
+  <LinkComponent tw="link" to={getPagePath({ name: "agentsTable" })}>Agents</LinkComponent>
+);
 
 export const AgentPage = () => {
+  const { agentId = "", buildVersion = "" } = useParams<{ agentId?: string; buildVersion?: string; }>();
   const agent = useAgent();
+  const plugins = agent.plugins || [];
+  const pluginsLinks: Link[] = [
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      path: getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } }),
+    },
+    ...plugins.map(({ id = "", name }) => ({
+      id,
+      name: name as keyof typeof Icons,
+      path: getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: id } }),
+    })),
+  ];
+
   return (
     <PluginsLayout
       footer={<Footer />}
-      sidebar={<Sidebar links={getPluginsLinks(agent.plugins)} />}
+      sidebar={<Sidebar links={pluginsLinks} />}
       header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
       toolbar={<Toolbar breadcrumbs={<Breadcrumbs />} />}
     >
-      <Route path="/agent/:agentId/:buildVersion/dashboard" component={Dashboard} />
-      <Route path="/agent/:agentId/:buildVersion/plugin/:pluginId" component={Plugin} />
+      <Switch>
+        <Route path={routes.agentPlugin} component={Plugin} />
+        <Route path={routes.agentDashboard} component={Dashboard} />
+      </Switch>
     </PluginsLayout>
   );
 };

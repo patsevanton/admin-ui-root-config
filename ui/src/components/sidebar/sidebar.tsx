@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import tw, { styled } from "twin.macro";
 
+import { routes } from "common";
 import LogoSvg from "./logo.svg";
 
 interface IconProps {
@@ -44,7 +45,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
     <div tw="w-20 h-full bg-monochrome-light-tint">
       <Link
         tw="flex justify-center items-center w-full h-20 cursor-pointer border-b border-monochrome-medium-tint"
-        to="/"
+        to={routes.agentsTable}
       >
         <img src={LogoSvg} alt="" />
       </Link>

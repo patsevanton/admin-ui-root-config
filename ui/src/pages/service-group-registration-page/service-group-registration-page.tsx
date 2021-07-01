@@ -31,14 +31,15 @@ import {
 } from "forms";
 import { Agent } from "types/agent";
 import { useAdminConnection } from "hooks";
+import { getPagePath } from "common";
 import { ServiceGroupGeneralRegistrationForm } from "./service-group-general-registration-form";
 
 export const ServiceGroupRegistrationPage = () => {
   const { push } = useHistory();
-  const { serviceGroupId = "" } = useParams<{ serviceGroupId: string }>();
+  const { groupId = "" } = useParams<{ groupId: string }>();
   const { search } = useLocation();
   const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
-  const serviceGroup = useAdminConnection<Agent>(`/groups/${serviceGroupId}`) || {};
+  const serviceGroup = useAdminConnection<Agent>(`/groups/${groupId}`) || {};
   const { unregisteredAgentsCount } = queryString.parse(search);
   const isMounted = useRef(true);
   useEffect(() => () => {
@@ -69,9 +70,9 @@ export const ServiceGroupRegistrationPage = () => {
           if (isMounted.current) {
             if (data.plugins?.length === 1) {
               const [plugin] = data.plugins;
-              push(`/service-group-full-page/${serviceGroupId}/${plugin}`);
+              push(getPagePath({ name: "serviceGroupPlugin", params: { groupId, pluginId: plugin.id || "" } }));
             } else {
-              push(`/service-group-full-page/${serviceGroupId}/service-group-dashboard`);
+              push(getPagePath({ name: "serviceGroupDashboard", params: { groupId } }));
             }
           }
         }}

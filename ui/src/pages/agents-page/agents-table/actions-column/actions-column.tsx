@@ -21,7 +21,7 @@ import "twin.macro";
 import { AGENT_STATUS } from "common/constants";
 import { ServiceGroupEntity } from "types/service-group-entity";
 import { Agent } from "types/agent";
-import { getPath } from "../../../../common/get-path";
+import { getPagePath } from "common";
 
 interface ServiceGroup extends ServiceGroupEntity {
   name: string;
@@ -69,8 +69,8 @@ export const ActionsColumn = ({ agent }: Props) => {
         >
           <Link
             to={agentType === "ServiceGroup"
-              ? getPath({ name: "serviceGroupRegistration", params: { serviceGroupId: agentId } })
-              : getPath({ name: "agentRegistration", params: { agentId } })}
+              ? getPagePath({ name: "serviceGroupRegistration", params: { groupId: agentId } })
+              : getPagePath({ name: "agentRegistration", params: { agentId } })}
           >
             <Button
               data-test="action-column:icons-register"
@@ -95,8 +95,8 @@ export const ActionsColumn = ({ agent }: Props) => {
         (!hasOfflineAgent && !unregisteredAgentsCount && agentType === "ServiceGroup")) && (
         <Link
           to={agentType === "ServiceGroup"
-            ? getPath({ name: "serviceGroupSettings", params: { serviceGroupId: agentId, tab: "general" } })
-            : getPath({ name: "agentSettings", params: { agentId, tab: "general" } })}
+            ? getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId: agentId } })
+            : getPagePath({ name: "agentGeneralSettings", params: { agentId } })}
           tw="link"
         >
           <Icons.Settings

@@ -14,37 +14,38 @@
  * limitations under the License.
  */
 import React from "react";
-import { useQueryParams } from "@drill4j/react-hooks";
 import { Icons, Tooltip } from "@drill4j/ui-kit";
 import "twin.macro";
+import { useLocation } from "react-router-dom";
 
 import { SidebarLink } from "components";
 
+export interface Link {
+  id: string;
+  name: keyof typeof Icons;
+  path: string;
+}
+
 interface Props {
   active?: "active";
-  links: Array<{
-    id: string;
-    name: keyof typeof Icons;
-    link: string;
-    computed?: boolean;
-  }>;
+  links: Link[];
   matchParams?: { path: string };
 }
 
 export const Sidebar = ({ links }: Props) => {
-  const { agentId, buildVersion, pluginId } = useQueryParams<{ agentId: string; buildVersion: string; pluginId: string; }>();
+  const { pathname } = useLocation();
 
   return (
     <div tw="flex flex-col w-20 h-full bg-monochrome-light-tint">
       {links.map(({
-        name, link, computed,
+        name, id, path,
       }) => {
         const Icon = Icons[name] || Icons.Plugins;
         return (
-          <Tooltip message={<div>{name}</div>} position="right" key={link}>
+          <Tooltip message={<div>{name}</div>} position="right" key={id}>
             <SidebarLink
-              isActive={Boolean(pluginId)}
-              to={`/${computed ? `full-page/${agentId}/${buildVersion}/${link}` : link}`}
+              isActive={pathname.includes(path)}
+              to={path}
             >
               <Icon />
             </SidebarLink>

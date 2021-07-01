@@ -15,12 +15,12 @@
  */
 import React, { useEffect } from "react";
 import { getAppNames, LifeCycles, registerApplication } from "single-spa";
-import { useQueryParams } from "@drill4j/react-hooks";
 
+import { useParams } from "react-router-dom";
 import { paths } from "../../../containers-paths";
 
 export const Plugin = () => {
-  const { pluginId } = useQueryParams<{ pluginId: string }>();
+  const { pluginId } = useParams<{ pluginId: string }>();
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

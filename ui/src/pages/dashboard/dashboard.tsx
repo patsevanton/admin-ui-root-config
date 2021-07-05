@@ -82,5 +82,5 @@ export const Dashboard = ({ id = "", isGroup = false }: Props) => {
     };
   }, []);
 
-  return <div id="dashboard" />;
+  return <div tw="w-full" id="dashboard" />;
 };

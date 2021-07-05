@@ -45,7 +45,7 @@ export const ServiceGroup = () => {
 
   const pluginsList: Link[] = [
     {
-      id: "service-group-dashboard",
+      id: "dashboard",
       name: "Dashboard",
       path: getPagePath({ name: "serviceGroupDashboard", params: { groupId } }),
     },

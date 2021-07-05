@@ -34,7 +34,6 @@ interface Props {
 
 export const Sidebar = ({ links }: Props) => {
   const { pathname } = useLocation();
-
   return (
     <div tw="flex flex-col w-20 h-full bg-monochrome-light-tint">
       {links.map(({
@@ -44,7 +43,7 @@ export const Sidebar = ({ links }: Props) => {
         return (
           <Tooltip message={<div>{name}</div>} position="right" key={id}>
             <SidebarLink
-              isActive={pathname.includes(path)}
+              isActive={id === "dashboard" ? pathname.slice(-9) === "dashboard" : pathname.includes(path)}
               to={path}
             >
               <Icon />

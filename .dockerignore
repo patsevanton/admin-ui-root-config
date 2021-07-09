@@ -3,6 +3,7 @@
 **/common-hooks
 **/common-utils
 **/send-notification-event
+**/.env.local
 
 **/npm-debug.log*
 **/yarn-debug.log*

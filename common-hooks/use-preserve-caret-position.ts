@@ -31,7 +31,7 @@ export const usePreserveCaretPosition = (replacer: (str: string) => string) => {
     return [newValue, preserveCaret];
   };
 
-  const handleOnChange = ({ onChange }: any, event: any) => {
+  const handleOnChange = (onChange: any, event: any) => {
     const input = event.target;
     const [newValue, preserveCaret] = parse(event.target.value, input.selectionStart);
     onChange({

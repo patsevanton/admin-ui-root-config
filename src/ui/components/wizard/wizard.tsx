@@ -16,7 +16,7 @@
 import React, {
   Children, ComponentType, ReactElement, useReducer, Component,
 } from "react";
-import { Form } from "react-final-form";
+import { Formik } from "formik";
 import {
   Icons, Button, Spinner,
 } from "@drill4j/ui-kit";
@@ -56,12 +56,12 @@ export const Wizard = ({
 
   return (
     <div>
-      <Form
+      <Formik
         initialValues={{
           ...initialValues, availablePlugins, plugins: ["test2code"],
         }}
-        keepDirtyOnReinitialize
-        initialValuesEqual={(prevValues, nextValues) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
+        // keepDirtyOnReinitialize
+        // initialValuesEqual={(prevValues: any, nextValues: any) => JSON.stringify(prevValues) === JSON.stringify(nextValues)}
         onSubmit={async (values: any) => {
           try {
             await onSubmit(values);
@@ -76,14 +76,9 @@ export const Wizard = ({
         validate={validate}
         render={({
           handleSubmit,
-          submitting,
-          invalid,
+          isSubmitting,
+          isValid,
           values,
-        }: {
-          handleSubmit: () => void;
-          submitting: boolean;
-          invalid: boolean;
-          values: Agent;
         }) => (
           <>
             <div className="flex items-center w-full px-6 py-4">
@@ -110,7 +105,7 @@ export const Wizard = ({
                     primary
                     size="large"
                     onClick={() => dispatch(nextStep())}
-                    disabled={submitting || invalid}
+                    disabled={isSubmitting || !isValid}
                     data-test="wizard:continue-button"
                   >
                     Continue
@@ -122,11 +117,11 @@ export const Wizard = ({
                     className="flex gap-x-2"
                     primary
                     size="large"
-                    onClick={handleSubmit}
+                    type="submit"
                     data-test="wizard:finishng-button"
-                    disabled={submitting}
+                    disabled={isSubmitting}
                   >
-                    {submitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
+                    {isSubmitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
                     <span>Finish</span>
                   </Button>
                 )}

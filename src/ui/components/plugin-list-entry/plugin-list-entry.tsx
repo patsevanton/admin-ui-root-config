@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import { FieldInputProps, FieldMetaState } from "react-final-form";
+import { FieldInputProps, FieldMetaProps } from "formik";
 import { Icons } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
 
@@ -23,7 +23,7 @@ import { Fields } from "forms/fields";
 interface Props {
   onClick?: () => void;
   input?: FieldInputProps<string>;
-  meta?: FieldMetaState<string>;
+  meta?: FieldMetaProps<string>;
   icon: keyof typeof Icons;
   description?: string;
   children?: React.ReactNode;
@@ -52,7 +52,7 @@ export const PluginListEntry = ({
     ]}
     >
       <PluginElements onClick={onClick} selected={input && input.checked}>
-        {input && meta && <Fields.Checkbox input={input} meta={meta} />}
+        {/* {input && meta && <Fields.Checkbox input={input} meta={meta} />} */}
         <PluginsIconWrapper selected={input && input.checked}>
           <PluginIcon />
         </PluginsIconWrapper>

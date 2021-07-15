@@ -19,7 +19,7 @@ import "twin.macro";
 
 import { PluginListEntry } from "components";
 import { Plugin } from "types/plugin";
-import { Field as Checkbox } from "react-final-form";
+import { Field as Checkbox } from "formik";
 
 interface Props {
   formValues?: { plugins?: string[], availablePlugins?: Plugin[] };
@@ -44,25 +44,25 @@ export const InstallPluginsStep = ({ infoPanel, formValues: { plugins = [], avai
           type="checkbox"
           value={id}
           key={id}
-          render={({ input, meta }) => (
-            <PluginListEntry
-              description={description}
-              input={input}
-              meta={meta}
-              icon={name as keyof typeof Icons}
-              onClick={() => input.onChange({
-                target: {
-                  type: "checkbox",
-                  checked: !input.checked,
-                },
-              })}
-            >
-              <div tw="flex items-center w-full mb-3 text-14 leading-20">
-                <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
-                {version && <div tw="text-monochrome-default">({version})</div>}
-              </div>
-            </PluginListEntry>
-          )}
+          // render={({ field }) => (
+          //   <PluginListEntry
+          //     description={description}
+          //     input={input}
+          //     meta={meta}
+          //     icon={name as keyof typeof Icons}
+          //     onClick={() => field.onChange({
+          //       target: {
+          //         type: "checkbox",
+          //         checked: !field.checked,
+          //       },
+          //     })}
+          //   >
+          //     <div tw="flex items-center w-full mb-3 text-14 leading-20">
+          //       <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
+          //       {version && <div tw="text-monochrome-default">({version})</div>}
+          //     </div>
+          //   </PluginListEntry>
+          // )}
         />
       ))}
     </div>

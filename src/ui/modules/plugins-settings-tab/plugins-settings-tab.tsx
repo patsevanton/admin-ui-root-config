@@ -64,7 +64,7 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = "" } }: Props) => {
           </Button>
         </Link>
       </div>
-      <div tw="flex-grow mr-6 ml-6">
+      {/* <div tw="flex-grow mr-6 ml-6">
         {installedPlugins.length > 0 ? (
           installedPlugins.map(({
             id: pluginId = "", name, description, version,
@@ -94,7 +94,7 @@ export const PluginsSettingsTab = ({ agent: { buildVersion = "" } }: Props) => {
             message={`There are no plugins installed on this ${agentId ? "agent" : "service group"} at the moment.`}
           />
         )}
-      </div>
+      </div> */}
       <Route
         path="*/add-plugin-modal"
         render={() => (

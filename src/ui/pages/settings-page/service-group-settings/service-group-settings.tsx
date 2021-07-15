@@ -69,7 +69,7 @@ export const ServiceGroupSettings = () => {
         />
         <Route
           path={routes.serviceGroupGeneralSettings}
-          render={() => <ServiceGroupGeneralSettingsForm serviceGroup={serviceGroup} setPristineSettings={setPristineSettings} />}
+          render={() => <ServiceGroupGeneralSettingsForm serviceGroup={serviceGroup} />}
         />
       </Switch>
       <UnSaveChangeModal

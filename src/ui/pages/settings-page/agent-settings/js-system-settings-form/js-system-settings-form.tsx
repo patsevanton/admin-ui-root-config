@@ -16,7 +16,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { matchPath, useLocation } from "react-router-dom";
-import { Form, Field, FormRenderProps } from "react-final-form";
+import { Formik, Field } from "formik";
 import { useFormHandleSubmit } from "@drill4j/common-hooks";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import { isPristine } from "@drill4j/common-utils";
@@ -43,7 +43,7 @@ export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
   }) || {};
 
   return (
-    <Form
+    <Formik
       onSubmit={async ({ systemSettings: { targetHost } = {} }: Agent) => {
         try {
           await axios.put(`/agents/${agentId}/system-settings`, { targetHost });
@@ -60,10 +60,8 @@ export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
         !agent.group && required("systemSettings.targetHost", "Target Host"),
       ) as any}
       render={(props) => {
-        const ref = useFormHandleSubmit(props as FormRenderProps);
-        const {
-          handleSubmit, submitting, invalid, values,
-        } = props || {};
+        const ref = useFormHandleSubmit(props as any);
+        const { isSubmitting, isValid, values } = props || {};
         const pristine = isPristine(agent, values);
 
         useEffect(() => {
@@ -94,11 +92,11 @@ export const JsSystemSettingsForm = ({ agent, setPristineSettings }: Props) => {
                   className="flex justify-center items-center gap-x-1 w-32"
                   primary
                   size="large"
-                  onClick={handleSubmit}
-                  disabled={submitting || invalid || pristine}
+                  type="submit"
+                  disabled={isSubmitting || !isValid || pristine}
                   data-test="js-system-settings-form:save-changes-button"
                 >
-                  {submitting ? <Spinner disabled /> : "Save Changes"}
+                  {isSubmitting ? <Spinner disabled /> : "Save Changes"}
                 </Button>
               </div>
             </div>

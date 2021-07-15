@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useEffect } from "react";
+import React from "react";
 import { matchPath, useLocation } from "react-router-dom";
 import axios from "axios";
-import { Form, Field, FormRenderProps } from "react-final-form";
+import {
+  Formik, Field,
+} from "formik";
 import { useFormHandleSubmit } from "@drill4j/common-hooks";
-import { isPristine } from "@drill4j/common-utils";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import {
   Button, FormGroup, GeneralAlerts, Spinner,
@@ -34,17 +35,16 @@ import { routes } from "common";
 
 interface Props {
   serviceGroup: ServiceGroupEntity;
-  setPristineSettings: (pristine: boolean) => void;
 }
 
-export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSettings }: Props) => {
+export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
   const { pathname } = useLocation();
   const { params: { groupId = "" } = {} } = matchPath<{ groupId: string }>(pathname, {
     path: routes.serviceGroupGeneralSettings,
   }) || {};
 
   return (
-    <Form
+    <Formik
       onSubmit={async ({ name, description, environment }: ServiceGroupEntity) => {
         try {
           await axios.put(`/groups/${groupId}`, { name, description, environment });
@@ -63,19 +63,14 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
         sizeLimit({ name: "environment" }),
         sizeLimit({ name: "description", min: 3, max: 256 }),
       ) as any}
-      render={(props) => {
-        const ref = useFormHandleSubmit(props as FormRenderProps);
+      render={(props: any) => {
+        const ref = useFormHandleSubmit(props);
         const {
-          handleSubmit, submitting, invalid, values,
+          handleSubmit, submitting, invalid, pristine,
         } = props || {};
-        const pristine = isPristine(serviceGroup, values);
-
-        useEffect(() => {
-          setPristineSettings(pristine);
-        }, [pristine]);
 
         return (
-          <form ref={ref} tw="space-y-10">
+          <form onSubmit={handleSubmit} {...props} tw="space-y-10">
             <GeneralAlerts type="INFO">
               Basic service group settings.
             </GeneralAlerts>
@@ -110,7 +105,7 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup, setPristineSetti
                   className="flex justify-center items-center gap-x-1 w-32"
                   primary
                   size="large"
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={submitting || invalid || pristine}
                   data-test="js-system-settings-form:save-changes-button"
                 >

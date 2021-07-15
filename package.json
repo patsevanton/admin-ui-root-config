@@ -89,14 +89,15 @@
     "webpack-config-single-spa-react-ts": "^2.0.0"
   },
   "dependencies": {
-    "@drill4j/common-utils": "^1.0.0",
     "@drill4j/common-hooks": "1.0.3",
+    "@drill4j/common-utils": "^1.0.0",
     "@drill4j/send-notification-event": "^1.0.0",
     "@drill4j/socket": "^0.1.13",
     "@drill4j/ui-kit": "0.1.85-add-table-1",
     "axios": "^0.21.1",
     "babel-plugin-macros": "^3.1.0",
     "final-form": "4.20.2",
+    "formik": "^2.2.9",
     "nanostores": "^0.3.3",
     "query-string": "^7.0.0",
     "react": "^17.0.1",

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import { Field } from "react-final-form";
+import { Field } from "formik";
 import { useParams } from "react-router-dom";
 import { FormGroup, GeneralAlerts } from "@drill4j/ui-kit";
 import { styled } from "twin.macro";

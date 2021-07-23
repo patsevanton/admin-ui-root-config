@@ -22,13 +22,10 @@ import {
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 
 import {
-  Button, FormGroup, GeneralAlerts, Spinner,
+  Button, FormGroup, GeneralAlerts, Spinner, composeValidators, Fields, required, sizeLimit,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import {
-  composeValidators, Fields, required, sizeLimit,
-} from "forms";
 import { Agent } from "types/agent";
 import { routes } from "common";
 import { UnSaveChangeModal } from "pages/settings-page/un-save-changes-modal";
@@ -87,9 +84,9 @@ export const GeneralSettingsForm = ({ agent }: Props) => {
               </FormGroup>
               <FormGroup label="Description" optional>
                 <Field
-                  tw="h-20"
                   name="description"
                   component={Fields.Textarea}
+                  normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
                   placeholder="Add agent's description"
                 />
               </FormGroup>

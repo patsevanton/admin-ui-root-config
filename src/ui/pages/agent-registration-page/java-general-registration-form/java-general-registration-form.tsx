@@ -16,10 +16,8 @@
 import React from "react";
 import { Field } from "formik";
 import { useParams } from "react-router-dom";
-import { FormGroup, GeneralAlerts } from "@drill4j/ui-kit";
+import { FormGroup, GeneralAlerts, Fields } from "@drill4j/ui-kit";
 import { styled } from "twin.macro";
-
-import { Fields } from "forms";
 
 const Content = styled.div`height: calc(100vh - 270px);`;
 
@@ -49,6 +47,7 @@ export const JavaGeneralRegistrationForm = () => {
               tw="h-20"
               name="description"
               component={Fields.Textarea}
+              normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
               placeholder="Add agent's description"
             />
           </FormGroup>

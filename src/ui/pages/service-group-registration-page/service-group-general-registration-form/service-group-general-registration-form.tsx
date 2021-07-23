@@ -15,10 +15,8 @@
  */
 import React from "react";
 import { Field } from "formik";
-import { FormGroup, GeneralAlerts } from "@drill4j/ui-kit";
+import { FormGroup, GeneralAlerts, Fields } from "@drill4j/ui-kit";
 import { styled } from "twin.macro";
-
-import { Fields } from "forms";
 
 const HEADERS_HEIGHT = 275;
 
@@ -41,6 +39,7 @@ export const ServiceGroupGeneralRegistrationForm = () => (
           <Field
             name="description"
             component={Fields.Textarea}
+            normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
             placeholder="Add service group's description"
           />
         </FormGroup>

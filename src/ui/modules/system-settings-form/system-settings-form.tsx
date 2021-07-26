@@ -23,7 +23,7 @@ import { Formik, Field, Form } from "formik";
 import "twin.macro";
 
 import { UnlockingSystemSettingsFormModal } from "modules";
-import { dotsAndSlashesToSlash, parsePackages } from "@drill4j/common-utils";
+import { dotsAndSlashesToSlash, formatPackages, parsePackages } from "@drill4j/common-utils";
 import { Agent } from "types/agent";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import { routes } from "common";
@@ -43,10 +43,10 @@ export const SystemSettingsForm = ({ agent }: Props) => {
 
   return (
     <Formik
-      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = "", targetHost } = {} }: Agent) => {
+      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = [], targetHost } = {} }: Agent) => {
         try {
           const systemSettings = {
-            packages: parsePackages(packages).filter(Boolean),
+            packages: parsePackages(Array.isArray(packages) ? formatPackages(packages) : packages).filter(Boolean),
             sessionIdHeaderName,
             targetHost,
           };

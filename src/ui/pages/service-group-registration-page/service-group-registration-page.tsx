@@ -29,7 +29,7 @@ import { CancelAgentRegistrationModal, SystemSettingsStep, InstallPluginsStep } 
 import { Agent } from "types/agent";
 import { useAdminConnection } from "hooks";
 import { getPagePath } from "common";
-import { parsePackages } from "@drill4j/common-utils";
+import { formatPackages, parsePackages } from "@drill4j/common-utils";
 import { ServiceGroupGeneralRegistrationForm } from "./service-group-general-registration-form";
 
 export const ServiceGroupRegistrationPage = () => {
@@ -149,7 +149,9 @@ async function registerServiceGroup({
     name,
     systemSettings: {
       ...systemSettings,
-      packages: parsePackages(systemSettings?.packages || "")?.filter(Boolean),
+      packages: systemSettings?.packages && parsePackages(Array.isArray(systemSettings?.packages)
+        ? formatPackages(systemSettings?.packages)
+        : systemSettings?.packages)?.filter(Boolean),
     },
     description,
     environment,

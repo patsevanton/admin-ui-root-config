@@ -72,7 +72,8 @@ export const Wizard = ({
           }
         }}
         validate={validate}
-        render={({
+      >
+        {({
           isSubmitting,
           isValid,
           values,
@@ -129,7 +130,7 @@ export const Wizard = ({
             <StepComponent formValues={values} />
           </Form>
         )}
-      />
+      </Formik>
     </div>
   );
 };

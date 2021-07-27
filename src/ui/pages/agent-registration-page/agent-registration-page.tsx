@@ -158,9 +158,7 @@ async function preregisterOfflineAgent({
     plugins,
     systemSettings: {
       ...systemSettings,
-      packages: systemSettings?.packages && parsePackages(Array.isArray(systemSettings?.packages)
-        ? formatPackages(systemSettings?.packages)
-        : systemSettings?.packages)?.filter(Boolean),
+      packages: parsePackages(systemSettings?.packages).filter(Boolean),
     },
   });
 }
@@ -180,9 +178,7 @@ async function registerAgent({
     plugins,
     systemSettings: {
       ...systemSettings,
-      packages: systemSettings?.packages && parsePackages(Array.isArray(systemSettings?.packages)
-        ? formatPackages(systemSettings?.packages)
-        : systemSettings?.packages)?.filter(Boolean),
+      packages: parsePackages(systemSettings?.packages).filter(Boolean),
     },
   });
 }

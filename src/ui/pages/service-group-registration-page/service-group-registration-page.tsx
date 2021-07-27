@@ -149,9 +149,7 @@ async function registerServiceGroup({
     name,
     systemSettings: {
       ...systemSettings,
-      packages: systemSettings?.packages && parsePackages(Array.isArray(systemSettings?.packages)
-        ? formatPackages(systemSettings?.packages)
-        : systemSettings?.packages)?.filter(Boolean),
+      packages: parsePackages(systemSettings?.packages).filter(Boolean),
     },
     description,
     environment,

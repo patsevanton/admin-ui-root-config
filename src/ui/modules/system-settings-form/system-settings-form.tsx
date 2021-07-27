@@ -43,10 +43,10 @@ export const SystemSettingsForm = ({ agent }: Props) => {
 
   return (
     <Formik
-      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = [], targetHost } = {} }: Agent) => {
+      onSubmit={async ({ systemSettings: { sessionIdHeaderName, packages = "", targetHost } = {} }: Agent) => {
         try {
           const systemSettings = {
-            packages: parsePackages(Array.isArray(packages) ? formatPackages(packages) : packages).filter(Boolean),
+            packages: parsePackages(packages).filter(Boolean),
             sessionIdHeaderName,
             targetHost,
           };
@@ -60,7 +60,14 @@ export const SystemSettingsForm = ({ agent }: Props) => {
           });
         }
       }}
-      initialValues={agent}
+      initialValues={{
+        ...agent,
+        systemSettings: {
+          ...agent.systemSettings,
+          packages: formatPackages(agent.systemSettings?.packages),
+        },
+      }}
+      enableReinitialize
       validate={composeValidators(
         requiredArray("systemSettings.packages", "Path prefix is required."),
         sizeLimit({

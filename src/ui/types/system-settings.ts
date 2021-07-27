@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 export interface SystemSettings {
-  packages?: string | string[];
+  packages?: any;
   sessionIdHeaderName?: string;
   targetHost?: string;
 }

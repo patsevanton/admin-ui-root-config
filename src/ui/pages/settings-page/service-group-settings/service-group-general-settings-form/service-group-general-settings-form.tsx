@@ -29,6 +29,7 @@ import { ServiceGroupEntity } from "types/service-group-entity";
 
 import { routes } from "common";
 import { UnSaveChangeModal } from "pages/settings-page/un-save-changes-modal";
+import { formatPackages } from "@drill4j/common-utils";
 
 interface Props {
   serviceGroup: ServiceGroupEntity;
@@ -53,7 +54,14 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
           });
         }
       }}
-      initialValues={serviceGroup}
+      initialValues={{
+        ...serviceGroup,
+        systemSettings: {
+          ...serviceGroup.systemSettings,
+          packages: formatPackages(serviceGroup.systemSettings?.packages),
+        },
+      }}
+      enableReinitialize
       validate={composeValidators(
         required("name", "Service Group Name"),
         sizeLimit({ name: "name", alias: "Service Group Name" }),

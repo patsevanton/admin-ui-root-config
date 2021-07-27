@@ -25,6 +25,7 @@ import "twin.macro";
 import { Agent } from "types/agent";
 import { useAdminConnection } from "hooks";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
+import { formatPackages } from "@drill4j/common-utils";
 import {
   wizardReducer, previousStep, nextStep, state,
 } from "./wizard-reducer";
@@ -57,7 +58,13 @@ export const Wizard = ({
     <div>
       <Formik
         initialValues={{
-          ...initialValues, availablePlugins, plugins: ["test2code"],
+          ...initialValues,
+          availablePlugins,
+          systemSettings: {
+            ...initialValues.systemSettings,
+            packages: formatPackages(initialValues.systemSettings?.packages),
+          },
+          plugins: ["test2code"],
         }}
         enableReinitialize
         onSubmit={async (values: any) => {

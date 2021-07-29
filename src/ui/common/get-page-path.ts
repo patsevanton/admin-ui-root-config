@@ -34,21 +34,21 @@ interface Routes {
 }
 
 export const routes = {
-  login: "/login",
-  agentsTable: "/agents",
   agentDashboard: "/agents/:agentId/builds/:buildVersion/dashboard",
   agentPlugin: "/agents/:agentId/builds/:buildVersion/dashboard/:pluginId",
   agentGeneralSettings: "/agents/:agentId/general-settings",
   agentSystemSettings: "/agents/:agentId/system-settings",
   agentPluginsSettings: "/agents/:agentId/plugins-settings",
-  agentRegistration: "/register/:agentId",
-  agentPreregistration: "/preregister",
+  agentRegistration: "/agents/:agentId/registration",
+  agentPreregistration: "/agents/offline-agent-preregistration",
   serviceGroupPlugin: "/agents/group/:groupId/dashboard/:pluginId",
   serviceGroupGeneralSettings: "/agents/group/:groupId/general-settings",
   serviceGroupSystemSettings: "/agents/group/:groupId/system-settings",
   serviceGroupPluginsSettings: "/agents/group/:groupId/plugins-settings",
   serviceGroupDashboard: "/agents/group/:groupId/dashboard",
-  serviceGroupRegistration: "/register/group/:groupId",
+  serviceGroupRegistration: "/agents/group/:groupId/registration",
+  login: "/login",
+  agentsTable: "/agents",
 };
 
 export const router = createRouter<Routes>(routes);

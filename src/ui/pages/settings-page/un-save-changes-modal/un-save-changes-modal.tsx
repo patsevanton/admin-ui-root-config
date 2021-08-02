@@ -15,13 +15,19 @@
  */
 import React from "react";
 import { Popup, Button } from "@drill4j/ui-kit";
-import { Link, Prompt } from "react-router-dom";
+import { Prompt, useHistory } from "react-router-dom";
 import { useFormikContext } from "formik";
 import "twin.macro";
 
 export const UnSaveChangeModal = () => {
   const { dirty, resetForm } = useFormikContext();
   const [path, setPath] = React.useState("");
+  const { push } = useHistory();
+
+  const handleLeave = async () => {
+    await resetForm();
+    push(path);
+  };
 
   return (
     <>
@@ -32,10 +38,8 @@ export const UnSaveChangeModal = () => {
           </div>
           <div tw="flex gap-x-4">
             <Button primary size="large" onClick={() => setPath("")}>Continue Editing</Button>
-            <Button secondary size="large">
-              <Link to={path}>
-                Leave Without Saving
-              </Link>
+            <Button secondary size="large" onClick={handleLeave}>
+              Leave Without Saving
             </Button>
           </div>
         </div>
@@ -45,7 +49,6 @@ export const UnSaveChangeModal = () => {
         message={
           ({ pathname }) => {
             setPath(pathname);
-            resetForm();
             return false;
           }
         }

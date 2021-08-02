@@ -45,6 +45,7 @@ export const AgentsTable = ({ agents }: Props) => {
             )}
           </span>
         ) : null),
+      notSortable: true,
       width: "48px",
     },
     {

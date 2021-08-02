@@ -79,7 +79,7 @@ export const Notification = ({
         <div className="flex gap-x-4 font-bold h-4">
           <a
             className="link"
-            href={`/full-page/${agentId}/${buildVersion}/dashboard`}
+            href={`/agents/${agentId}/builds/${buildVersion}/dashboard`}
             target="_blank"
             rel="noopener noreferrer"
             data-test="notification:notification-button-dashboard"

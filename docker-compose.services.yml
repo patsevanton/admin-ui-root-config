@@ -15,7 +15,7 @@ services:
       - drill4j-dev-network
 
   admin-ui:
-    image: drill4j/admin-ui
+    image: test-123
     ports:
       - 9091:8080
     networks:

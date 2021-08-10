@@ -34,7 +34,7 @@ export const Plugin = () => {
     !getAppNames().includes(getPluginName(pluginId)) && paths[pluginId] && registerAgentPlugin(pluginId, paths[pluginId], { switchBuild });
   }, [pluginId]);
 
-  return <div tw="w-full h-full" id={pluginId} />;
+  return <div tw="w-full h-full px-6" id={pluginId} />;
 };
 
 const registerAgentPlugin = (pluginName: string, pluginPath: string, customProps: any) => {

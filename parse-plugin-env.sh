@@ -1,6 +1,6 @@
 #! /bin/bash
 IFS=','
-read -a strarr <<<"$PLUGINS"
+read -a strarr <<<"$UI_PLUGINS_URLS"
 echo "{" >>/usr/share/nginx/html/plugin-urls.json
 for entrie in "${strarr[@]}"; do
   plugin="$(cut -d'#' -f1 <<<"${entrie}")"

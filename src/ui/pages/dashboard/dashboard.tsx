@@ -20,14 +20,13 @@ import { BrowserRouter, Link } from "react-router-dom";
 import {
   Application, getAppNames, registerApplication, unregisterApplication,
 } from "single-spa";
-import "twin.macro";
+import { css } from "twin.macro";
 import { Icons, Stub } from "@drill4j/ui-kit";
 
-import { useAdminConnection } from "hooks";
+import { useAdminConnection, usePluginUrls } from "hooks";
 import { Plugin } from "types";
 import { HUD } from "components";
-import { paths } from "../../containers-paths";
-import { getPagePath, routes } from "../../common";
+import { getPagePath, routes } from "common";
 
 interface Props {
   id: string;
@@ -35,53 +34,65 @@ interface Props {
   isGroup?: boolean;
 }
 
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+  <BrowserRouter>
+    <div tw="flex flex-col pt-5 px-6 h-full">
+      <div tw="pb-7 text-24 leading-32 font-light border-b border-monochrome-medium-tint">Dashboard</div>
+      {children}
+    </div>
+  </BrowserRouter>
+);
+
 const DashboardComponent = ({ id, isGroup, buildVersion = "" }: Props) => {
   const plugins = useAdminConnection<Plugin[]>(isGroup ? `/groups/${id}/plugins` : `/agents/${id}/plugins`) || [];
   const installedPlugins = plugins.filter((plugin) => !plugin.available);
+  const paths = usePluginUrls();
+
+  if (!paths) {
+    return <Wrapper><div tw="w-full h-full "><Loader /></div></Wrapper>;
+  }
+
+  if (!installedPlugins.length) {
+    return (
+      <Stub
+        icon={<Icons.Plugins width={160} height={160} />}
+        title="No data available"
+        message={(
+          <div>
+            There are no enabled plugins on this {isGroup ? "service Group" : "agent"} to collect the data from.
+            <br /> To install a plugin go to
+            <Link
+              tw="link block mt-1 font-bold"
+              to={isGroup
+                ? getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId: id } })
+                : getPagePath({ name: "agentGeneralSettings", params: { agentId: id } })}
+            >
+              {isGroup ? "Service Group" : "Agent"} settings page
+            </Link>
+          </div>
+        )}
+      />
+    );
+  }
 
   return (
-    <BrowserRouter>
-      <div tw="flex flex-col pt-5 px-6 h-full">
-        <div tw="pb-7 text-24 leading-32 font-light border-b border-monochrome-medium-tint">Dashboard</div>
-        {installedPlugins.map(({ id: pluginId = "" }) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-          const hudPath = paths[pluginId];
-          return (
-            <HUD
-              key={pluginId}
-              url={hudPath}
-              name={isGroup ? "GroupHUD" : "AgentHUD"}
-              customProps={{
-                pluginPagePath: isGroup
-                  ? getPagePath({ name: "serviceGroupPlugin", params: { groupId: id, pluginId } })
-                  : getPagePath({ name: "agentPlugin", params: { agentId: id, buildVersion, pluginId } }),
-              }}
-            />
-          );
-        })}
-        {!installedPlugins.length && (
-          <Stub
-            icon={<Icons.Plugins width={160} height={160} />}
-            title="No data available"
-            message={(
-              <div>
-                There are no enabled plugins on this {isGroup ? "service Group" : "agent"} to collect the data from.
-                <br /> To install a plugin go to
-                <Link
-                  tw="link block mt-1 font-bold"
-                  to={isGroup
-                    ? getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId: id } })
-                    : getPagePath({ name: "agentGeneralSettings", params: { agentId: id } })}
-                >
-                  {isGroup ? "Service Group" : "Agent"} settings page
-                </Link>
-              </div>
-            )}
+    <Wrapper>
+      { installedPlugins.map(({ id: pluginId = "" }) => {
+        const hudPath = paths[pluginId];
+        return (
+          <HUD
+            key={pluginId}
+            url={hudPath}
+            name={isGroup ? "GroupHUD" : "AgentHUD"}
+            customProps={{
+              pluginPagePath: isGroup
+                ? getPagePath({ name: "serviceGroupPlugin", params: { groupId: id, pluginId } })
+                : getPagePath({ name: "agentPlugin", params: { agentId: id, buildVersion, pluginId } }),
+            }}
           />
-        )}
-      </div>
-    </BrowserRouter>
+        );
+      })}
+    </Wrapper>
   );
 };
 
@@ -117,3 +128,22 @@ export const Dashboard = ({ id = "", buildVersion = "", isGroup = false }: Props
 
   return <div tw="w-full h-full" id="dashboard" />;
 };
+
+const loaderStyles = css`
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 10px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #09d;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+export const Loader = () => (
+  <div tw="w-full h-full flex justify-center items-center"><div css={loaderStyles} /></div>
+);

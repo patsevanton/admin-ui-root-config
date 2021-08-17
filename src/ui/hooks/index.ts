@@ -15,3 +15,4 @@
  */
 export { useAdminConnection } from "./use-admin-connection";
 export { useAgent } from "./use-agent";
+export { usePluginUrls } from "./use-plugin-urls";

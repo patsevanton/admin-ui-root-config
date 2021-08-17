@@ -16,23 +16,31 @@
 import React, { useEffect } from "react";
 import { getAppNames, registerApplication } from "single-spa";
 import { useHistory, useParams } from "react-router-dom";
+import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import "twin.macro";
 
 import { getPagePath } from "common";
-import { paths } from "../../../containers-paths";
+import { usePluginUrls } from "hooks";
 
 export const Plugin = () => {
   const { pluginId, agentId } = useParams<{ pluginId: string; agentId: string; }>();
   const { push } = useHistory();
+  const paths = usePluginUrls();
   const switchBuild = (version: string, path: string) => {
     push(`${getPagePath({ name: "agentPlugin", params: { buildVersion: version, agentId, pluginId } })}${path}`);
   };
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    !getAppNames().includes(getPluginName(pluginId)) && paths[pluginId] && registerAgentPlugin(pluginId, paths[pluginId], { switchBuild });
-  }, [pluginId]);
+    if (!paths) return;
+    const isPluginAlreadyRegistered = getAppNames().includes(getPluginName(pluginId));
+    if (isPluginAlreadyRegistered) return;
+    if (!paths[pluginId]) {
+      sendNotificationEvent({ type: "ERROR", text: "CRITICAL ERROR: Plugin URL is not exist. Check PLUGINS env variable value" });
+      return;
+    }
+    registerAgentPlugin(pluginId, paths[pluginId], { switchBuild });
+  },
+  [pluginId, paths]);
 
   return <div tw="w-full h-full px-6" id={pluginId} />;
 };

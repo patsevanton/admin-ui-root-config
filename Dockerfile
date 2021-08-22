@@ -21,6 +21,9 @@ RUN addgroup nginx root
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
 RUN chmod +x /wait
 RUN apk add bash
+COPY nginx/cert.pem /etc/nginx/certs/cert.pem
+COPY nginx/key.pem /etc/nginx/certs/key.pem
+COPY nginx/* /etc/nginx/
 COPY --from=build /app/parse-plugin-env.sh .
 RUN chmod +x ./parse-plugin-env.sh
 COPY --from=build /app/dist /usr/share/nginx/html

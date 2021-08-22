@@ -12,3 +12,4 @@ for entrie in "${strarr[@]}"; do
   fi
 done
 echo "}" >>/usr/share/nginx/html/plugin-urls.json
+

@@ -1,0 +1,108 @@
+version: '3'
+
+services:
+  browser-proxy:
+    image: drill4j/browser-proxy:0.2.0
+    ports:
+      - 7777:7777
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.2
+
+  admin-ui:
+    image: test-certs
+    restart: always
+    ports:
+      - ${FRONT_PORT}:8080
+    environment:
+      WAIT_HOSTS: drill-admin:${BACK_PORT}
+      UI_PLUGINS_URLS: ${UI_PLUGINS_URLS}
+    volumes:
+      - myapp:/etc/nginx/certs
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.4
+
+  ssl-proxy:
+    image: fsouza/docker-ssl-proxy:latest
+    ports:
+      - 8443:8443
+    volumes:
+      - myapp:/etc/nginx/certs
+    environment:
+      DOMAIN: localhost
+      SSL_PORT: 8443
+      TARGET_HOST: admin-ui
+      TARGET_PORT: 8080
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.3
+
+  drill-admin:
+    image: drill4j/admin:${BACK_VERSION}
+    environment:
+      - TEST2CODE_PLUGIN_VERSION=${TEST2CODE_PLUGIN_VERSION}
+      - JAVA_TOOL_OPTIONS=${JAVA_OPTS}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - DRILL_AGENTS_SOCKET_TIMEOUT=${DRILL_AGENTS_SOCKET_TIMEOUT}
+      - DRILL_DEFAULT_PACKAGES=${DRILL_DEFAULT_PACKAGES}
+      - TEST2CODE_PLUGIN_URL=${TEST2CODE_PLUGIN_URL}
+    ports:
+      - ${BACK_PORT}:8090
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.5
+
+  mongo:
+    image: mongo:3.4
+    hostname: mongo
+    ports:
+      - '28017:27017'
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.6
+
+  jsagent:
+    image: drill4j/js-agent:${JS_AGENT_VERSION}
+    hostname: jsagent
+    ports:
+      - '9404:9404'
+    environment:
+      APP_PORT: '9404'
+      WAIT_HOSTS: mongo:27017, drill-admin:8090
+      DRILL_ADMIN_PROTOCOL: 'http'
+      COVERAGE_SOURCE_OMIT_PREFIX: ${JS_AGENT_COVERAGE_SOURCE_OMIT_PREFIX}
+      COVERAGE_SOURCE_APPEND_PREFIX: ${JS_AGENT_COVERAGE_SOURCE_APPEND_PREFIX}
+      PERF_MEASUREMENT_ENABLED: ${JS_AGENT_PERF_MEASUREMENT_ENABLED}
+      PERF_DIFFS_ENABLED: ${JS_AGENT_PERF_DIFFS_ENABLED}
+      DEBUG_AGENT_SERVICE_CONNECTION: ${DEBUG_JS_AGENT_SERVICE_CONNECTION}
+      DEBUG_AGENT_SERVICE_CONNECTION_MAX_ARGS_LENGTH: ${DEBUG_JS_AGENT_SERVICE_CONNECTION_MAX_ARGS_LENGTH}
+      DRILL_ADMIN_HOST: 'drill-admin:8090'
+      MONGO_HOST: 'mongo:27017'
+      MONGO_DBNAME: 'js-agent'
+      DEBUG: 'drill:*'
+      DEBUG_COLORS: 'true'
+      FORCE_COLOR: '3'
+      DEBUG_LOG_LEVEL: '4'
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.7
+
+  autotest-dispatcher:
+    image: drill4j/autotest-extension-dispatcher:0.1.0
+    ports:
+      - '5003:5003'
+    networks:
+      drill4j:
+        ipv4_address: 10.250.0.8
+
+networks:
+  drill4j:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.250.0.0/16
+         gateway: 10.250.0.1
+volumes:
+  myapp:
+    external: false

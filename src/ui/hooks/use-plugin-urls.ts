@@ -23,7 +23,7 @@ const devModePaths = {
 
 const errorHandler = async (func: () => any, message: string): Promise<any> => {
   try {
-    await func();
+    return await func();
   } catch (e) {
     console.error(e);
     throw new Error(message);
@@ -51,9 +51,10 @@ export const usePluginUrls = () => {
       try {
         const response = await errorHandler(async () => {
           const res = await fetch("/plugin-urls.json");
-          if (res.status !== 200) {
-            throw new Error();
+          if (res.status === 200) {
+            return res;
           }
+          throw new Error();
         },
         "CRITICAL ERROR: Failed to fetch JSON with plugin resources URLs");
         const data = await errorHandler(() => response.json(),

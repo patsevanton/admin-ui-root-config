@@ -1,0 +1,18 @@
+{
+  "name": "@drill4j/common-utils",
+  "version": "1.0.3",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Drill4J",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "scripts": {
+    "build": "webpack --mode=production",
+    "serve": "ws -d dist --port=1000",
+    "deploy": "npm publish"
+  },
+  "devDependencies": {
+    "local-web-server": "^5.1.0",
+    "typescript": "^4.1.2"
+  }
+}

@@ -56,6 +56,8 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.local
+**/.env
 
 # next.js build output
 .next
@@ -69,4 +71,6 @@ dist
 *.njsproj
 *.sln
 *.sw?
+*dist
 .DS_Store
+/src/ui/src/index.css

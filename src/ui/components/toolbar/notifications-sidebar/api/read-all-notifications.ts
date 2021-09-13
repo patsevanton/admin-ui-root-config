@@ -22,10 +22,10 @@ export async function readAllNotifications({
   try {
     await axios.patch("/notifications/read");
     onSuccess && onSuccess();
-  } catch ({ response: { data: { message } = {} } = {} }) {
+  } catch ({ response: { data: { message = "" } = {} } = {} }) {
     onError &&
       onError(
-        message || "There is some issue with your action. Please try again.",
+        String(message) || "There is some issue with your action. Please try again.",
       );
   }
 }

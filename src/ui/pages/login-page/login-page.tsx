@@ -44,7 +44,7 @@ export const LoginPage = () => {
       window.location.reload();
     } catch ({ response: { data: { message = "" } = {} } = {} }) {
       setError(
-        message ||
+        String(message) ||
           "There was some issue with an authentication. Please try again later.",
       );
     }

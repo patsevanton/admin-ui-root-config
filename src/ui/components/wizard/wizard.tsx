@@ -77,10 +77,10 @@ export const Wizard = ({
             await onSubmit(values);
             setIsSubmitting(false);
             sendNotificationEvent({ type: "SUCCESS", text: onSuccessMessage });
-          } catch ({ response: { data: { message } = {} } = {} }) {
+          } catch ({ response: { data: { message = "" } = {} } = {} }) {
             sendNotificationEvent({
               type: "ERROR",
-              text: message || "On-submit error. Server problem or operation could not be processed in real-time.",
+              text: String(message) || "On-submit error. Server problem or operation could not be processed in real-time.",
             });
           }
         }}

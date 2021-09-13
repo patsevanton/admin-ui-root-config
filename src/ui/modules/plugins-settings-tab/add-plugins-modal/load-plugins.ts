@@ -24,7 +24,7 @@ export const loadPlugins = (
       selectedPlugins.map((pluginId) => axios.post(connectionTopic, { pluginId })),
     );
     onSuccess && onSuccess();
-  } catch ({ response: { data: { message } = {} } = {} }) {
-    onError && onError(message || "Internal service error");
+  } catch ({ response: { data: { message = "" } = {} } = {} }) {
+    onError && onError(String(message) || "Internal service error");
   }
 };

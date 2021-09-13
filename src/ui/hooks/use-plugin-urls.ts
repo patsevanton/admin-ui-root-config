@@ -66,8 +66,8 @@ export const usePluginUrls = () => {
           setPaths(data);
         },
         "CRITICAL ERROR: plugin URL is invalid. Check PLUGINS env variable value");
-      } catch (e) {
-        sendNotificationEvent({ type: "ERROR", text: e.message });
+      } catch (e: any) {
+        sendNotificationEvent({ type: "ERROR", text: String(e.message) });
       }
     } else {
       setPaths(devModePaths);

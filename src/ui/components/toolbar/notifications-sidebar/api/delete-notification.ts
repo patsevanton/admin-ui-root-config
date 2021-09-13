@@ -25,10 +25,10 @@ export async function deleteNotification(
   try {
     await axios.delete(`/notifications/${notificationId}`);
     onSuccess && onSuccess();
-  } catch ({ response: { data: { message } = {} } = {} }) {
+  } catch ({ response: { data: { message = "" } = {} } = {} }) {
     onError &&
       onError(
-        message || "There is some issue with your action. Please try again.",
+        String(message) || "There is some issue with your action. Please try again.",
       );
   }
 }

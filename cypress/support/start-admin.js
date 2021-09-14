@@ -13,4 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const BASE_URL = "http://localhost:9091";
+
+before(() => {
+  // cy.task("removeContainers");
+  // cy.task("startAdmin");
+  // cy.task("startPetclinic", { build: "0.1.0" });
+});

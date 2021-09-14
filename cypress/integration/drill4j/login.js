@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 /// <reference types="cypress" />
-import { BASE_URL } from "../../constants";
+import { BASE_URL } from "../../fixtures/constants.js";
 
 context("Register agent flow", () => {
   before(() => {

@@ -13,9 +13,10 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": false
   },
   "include": ["src", "node_modules/@types", "twin.d.ts", "declarations.d.ts"],
   "exclude": ["src/**/*.test*"]

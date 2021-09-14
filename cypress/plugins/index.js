@@ -31,8 +31,8 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-const { exec } = require("child_process");
-const { writeFile } = require("fs");
+import { exec } from "child_process";
+import { writeFile } from "fs";
 
 module.exports = (on) => {
   on("task", {
@@ -69,6 +69,10 @@ module.exports = (on) => {
       });
       await promisifiedExec("docker-compose -f java-agent-example.yml --env-file java-agent-example.env up -d");
       return null;
+    },
+    async startPetclinicAutoTests() {
+      await promisifiedExec("cd ../petclinic-ui-autotests-develop");
+      await promisifiedExec("gradlew clean test -DpetclinicUrl=localhost:8087 -DadminUrl=localhost:9090 -DagentId=dev-pet-standalone");
     },
   });
 };

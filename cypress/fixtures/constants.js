@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { BASE_URL } from "../fixtures/constants.js";
-
-export const convertUrl = (url) => `${BASE_URL}${url}`;
+export const BASE_URL = "http://localhost:9091";
+export const AGENT_NAME = "dev-pet-standalone";
+export const TEST_2_CODE_ID = "test2code";

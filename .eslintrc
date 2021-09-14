@@ -1,25 +1,50 @@
 {
-  "extends": ["airbnb", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:cypress/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier", "drill4j"],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "drill4j",
+    "cypress"
+  ],
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
     },
     "import/resolver": {
       "typescript": {}
     }
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "cypress/globals": true
   },
   "root": true,
-  "ignorePatterns": ["src/utils/*spec.ts", "dist"],
+  "ignorePatterns": [
+    "src/utils/*spec.ts",
+    "dist"
+  ],
   "rules": {
-    "drill4j/license-header": ["error"],
+    "drill4j/license-header": [
+      "error"
+    ],
     "react/jsx-filename-extension": [
       2,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
     ],
     "import/prefer-default-export": 0,
     "import/extensions": 0,
@@ -27,9 +52,17 @@
     "no-unused-expressions": 0,
     "import/no-extraneous-dependencies": [
       0,
-      { "devDependencies": ["**/spec.tsx", "**/spec.ts"] }
+      {
+        "devDependencies": [
+          "**/spec.tsx",
+          "**/spec.ts"
+        ]
+      }
     ],
-    "@typescript-eslint/indent": [2, 2],
+    "@typescript-eslint/indent": [
+      2,
+      2
+    ],
     "eofline": 0,
     "arrow-parens": 0,
     "ordered-imports": 0,
@@ -37,7 +70,12 @@
     "no-empty": 2,
     "no-unused-expression": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
-    "max-len": ["error", { "code": 140 }],
+    "max-len": [
+      "error",
+      {
+        "code": 140
+      }
+    ],
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-empty-function": 0,
     "react/jsx-props-no-spreading": 0,
@@ -53,7 +91,19 @@
     "react/require-default-props": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/no-explicit-any": 0,
-    "quotes": [2, "double", { "avoidEscape": true }]
+    "quotes": [
+      2,
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "react/jsx-no-bind": 0,
+    "cypress/no-assigning-return-values": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-unnecessary-waiting": "warn",
+    "cypress/no-async-tests": "error"
   },
   "globals": {
     "JSX": true

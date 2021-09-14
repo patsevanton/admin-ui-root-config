@@ -15,12 +15,13 @@
  */
 import React from "react";
 import { useHistory, matchPath, Link } from "react-router-dom";
-import { Spinner, Icons } from "@drill4j/ui-kit";
+import {
+  Spinner, Icons, capitalize, snakeToSpaces,
+} from "@drill4j/ui-kit";
 import tw, { styled, css } from "twin.macro";
 
 import { AGENT_STATUS } from "common/constants";
 import { getPagePath, routes } from "common";
-import { capitalize, snakeToSpaces } from "@drill4j/common-utils";
 import { AgentStatus } from "types/agent-status";
 import LogoSvg from "./logo.svg";
 

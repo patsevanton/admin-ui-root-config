@@ -41,7 +41,7 @@ export const LoginPage = () => {
       if (authToken) {
         localStorage.setItem(TOKEN_KEY, authToken);
       }
-      window.location.reload();
+      document.dispatchEvent(new CustomEvent("login"));
     } catch ({ response: { data: { message = "" } = {} } = {} }) {
       setError(
         message ||

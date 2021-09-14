@@ -15,4 +15,11 @@
  */
 import { createApi } from "@drill4j/socket";
 
-export const defaultAdminSocket = createApi("drill-admin-socket");
+// eslint-disable-next-line import/no-mutable-exports
+export let defaultAdminSocket = createApi("drill-admin-socket");
+
+const handleLogin = () => {
+  defaultAdminSocket = createApi("drill-admin-socket");
+};
+
+document.addEventListener("login", handleLogin);

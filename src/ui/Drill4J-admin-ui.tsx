@@ -16,12 +16,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
+import { BrowserRouter } from "react-router-dom";
 import Root from "./root.component";
 
 export default singleSpaReact({
   React,
   ReactDOM,
-  rootComponent: Root,
+  rootComponent: () => <BrowserRouter><Root /></BrowserRouter>,
   errorBoundary: (err, info, props) => (
     <ul>
       <li>err: {err}</li>

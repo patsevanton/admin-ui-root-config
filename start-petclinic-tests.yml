@@ -2,13 +2,9 @@ version: '3'
 
 services:
   start-petclinic-tests:
-    image: pet-auto-tests:latest
+    image: drill4j/petclinic-autotests-execute:latest
     environment:
-      - DpetclinicUrl=spring-petclinic-sample:8080
-      - DadminUrl=drill-admin:8090
-      - DagentId=dev-pet-standalone
-    networks:
-      - drill4j-dev-network
-
-networks:
-  drill4j-dev-network:
+      - petclinicUrl=http://host.docker.internal:8087
+      - adminHost=host.docker.internal
+      - adminPort=9090
+      - agentId=dev-pet-standalone

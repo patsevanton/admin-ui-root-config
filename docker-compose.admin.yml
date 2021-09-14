@@ -22,5 +22,12 @@ services:
       - 9091:8080
     networks:
       - drill4j-dev-network
+
+  browser-proxy:
+    image: drill4j/browser-proxy:0.2.0
+    ports:
+      - 7777:7777
+    networks:
+      - drill4j-dev-network
 networks:
   drill4j-dev-network:

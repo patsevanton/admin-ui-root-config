@@ -20,6 +20,7 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import {
   Icons, Button, GeneralAlerts, requiredArray, composeValidators, required, sizeLimit, toError, FormValidator,
+  parsePackages, getPropertyByPath,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
@@ -30,7 +31,6 @@ import { useAgent } from "hooks";
 import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from "modules";
 import { Agent } from "types/agent";
 import { getPagePath } from "common";
-import { parsePackages, getPropertyByPath } from "@drill4j/common-utils";
 import { JavaGeneralRegistrationForm } from "./java-general-registration-form";
 import { JsGeneralRegistrationForm } from "./js-general-registration-form";
 import { JsSystemRegistrationForm } from "./js-system-registration-form";

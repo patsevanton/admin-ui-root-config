@@ -18,8 +18,8 @@ import React, {
 } from "react";
 import {
   Formik, Form, Icons, Button, Spinner,
+  formatPackages,
 } from "@drill4j/ui-kit";
-import { formatPackages } from "@drill4j/common-utils";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import "twin.macro";
 

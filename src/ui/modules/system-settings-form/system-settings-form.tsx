@@ -19,12 +19,12 @@ import { matchPath, useLocation } from "react-router-dom";
 import {
   Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button, composeValidators, Fields, requiredArray, sizeLimit,
   Formik, Field, Form,
+  dotsAndSlashesToSlash, formatPackages, parsePackages,
 } from "@drill4j/ui-kit";
 
 import "twin.macro";
 
 import { UnlockingSystemSettingsFormModal } from "modules";
-import { dotsAndSlashesToSlash, formatPackages, parsePackages } from "@drill4j/common-utils";
 import { Agent } from "types/agent";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import { routes } from "common";

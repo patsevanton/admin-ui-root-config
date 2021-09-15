@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 import axios from "axios";
+import { AGENT_NAME } from "../fixtures/constants";
 
-export const TOKEN_HEADER = "Authorization";
-export const TOKEN_KEY = "auth_token";
-
-export const login = () => {
-  cy.intercept("/api/login", (req) => {
+export const registerAgent = (agentId = AGENT_NAME) => {
+  cy.intercept(`/api/agents/${agentId}`, (req) => {
     req.continue((res) => {
       expect(res.statusCode).to.be.eq(200);
     });
-  }).as("login");
+  }).as("registration");
 
-  cy.wrap(null).then(async () => {
-    const response = await axios.post("/api/login");
-    const authToken = response.headers[TOKEN_HEADER.toLowerCase()];
-    if (authToken) {
-      localStorage.setItem(TOKEN_KEY, authToken);
-    }
+  cy.wrap(null).then(() => {
+    axios.patch(`/api/agents/${agentId}`, {
+      name: agentId,
+      environment: "",
+      description: "",
+      plugins: ["test2code"],
+      systemSettings: {
+        packages: ["org/springframework/samples/petclinic"],
+        sessionIdHeaderName: "",
+        targetHost: "",
+      },
+    });
   });
-  cy.wait(["@login"]);
+  cy.wait(["@registration"]);
 };

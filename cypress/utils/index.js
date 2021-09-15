@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 export { login } from "./login";
+export { manualLogin } from "./manual-login";
 export { convertUrl } from "./covert-url";
+export { waitFotAgentInitialized } from "./wait-for-agent-initialized";
+export { registerAgent } from "./register-agent";
+export { manualRegisterAgent } from "./manual-register-agent";

@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import "./commands";
-import "./configure-axios";
-import "./start-admin";
+/// <reference types="cypress" />
+import { AGENT_NAME } from "../fixtures/constants";
+
+export const waitFotAgentInitialized = (agentName = AGENT_NAME) => {
+  cy.contains("[data-test=name-column]", agentName, { timeout: 200000 }).should("exist");
+};

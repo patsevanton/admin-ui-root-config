@@ -13,6 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import "./commands";
-import "./configure-axios";
-import "./start-admin";
+import { BASE_URL } from "../fixtures/constants.js";
+
+export const manualLogin = () => {
+  cy.visit(BASE_URL);
+  cy.contains("Continue as a guest (with admin rights)").click().then(() => {
+    const AUTH_TOKEN = localStorage.getItem("auth_token");
+    expect(AUTH_TOKEN).to.not.equal(null);
+    expect(AUTH_TOKEN).to.not.equal("");
+    expect(AUTH_TOKEN).to.not.equal(undefined);
+  });
+};

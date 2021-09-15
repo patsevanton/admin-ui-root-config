@@ -71,8 +71,9 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicAutoTests() {
-      await promisifiedExec("cd ../petclinic-ui-autotests-develop");
-      await promisifiedExec("gradlew clean test -DpetclinicUrl=localhost:8087 -DadminUrl=localhost:9090 -DagentId=dev-pet-standalone");
+      await promisifiedExec("docker-compose -f start-petclinic-tests.yml up -d");
+      console.log("petclinic tests container started");
+      return null;
     },
   });
 };

@@ -128,12 +128,17 @@ context("Register agent flow", () => {
       cy.get('[data-test="associated-test-pane:package-name"]').should("have.text", PACKAGE_NAME);
       cy.get('[data-test="associated-tests-list:item"]').should("have.length", ASSOCIATED_TESTS_COUNT);
       cy.get('[data-test="dropdown:selected-value"]').should("have.text", "All tests");
+      cy.get('[data-test="modal:close-button"]').click();
     });
   });
 
   context("Risks and Tests to run", () => {
     before(() => {
       cy.task("startPetclinic", { build: "0.5.0" });
+      cy.wait(15000);
+    });
+
+    beforeEach(() => {
       cy.get('[data-test="name-column"]').contains(AGENT_NAME).click();
       cy.get('[data-test="sidebar:link:Test2Code"]').click();
     });
@@ -157,31 +162,37 @@ context("Register agent flow", () => {
     });
   });
 
-  it("All new builds are compared with the Baseline build", () => {
-    cy.get('[data-test="name-column"]').contains(AGENT_NAME).click();
-    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+  context("Baseline", () => {
+    it("All new builds are compared with the Baseline build", () => {
+      cy.get('[data-test="name-column"]').contains(AGENT_NAME).click();
+      cy.get('[data-test="sidebar:link:Test2Code"]').click();
 
-    cy.get('[data-test="mark-as-baseline-flag"]').click();
-    cy.get('button[data-test="baseline-build-modal:set-as-baseline-button"]').should("be.disabled");
-    cy.get("input[type=checkbox]").click();
-    cy.get('button[data-test="baseline-build-modal:set-as-baseline-button"]').should("not.be.disabled");
-    cy.get('button[data-test="baseline-build-modal:set-as-baseline-button"]').click();
-    checkSystemMessage("Current build has been set as baseline successfully. All subsequent builds will be compared to it.");
+      cy.get('[data-test="mark-as-baseline-flag"]').click();
+      cy.get('button[data-test="baseline-build-modal:set-as-baseline-button"]').should("be.disabled");
+      cy.get("input[type=checkbox]").click();
+      cy.get('button[data-test="baseline-build-modal:set-as-baseline-button"]').should("not.be.disabled");
+      cy.get('button[data-test="baseline-build-modal:set-as-baseline-button"]').click();
+      checkSystemMessage("Current build has been set as baseline successfully. All subsequent builds will be compared to it.");
 
-    cy.task("startPetclinic", { build: "0.6.0" });
+      cy.task("startPetclinic", { build: "0.6.0" });
+      cy.get("a").contains("builds").click();
+      cy.contains("a", "0.6.0", { timeout: 120000 }).click({ force: true });
+      cy.contains("div", "Online", { timeout: 120000 }); // agent is not BUSY
+      cy.get('[data-test="sidebar:link:Test2Code"]').click();
 
-    cy.get('[data-test="header:parent-build-version"]').should("have.text", "0.5.0");
-    cy.get('[data-test="header:current-build-version"]').should("have.text", "0.6.0");
+      cy.get('[data-test="header:parent-build-version"]').should("have.text", "0.5.0");
+      cy.get('[data-test="header:current-build-version"]').should("have.text", "0.6.0");
 
-    cy.get('[data-test="action-section:count:risks"]').click();
-    cy.get('[data-test="risks-pane:risk-name"]').should("have.text", "showOwner");
-    cy.get('[data-test="modal:close-button"]').click();
+      cy.get('[data-test="action-section:count:risks"]').click();
+      cy.get('[data-test="risks-pane:risk-name"]').should("have.text", "showOwner");
+      cy.get('[data-test="modal:close-button"]').click();
 
-    cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
-    cy.get('button[data-test="active-scope-info:finish-scope-button"]').click();
-    cy.get('button[data-test="finish-scope-modal:finish-scope-button"]').click();
+      cy.task("startPetclinicAutoTests", {}, { timeout: 200000 });
+      cy.get('button[data-test="active-scope-info:finish-scope-button"]').click();
+      cy.get('button[data-test="finish-scope-modal:finish-scope-button"]').click();
 
-    cy.get('[data-test="action-section:count:risks"]').should("have.text", 0);
-    cy.get('[data-test="action-section:count:tests-to-run"]').should("have.text", 0);
+      cy.get('[data-test="action-section:count:risks"]').should("have.text", 0);
+      cy.get('[data-test="action-section:count:tests-to-run"]').should("have.text", 0);
+    });
   });
 });

@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { login } from "./login";
-export { manualLogin } from "./manual-login";
-export { convertUrl } from "./covert-url";
-export { waitFotAgentInitialized } from "./wait-for-agent-initialized";
-export { registerAgent } from "./register-agent";
-export { manualRegisterAgent } from "./manual-register-agent";
-export { startNewBuildAndGoToTest2Code } from "./start-new-build-and-go-to-test-to-code";
-export { startAutotestsAndWait } from "./start-autotests-and-wait";
-export { checkSystemMessage } from "./check-system-message";
+/// <reference types="cypress" />
+
+export const startAutotestsAndWait = () => {
+  cy.task("startPetclinicAutoTests");
+  cy.contains('[data-test="active-scope-info:scope-coverage"]', /1[1-9]/, { timeout: 200000 }).should("exist");
+};

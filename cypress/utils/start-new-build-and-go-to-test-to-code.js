@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { login } from "./login";
-export { manualLogin } from "./manual-login";
-export { convertUrl } from "./covert-url";
-export { waitFotAgentInitialized } from "./wait-for-agent-initialized";
-export { registerAgent } from "./register-agent";
-export { manualRegisterAgent } from "./manual-register-agent";
-export { startNewBuildAndGoToTest2Code } from "./start-new-build-and-go-to-test-to-code";
-export { startAutotestsAndWait } from "./start-autotests-and-wait";
-export { checkSystemMessage } from "./check-system-message";
+/// <reference types="cypress" />
+
+export const startNewBuildAndGoToTest2Code = (build = "0.1.0") => {
+  cy.task("startPetclinic", { build });
+
+  cy.get("a").contains("builds").click();
+  cy.contains("a", build, { timeout: 120000 }).click({ force: true });
+  cy.contains("div", "Online", { timeout: 120000 }); // agent is not BUSY
+  cy.get('[data-test="sidebar:link:Test2Code"]').click();
+};

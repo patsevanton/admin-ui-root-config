@@ -71,8 +71,8 @@ module.exports = (on) => {
       return null;
     },
     async startPetclinicAutoTests() {
-      await promisifiedExec("docker-compose -f start-petclinic-tests.yml up -d");
-      console.log("petclinic tests container started");
+      await promisifiedExec("docker-compose -f start-petclinic-tests.yml up");
+      console.log("petclinic tests container exited");
       return null;
     },
   });

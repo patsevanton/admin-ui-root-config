@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import axios from "axios";
+import { BASE_URL } from "../fixtures/constants";
 
 export const TOKEN_HEADER = "Authorization";
 export const TOKEN_KEY = "auth_token";
@@ -26,7 +27,9 @@ export const login = () => {
   }).as("login");
 
   cy.wrap(null).then(async () => {
-    const response = await axios.post("/api/login");
+    const response = await axios.post("/api/login", {
+      BASE_URL,
+    });
     const authToken = response.headers[TOKEN_HEADER.toLowerCase()];
     if (authToken) {
       localStorage.setItem(TOKEN_KEY, authToken);

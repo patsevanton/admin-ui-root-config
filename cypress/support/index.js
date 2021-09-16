@@ -14,5 +14,3 @@
  * limitations under the License.
  */
 import "./commands";
-import "./configure-axios";
-import "./start-admin";

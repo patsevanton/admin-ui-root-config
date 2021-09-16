@@ -73,3 +73,37 @@ context("Finish the active scope when test session are NOT complete", () => {
     cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
   });
 });
+
+// context("wrapper", () => {
+//     it("should can finish scope with active session", () => {
+//         const dispatchActionUrl = `/api/agents/${AGENT_NAME}/plugins/${TEST_2_CODE_ID}/dispatch-action`;
+//         const payload = {
+//             sessionId: "sessionId",
+//             isGlobal: false,
+//             isRealtime: false,
+//         };
+//
+//         cy.intercept("POST", dispatchActionUrl, (req) => {
+//             req.continue((res) => {
+//                 expect(res.statusCode).to.be.eq(200);
+//             });
+//         }).as("dispatch-action");
+//
+//         axios.post(dispatchActionUrl, { type: "START", payload });
+//         cy.wait("@dispatch-action");
+//         cy.get('[data-test="name-column"]').contains(AGENT_NAME).click();
+//         cy.get('[data-test="sidebar:link:Test2Code"]').click();
+//         cy.get('button[data-test="active-scope-info:finish-scope-button"]').click();
+//         cy.get('[data-test="finish-scope-modal:general-alert:session-management-link"').click();
+//
+//         cy.get('[data-test="management-active-sessions:finish-all"').click();
+//         cy.get('[data-test="operation-action-warning:yes-button"').click();
+//         cy.get('[data-test="general-alert:content"]').should("have.text",
+//             "Sessions have been finished successfully. All your progress has been added to the active scope.");
+//         cy.get('[data-test="modal:close-button"]').click();
+//
+//         cy.get('button[data-test="active-scope-info:finish-scope-button"]').click();
+//         cy.get('button[data-test="finish-scope-modal:finish-scope-button"]').click();
+//         cy.get('[data-test="message-panel:text"]').should("have.text", "Scope has been finished");
+//     });
+// });

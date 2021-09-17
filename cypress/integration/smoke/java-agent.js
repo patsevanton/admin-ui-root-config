@@ -183,7 +183,7 @@ context("Register agent flow", () => {
       cy.get('[data-test="header:parent-build-version"]').should("have.text", "0.5.0");
       cy.get('[data-test="header:current-build-version"]').should("have.text", "0.6.0");
 
-      cy.get('[data-test="action-section:count:risks"]').click();
+      cy.contains('[data-test="action-section:count:risks"]', 1).click();
       cy.get('[data-test="risks-pane:risk-name"]').should("have.text", "showOwner");
       cy.get('[data-test="modal:close-button"]').click();
 

@@ -23,7 +23,7 @@ import {
   SettingsPage, AgentRegistrationPage, ServiceGroupRegistrationPage, ServiceGroup, Builds,
 } from "pages";
 import { TypographyStyles, LayoutStyles, FontsStyles } from "global-styles";
-import { Footer, PrivateRoute } from "components";
+import { Footer, NavigationPanel, PrivateRoute } from "components";
 import { configureAxios, routes } from "common";
 import { AppLayout } from "layouts";
 
@@ -41,6 +41,7 @@ const Root = () => (
     <LayoutStyles />
     <NotificationManager />
     <Route exact path={routes.login} component={LoginPage} />
+    <NavigationPanel />
     <AppLayout footer={<Footer />}>
       <Switch>
         <Route exact path="/" render={() => <Redirect to={routes.agentsTable} />} />

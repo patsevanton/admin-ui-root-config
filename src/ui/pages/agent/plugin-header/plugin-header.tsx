@@ -72,20 +72,25 @@ const SettingsButton = styled(Link)(({ disabled }: { disabled?: boolean }) => [
     }
   `,
 ]);
-const AgentStatusWrapper = styled.div(({ status }: { status?: AgentStatus }) => [
-  tw`flex justify-center items-center px-2`,
-  tw`border border-current-color rounded-full font-bold text-12 leading-20`,
-  status === "BUSY" && tw`text-orange-default`,
-  status === "NOT_REGISTERED" && tw`text-monochrome-default`,
-  status === "OFFLINE" && tw`text-monochrome-default`,
-  status === "ONLINE" && tw`text-green-default`,
-]);
+const AgentStatusWrapper = styled.div(
+  ({ status }: { status?: AgentStatus }) => [
+    tw`flex justify-center items-center px-2`,
+    tw`border border-current-color rounded-full font-bold text-12 leading-20`,
+    status === "BUSY" && tw`text-orange-default`,
+    status === "NOT_REGISTERED" && tw`text-monochrome-default`,
+    status === "OFFLINE" && tw`text-monochrome-default`,
+    status === "ONLINE" && tw`text-green-default`,
+  ],
+);
 
 export const PluginHeader = ({ agentName, agentStatus }: Props) => {
-  const { location: { pathname } } = useHistory();
-  const { params: { agentId = "" } = {} } = matchPath<{ buildVersion: string; agentId: string }>(pathname, {
-    path: routes.agentDashboard,
-  }) || {};
+  const {
+    location: { pathname },
+  } = useHistory();
+  const { params: { agentId = "" } = {} } =
+    matchPath<{ buildVersion: string; agentId: string }>(pathname, {
+      path: routes.agentDashboard,
+    }) || {};
 
   return (
     <div tw="flex w-full h-28">
@@ -95,12 +100,14 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
             <img tw="absolute bottom-0 left-0" src={LogoSvg} alt="" />
           </LogoWrapper>
           <AgentInfo>
-            <div className="text-ellipsis text-32 leading-40" title={agentName}>{agentName}</div>
+            <div className="text-ellipsis text-32 leading-40" title={agentName}>
+              {agentName}
+            </div>
             <div className="flex items-center w-full">
-              <AgentStatusWrapper status={agentStatus}>{capitalize(snakeToSpaces(agentStatus))}</AgentStatusWrapper>
-              <div
-                className="flex items-center ml-2"
-              >
+              <AgentStatusWrapper status={agentStatus}>
+                {capitalize(snakeToSpaces(agentStatus))}
+              </AgentStatusWrapper>
+              <div className="flex items-center ml-2">
                 {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
               </div>
             </div>
@@ -108,7 +115,10 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
         </div>
         <SettingsButton
           tw="link"
-          to={getPagePath({ name: "agentGeneralSettings", params: { agentId } })}
+          to={getPagePath({
+            name: "agentGeneralSettings",
+            params: { agentId },
+          })}
           disabled={agentStatus === AGENT_STATUS.OFFLINE}
           data-test="plugin-header:settings-button"
         >

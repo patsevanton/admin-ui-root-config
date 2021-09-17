@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { HUD } from "./hud";
-export { PrivateRoute } from "./private-route";
-export { PageHeader } from "./page-header";
-export { Stub } from "./stub";
-export {
-  TableErrorFallback,
-  PageNotFoundErrorFallback,
-  ErrorFallback,
-} from "./error-fallback";
-export { Toolbar } from "./toolbar";
-export { Footer } from "./footer";
-export { Sidebar, SidebarLink } from "./sidebar";
-export { PluginListEntry } from "./plugin-list-entry";
-export { Step, Wizard } from "./wizard";
-export { NavigationPanel } from "./navigation-panel";
+import React from "react";
+import { Icons } from "@drill4j/ui-kit";
+import { ActionBlock } from "./action-block";
+
+export const Logout = () => (
+  <ActionBlock tooltip="Log Out" isActive={false}>
+    <Icons.Logout />
+  </ActionBlock>
+);

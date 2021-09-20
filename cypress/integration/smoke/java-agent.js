@@ -85,6 +85,22 @@ context("Register agent flow", () => {
     cy.get('[data-test="active-scope-info:scope-coverage"]').should("have.text", "0%");
   });
 
+  context("Check Quality Gate statuses", () => {
+    it('Сlick on the "Configure" button in the "Quality Gate" by "Test2code" plugin header', () => {
+      cy.get('[data-test="name-column"]').contains(AGENT_NAME).click();
+      cy.get('[data-test="sidebar:link:Test2Code"]').click();
+      cy.get('[data-test="coverage-plugin-header:configure-button"]').click();
+      cy.get('input[name="coverage.enabled"]').click();
+      cy.get('input[name="coverage.condition.value"]').type("{backspace}").type("17");
+      cy.get('input[name="risks.enabled"]').click();
+      cy.get('input[name="risks.condition.value"]').type("1");
+      cy.get('input[name="tests.enabled"]').click();
+      cy.get('button[type="submit"]').click();
+      cy.get('[data-test="modal:close-button"]').click();
+      cy.get('[data-test="coverage-plugin-header:quality-gate-status"]').contains("PASSED");
+    });
+  });
+
   context("Covered methods and associated tests", () => {
     beforeEach(() => {
       cy.get('[data-test="name-column"]').contains(AGENT_NAME).click();

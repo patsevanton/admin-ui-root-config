@@ -21,11 +21,14 @@ interface Props {
   isActive: boolean;
   children: React.ReactNode;
   tooltip: string;
+  onClick?: () => void;
 }
 
-export const ActionBlock = ({ isActive, children, tooltip }: Props) => (
+export const ActionBlock = ({
+  isActive, children, tooltip, onClick,
+}: Props) => (
   <Tooltip message={tooltip} position="right">
-    <Wrapper isActive={isActive}>
+    <Wrapper isActive={isActive} onClick={onClick}>
       {children}
     </Wrapper>
   </Tooltip>

@@ -16,15 +16,23 @@
 import React from "react";
 import "twin.macro";
 
-import { Navigation } from "components";
-
 interface Props {
-  children?: React.ReactNode;
+  header: React.ReactNode;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClosePanel: () => void;
 }
 
-export const AppLayout = ({ children }: Props) => (
-  <div tw="flex flex-row w-full h-full overflow-hidden">
-    <Navigation />
-    {children}
-  </div>
+export const Panel = ({
+  children, header, isOpen, onClosePanel,
+}: Props) => (isOpen
+  ? (
+    <>
+      <div tw="absolute top-0 left-12 z-20 text-monochrome-light-tint text-24 h-full left-12 flex flex-col">
+        <div tw="px-6 py-7 leading-32 bg-monochrome-black">{header}</div>
+        <div tw="bg-monochrome-black flex-grow" style={{ opacity: "0.97" }}>{children}</div>
+      </div>
+      <div onClick={onClosePanel} tw="absolute z-10 inset-0 left-12" style={{ background: "rgba(0, 0, 0, 0.4)" }} />
+    </>
+  ) : null
 );

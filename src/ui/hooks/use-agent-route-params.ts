@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 import { matchPath, useLocation } from "react-router-dom";
+import { routes } from "../common";
 
-export const useAgentRouteParams = (): { agentId: string; } => {
+export const useAgentRouteParams = (): { agentId: string; buildVersion: string; } => {
   const { pathname } = useLocation();
-  const { params: { agentId = "" } = {} } = matchPath<{ agentId?: string; }>(pathname, { path: "/agents/:agentId" }) || {};
-  return { agentId };
+  const { params: { agentId = "", buildVersion = "" } = {} } = matchPath<{
+    agentId?: string; buildVersion?: string; }>(pathname, { path: [routes.agentPlugin, routes.agentDashboard] }) || {};
+  return { agentId, buildVersion };
 };

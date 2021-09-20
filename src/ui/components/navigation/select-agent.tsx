@@ -13,30 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
+import React, { useState } from "react";
 import { Icons } from "@drill4j/ui-kit";
 import { ActionBlock } from "./action-block";
-import { useAgentRouteParams } from "../../hooks/use-agent-route-params";
-import { useAgent } from "../../hooks";
-import "twin.macro";
+import { Panel } from "./panel";
 
-export const AgentPlugins = () => {
-  const { agentId } = useAgentRouteParams();
-  const { plugins = [] } = useAgent(agentId);
-  if (!agentId) {
-    return <div />;
-  }
+export const SelectAgent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const isAgent = true;
   return (
-    <div tw="py-4 rounded bg-monochrome-shade">
-      {plugins.map(({ name = "" }) => {
-        const Icon = Icons[name as keyof typeof Icons];
-        return (
-          <ActionBlock tooltip={name} isActive>
-            <Icon width={24} height={24} />
-          </ActionBlock>
-        );
-      })}
-    </div>
-
+    <>
+      <ActionBlock tooltip="Select Agent" isActive={isOpen} onClick={() => setIsOpen(!isOpen)}>
+        {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
+      </ActionBlock>
+      <Panel
+        header={<div>Select Agent </div>}
+        isOpen={isOpen}
+        onClosePanel={() => setIsOpen(false)}
+      >
+        <div style={{ width: "1100px" }} />
+      </Panel>
+    </>
   );
 };

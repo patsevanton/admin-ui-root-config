@@ -16,33 +16,28 @@
 import React from "react";
 import { Icons } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
-import { useAdminConnection } from "../../hooks";
-import { Agent, ServiceGroup } from "../../types";
 import { SelectAgent } from "./select-agent";
 import { SelectedAgent } from "./selected-agent";
 import { AgentPlugins } from "./agent-plugins";
 import { Notifications } from "./notifications";
 import { Logout } from "./logout";
 
-export const NavigationPanel = () => {
-  const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
-  const serviceGroups = useAdminConnection<ServiceGroup[]>("/api/groups") || [];
-
-  return (
+export const Navigation = () => (
+  <>
     <div tw="flex flex-col w-12 h-full bg-monochrome-black" style={{ padding: "6px" }}>
       <div tw="flex justify-center items-center w-full h-22 flex-grow-0 text-monochrome-white">
         <Icons.TransparentLogo width={24} height={24} viewBox="0 0 24 24" />
       </div>
       <ActionsWrapper>
-        <SelectAgent isAgent />
+        <SelectAgent />
         <SelectedAgent />
         <AgentPlugins />
         <Notifications />
         <Logout />
       </ActionsWrapper>
     </div>
-  );
-};
+  </>
+);
 
 const ActionsWrapper = styled.div`
   ${tw`grid gap-y-4 py-4 flex-grow`}

@@ -13,4 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { NavigationPanel } from "./navigation-panel";
+export { Navigation } from "./navigation";
+export {
+  useSetPanelContext, PanelContext, PanelProvider, usePanelContext, SetPanelContext,
+} from "./panel-context";

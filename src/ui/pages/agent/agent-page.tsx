@@ -17,35 +17,19 @@ import React, { useEffect } from "react";
 import {
   Route, Switch, useParams,
 } from "react-router-dom";
-import { Icons } from "@drill4j/ui-kit";
 import axios from "axios";
 import "twin.macro";
 
 import { useAdminConnection, useAgent } from "hooks";
-import { PluginsLayout } from "layouts";
-import { getPagePath, routes } from "common";
+import { routes } from "common";
 import { Notification } from "types";
 import { Dashboard } from "../dashboard";
-import { Sidebar, Link } from "./sidebar";
 import { Plugin } from "./plugin";
 import { PluginHeader } from "./plugin-header";
 
 export const AgentPage = () => {
   const { agentId = "", buildVersion = "" } = useParams<{ agentId?: string; buildVersion?: string; }>();
   const agent = useAgent();
-  const plugins = agent.plugins || [];
-  const pluginsLinks: Link[] = [
-    {
-      id: "dashboard",
-      name: "Dashboard",
-      path: getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } }),
-    },
-    ...plugins.map(({ id = "", name }) => ({
-      id,
-      name: name as keyof typeof Icons,
-      path: getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: id } }),
-    })),
-  ];
 
   const notifications = useAdminConnection<Notification[]>("/notifications") || [];
   const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
@@ -61,10 +45,8 @@ export const AgentPage = () => {
   }, [buildVersion, newBuildNotification?.id]);
 
   return (
-    <PluginsLayout
-      sidebar={<Sidebar links={pluginsLinks} />}
-      header={<PluginHeader agentName={agent.name} agentStatus={agent.status} />}
-    >
+    <div tw="flex flex-col w-full">
+      <PluginHeader agentName={agent.name} agentStatus={agent.status} />
       <Switch>
         <Route
           exact
@@ -73,7 +55,7 @@ export const AgentPage = () => {
         />
         <Route path={routes.agentPlugin} component={Plugin} />
       </Switch>
-    </PluginsLayout>
+    </div>
   );
 };
 

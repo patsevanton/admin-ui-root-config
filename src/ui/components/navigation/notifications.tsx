@@ -15,14 +15,14 @@
  */
 import React from "react";
 import { Icons } from "@drill4j/ui-kit";
+import { useHistory } from "react-router-dom";
 import { ActionBlock } from "./action-block";
 
-interface Props {
-  isAgent: boolean;
-}
-
-export const SelectAgent = ({ isAgent }: Props) => (
-  <ActionBlock tooltip="Select Agent" isActive>
-    {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
-  </ActionBlock>
-);
+export const Notifications = () => {
+  const { push, location: { pathname } } = useHistory();
+  return (
+    <ActionBlock tooltip="Notifications" isActive onClick={() => push(`${pathname}?activeModal=NOTIFICATION_SIDEBAR`)}>
+      <Icons.Notification />
+    </ActionBlock>
+  );
+};

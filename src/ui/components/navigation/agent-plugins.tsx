@@ -15,16 +15,18 @@
  */
 import React from "react";
 import { Icons } from "@drill4j/ui-kit";
-import { Link } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import "twin.macro";
 
+import { useAgentRouteParams, useAgent } from "hooks";
+import { getPagePath, routes } from "common";
 import { ActionBlock } from "./action-block";
-import { useAgentRouteParams } from "../../hooks/use-agent-route-params";
-import { useAgent } from "../../hooks";
-import { getPagePath } from "../../common";
 
 export const AgentPlugins = () => {
   const { agentId, buildVersion } = useAgentRouteParams();
+  const { pathname } = useLocation();
+  const { params: { pluginId: selectedPluginId = "" } = {} } = matchPath<{
+    pluginId?: string; }>(pathname, { path: routes.agentPlugin }) || {};
   const { plugins = [] } = useAgent(agentId);
   if (!agentId) {
     return <div />;
@@ -33,9 +35,10 @@ export const AgentPlugins = () => {
     <div tw="py-4 rounded bg-monochrome-shade">
       {plugins.map(({ name = "", id = "" }) => {
         const Icon = Icons[name as keyof typeof Icons];
+
         return (
           <Link to={getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: id } })}>
-            <ActionBlock tooltip={name} isActive>
+            <ActionBlock tooltip={name} isActive={selectedPluginId === id}>
               <Icon width={24} height={24} />
             </ActionBlock>
           </Link>

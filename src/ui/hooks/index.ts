@@ -16,3 +16,4 @@
 export { useAdminConnection } from "./use-admin-connection";
 export { useAgent } from "./use-agent";
 export { usePluginUrls } from "./use-plugin-urls";
+export { useAgentRouteParams } from "./use-agent-route-params";

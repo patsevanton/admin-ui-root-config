@@ -36,5 +36,5 @@ export const ActionBlock = ({
 
 const Wrapper = styled.div(({ isActive }: {isActive: boolean}) => [
   tw`flex justify-center items-center w-9 h-9 rounded text-monochrome-white cursor-pointer`,
-  isActive ? tw`bg-blue-default` : tw`bg-monochrome-black hover:bg-monochrome-white hover:bg-opacity-10`,
+  isActive ? tw`bg-blue-default` : tw`bg-transparent hover:bg-monochrome-white hover:bg-opacity-10`,
 ]);

@@ -15,10 +15,13 @@
  */
 import React from "react";
 import { Tooltip } from "@drill4j/ui-kit";
-import { ActionBlock } from "./action-block";
-import { useAgentRouteParams } from "../../hooks/use-agent-route-params";
-import { useAgent } from "../../hooks";
+import { Link } from "react-router-dom";
 import "twin.macro";
+
+import { useAgentRouteParams } from "hooks/use-agent-route-params";
+import { useAgent } from "hooks";
+import { getPagePath } from "common";
+import { ActionBlock } from "./action-block";
 
 export const SelectedAgent = () => {
   const { agentId } = useAgentRouteParams();
@@ -33,9 +36,11 @@ export const SelectedAgent = () => {
   }
 
   return (
-    <ActionBlock tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
-      {convertAgentName(name)}
-    </ActionBlock>
+    <Link to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion: "0.1.0" } })}>
+      <ActionBlock tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
+        {convertAgentName(name)}
+      </ActionBlock>
+    </Link>
   );
 };
 

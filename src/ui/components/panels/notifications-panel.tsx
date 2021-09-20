@@ -18,7 +18,7 @@ import { Panel } from "@drill4j/ui-kit";
 import { PanelProps } from "./panel-props";
 
 export const NotificationsPanel = ({ isOpen, onClosePanel }: PanelProps) => (
-  <Panel header={<div>Notifications</div>} isOpen={isOpen} onClosePanel={onClosePanel} hasCloseIcon>
+  <Panel header={<div>Notifications</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
     <div style={{ width: "400px" }} />
   </Panel>
 );

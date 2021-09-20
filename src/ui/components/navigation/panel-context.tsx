@@ -31,7 +31,7 @@ export function useSetPanelContext() {
   return useContext(SetPanelContext);
 }
 
-export const PanelProvider:React.FC = ({ children }) => {
+export const PanelProvider = ({ children }: {children: React.ReactNode}) => {
   const [selectedPanel, setSelectedPanel] = useState<PanelsType | null>(null);
 
   return (

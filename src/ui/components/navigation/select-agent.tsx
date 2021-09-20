@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useState } from "react";
+import React from "react";
 import { Icons } from "@drill4j/ui-kit";
 import { ActionBlock } from "./action-block";
-import { Panel } from "./panel";
+import { usePanelContext, useSetPanelContext } from "./panel-context";
 
 export const SelectAgent = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const setPanel = useSetPanelContext();
+  const activePanel = usePanelContext();
   const isAgent = true;
   return (
     <>
-      <ActionBlock tooltip="Select Agent" isActive={isOpen} onClick={() => setIsOpen(!isOpen)}>
+      <ActionBlock tooltip="Select Agent" isActive={activePanel === "SELECT_AGENT"} onClick={() => setPanel("SELECT_AGENT")}>
         {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
       </ActionBlock>
-      <Panel
-        header={<div>Select Agent </div>}
-        isOpen={isOpen}
-        onClosePanel={() => setIsOpen(false)}
-      >
-        <div style={{ width: "1100px" }} />
-      </Panel>
     </>
   );
 };

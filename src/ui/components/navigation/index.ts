@@ -17,3 +17,4 @@ export { Navigation } from "./navigation";
 export {
   useSetPanelContext, PanelContext, PanelProvider, usePanelContext, SetPanelContext,
 } from "./panel-context";
+export type { PanelsType } from "./panel-context";

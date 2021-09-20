@@ -25,7 +25,7 @@ import { ActionBlock } from "./action-block";
 
 export const SelectedAgent = () => {
   const { agentId } = useAgentRouteParams();
-  const { name = "" } = useAgent(agentId);
+  const { name = "", buildVersion = "" } = useAgent(agentId);
 
   if (!agentId) {
     return (
@@ -36,7 +36,7 @@ export const SelectedAgent = () => {
   }
 
   return (
-    <Link to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion: "0.1.0" } })}>
+    <Link to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } })}>
       <ActionBlock tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
       </ActionBlock>

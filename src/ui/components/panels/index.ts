@@ -13,18 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Icons } from "@drill4j/ui-kit";
-import { ActionBlock } from "./action-block";
-import { usePanelContext, useSetPanelContext } from "./panel-context";
-
-export const Notifications = () => {
-  const openModal = useSetPanelContext();
-  const activePane = usePanelContext();
-
-  return (
-    <ActionBlock tooltip="Notifications" isActive={activePane === "NOTIFICATIONS"} onClick={() => openModal("NOTIFICATIONS")}>
-      <Icons.Notification />
-    </ActionBlock>
-  );
-};
+export { Panels } from "./panels";

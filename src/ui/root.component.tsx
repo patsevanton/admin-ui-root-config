@@ -24,7 +24,7 @@ import {
 } from "pages";
 import { TypographyStyles, LayoutStyles, FontsStyles } from "global-styles";
 import {
-  PrivateRoute, PanelProvider,
+  PrivateRoute, PanelProvider, Panels,
 } from "components";
 import { configureAxios, routes } from "common";
 import { AppLayout } from "layouts";
@@ -66,6 +66,7 @@ const Root = () => (
           </Switch>
         </Switch>
       </AppLayout>
+      <Panels />
     </PanelProvider>
     <SetPluginUrlModal />
   </BrowserRouter>

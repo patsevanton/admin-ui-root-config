@@ -14,17 +14,11 @@
  * limitations under the License.
  */
 import React from "react";
-import { Icons } from "@drill4j/ui-kit";
-import { ActionBlock } from "./action-block";
-import { usePanelContext, useSetPanelContext } from "./panel-context";
+import { Panel } from "@drill4j/ui-kit";
+import { PanelProps } from "./panel-props";
 
-export const Notifications = () => {
-  const openModal = useSetPanelContext();
-  const activePane = usePanelContext();
-
-  return (
-    <ActionBlock tooltip="Notifications" isActive={activePane === "NOTIFICATIONS"} onClick={() => openModal("NOTIFICATIONS")}>
-      <Icons.Notification />
-    </ActionBlock>
-  );
-};
+export const NotificationsPanel = ({ isOpen, onClosePanel }: PanelProps) => (
+  <Panel header={<div>Notifications</div>} isOpen={isOpen} onClosePanel={onClosePanel} hasCloseIcon>
+    <div style={{ width: "400px" }} />
+  </Panel>
+);

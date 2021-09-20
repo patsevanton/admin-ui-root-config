@@ -30,3 +30,4 @@ export { Step, Wizard } from "./wizard";
 export {
   Navigation, useSetPanelContext, usePanelContext, PanelProvider, PanelContext, SetPanelContext,
 } from "./navigation";
+export { Panels } from "./panels";

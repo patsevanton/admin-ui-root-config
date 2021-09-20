@@ -32,7 +32,7 @@ export const AgentPlugins = () => {
     return <div />;
   }
   return (
-    <div tw="py-4 rounded bg-monochrome-shade">
+    <div tw="py-4 rounded bg-[#2F2D2F]">
       {plugins.map(({ name = "", id = "" }) => {
         const Icon = Icons[name as keyof typeof Icons];
 

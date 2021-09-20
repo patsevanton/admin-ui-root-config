@@ -17,30 +17,22 @@ import React, {
   createContext, Dispatch, SetStateAction, useContext, useState,
 } from "react";
 
-type Panels = "NOTIFICATIONS" | "AGENTS" | "AGENT_SETTINGS" | "AGENT_REGISTRATION" | "GROUP_SETTINGS" | "GROUP_REGISTRATION";
+export type PanelsType = "NOTIFICATIONS" | "ADD_AGENT" | "SELECT_AGENT" | "AGENT_REGISTRATION";
 
-export const PanelContext = createContext<Panels | null>(null);
+export const PanelContext = createContext<PanelsType | null>(null);
 
-export const SetPanelContext = createContext<Dispatch<SetStateAction<Panels | null>>>(() => {});
+export const SetPanelContext = createContext<Dispatch<SetStateAction<PanelsType | null>>>(() => {});
 
 export function usePanelContext() {
-  const context = useContext(PanelContext);
-  if (!context) {
-    throw new Error("usePanelContext must be used within a PanelContext");
-  }
-  return context;
+  return useContext(PanelContext);
 }
 
 export function useSetPanelContext() {
-  const context = useContext(SetPanelContext);
-  if (!context) {
-    throw new Error("useSetPanel must be used within a SetPanelContext");
-  }
-  return context;
+  return useContext(SetPanelContext);
 }
 
 export const PanelProvider:React.FC = ({ children }) => {
-  const [selectedPanel, setSelectedPanel] = useState<Panels | null>(null);
+  const [selectedPanel, setSelectedPanel] = useState<PanelsType | null>(null);
 
   return (
     <PanelContext.Provider value={selectedPanel}>

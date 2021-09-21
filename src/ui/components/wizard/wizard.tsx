@@ -17,9 +17,8 @@ import React, {
   Children, ComponentType, ReactElement, useReducer, Component, useState, useEffect,
 } from "react";
 import {
-  Formik, Form, Icons, Button, Spinner,
+  Formik, Form, Icons, Button, Spinner, formatPackages,
 } from "@drill4j/ui-kit";
-import { formatPackages } from "@drill4j/common-utils";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import "twin.macro";
 
@@ -77,10 +76,11 @@ export const Wizard = ({
             await onSubmit(values);
             setIsSubmitting(false);
             sendNotificationEvent({ type: "SUCCESS", text: onSuccessMessage });
-          } catch ({ response: { data: { message } = {} } = {} }) {
+          } catch (e) {
+            console.log(e);
             sendNotificationEvent({
               type: "ERROR",
-              text: message || "On-submit error. Server problem or operation could not be processed in real-time.",
+              text: "On-submit error. Server problem or operation could not be processed in real-time.",
             });
           }
         }}

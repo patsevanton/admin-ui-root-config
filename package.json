@@ -3,7 +3,7 @@
   "author": "Drill4J",
   "license": "Apache-2.0",
   "description": "Drill4J admin ui root config",
-  "version": "0.1.0-53",
+  "version": "0.1.0-54",
   "scripts": {
     "start": "npm run tailwind:css && webpack serve --port 9000 --env isLocal",
     "lint": "eslint src --ext js,ts,tsx",
@@ -92,7 +92,6 @@
   },
   "dependencies": {
     "@drill4j/common-hooks": "1.0.5",
-    "@drill4j/common-utils": "^1.0.0",
     "@drill4j/send-notification-event": "^1.0.0",
     "@drill4j/socket": "^0.1.16",
     "@drill4j/ui-kit": "^0.1.145",

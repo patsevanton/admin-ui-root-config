@@ -20,6 +20,7 @@ import {
   Formik, Field, Form,
 
   Button, FormGroup, GeneralAlerts, Spinner, composeValidators, Fields, required, sizeLimit,
+  formatPackages,
 } from "@drill4j/ui-kit";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 
@@ -29,7 +30,6 @@ import { ServiceGroupEntity } from "types/service-group-entity";
 
 import { routes } from "common";
 import { UnSaveChangeModal } from "pages/settings-page/un-save-changes-modal";
-import { formatPackages } from "@drill4j/common-utils";
 
 interface Props {
   serviceGroup: ServiceGroupEntity;

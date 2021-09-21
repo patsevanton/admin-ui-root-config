@@ -19,7 +19,8 @@ import React, {
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 import {
-  Icons, Button, GeneralAlerts, composeValidators, required, requiredArray, sizeLimit,
+  Icons, Button, GeneralAlerts,
+  composeValidators, required, requiredArray, sizeLimit, parsePackages,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
@@ -28,7 +29,6 @@ import { CancelAgentRegistrationModal, SystemSettingsStep, InstallPluginsStep } 
 import { Agent } from "types/agent";
 import { useAdminConnection } from "hooks";
 import { getPagePath, AGENT_STATUS } from "common";
-import { parsePackages } from "@drill4j/common-utils";
 import { ServiceGroupGeneralRegistrationForm } from "./service-group-general-registration-form";
 
 export const ServiceGroupRegistrationPage = () => {

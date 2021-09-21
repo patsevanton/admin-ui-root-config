@@ -15,12 +15,10 @@
  */
 import React from "react";
 import {
-  Field, FormGroup, GeneralAlerts, Fields,
+  Field, FormGroup, GeneralAlerts, Fields, dotsAndSlashesToSlash,
 } from "@drill4j/ui-kit";
 
 import "twin.macro";
-
-import { dotsAndSlashesToSlash } from "@drill4j/common-utils";
 
 export const SystemSettingsStep = () => (
   <div tw="space-y-10">

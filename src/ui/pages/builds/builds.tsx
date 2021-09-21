@@ -16,9 +16,8 @@
 import React from "react";
 
 import { Link, useParams } from "react-router-dom";
-import { Table, Typography } from "@drill4j/ui-kit";
+import { Table, Typography, dateTimeFormatter } from "@drill4j/ui-kit";
 import { BuildVersion } from "@drill4j/types-admin";
-import { dateTimeFormatter } from "@drill4j/common-utils";
 import tw, { styled } from "twin.macro";
 
 import { useAdminConnection } from "hooks";

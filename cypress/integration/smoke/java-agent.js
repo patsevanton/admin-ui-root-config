@@ -28,7 +28,7 @@ context("Register agent flow", () => {
 
   beforeEach(() => {
     cy.visit(convertUrl("/login"));
-    cy.contains("Continue as a guest (with admin rights)").click();
+    cy.get('button[data-test="login-page:login-button"]').click();
   });
 
   it("should display unregistered agent", () => {

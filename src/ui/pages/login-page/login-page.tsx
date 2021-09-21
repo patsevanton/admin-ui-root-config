@@ -88,6 +88,7 @@ export const LoginPage = () => {
             Forgot your password?
           </div>
           <Button
+            data-test="login-page:login-button"
             tw="flex justify-center w-88 mt-10 "
             secondary
             size="large"

@@ -25,6 +25,6 @@ export const loadPlugins = (
     );
     onSuccess && onSuccess();
   } catch ({ response: { data: { message } = {} } = {} }) {
-    onError && onError(message || "Internal service error");
+    onError && onError(message as string || "Internal service error");
   }
 };

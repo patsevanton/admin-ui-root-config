@@ -15,8 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "node_modules/@types", "twin.d.ts", "declarations.d.ts"],
   "exclude": ["src/**/*.test*"]

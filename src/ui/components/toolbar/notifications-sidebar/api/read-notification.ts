@@ -28,7 +28,7 @@ export async function readNotification(
   } catch ({ response: { data: { message } = {} } = {} }) {
     onError &&
       onError(
-        message || "There is some issue with your action. Please try again.",
+        message as string || "There is some issue with your action. Please try again.",
       );
   }
 }

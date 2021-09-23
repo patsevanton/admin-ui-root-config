@@ -49,7 +49,7 @@ export const AgentStatusToggle = ({ className, agent }: Props) => (
             sendNotificationEvent({
               type: "ERROR",
               text:
-                  message ||
+                  message as string ||
                   "There is some issue with your action. Please try again later.",
             });
           }

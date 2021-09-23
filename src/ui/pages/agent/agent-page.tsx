@@ -85,6 +85,6 @@ async function readNotification(
     await axios.patch(`/notifications/${notificationId}/read`);
     onSuccess && onSuccess();
   } catch ({ response: { data: { message } = {} } = {} }) {
-    onError && onError(message);
+    onError && onError(message as string);
   }
 }

@@ -16,6 +16,7 @@
 import React from "react";
 import { Icons } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
+
 import { SelectAgent } from "./select-agent";
 import { SelectedAgent } from "./selected-agent";
 import { AgentPlugins } from "./agent-plugins";
@@ -23,20 +24,18 @@ import { Notifications } from "./notifications";
 import { Logout } from "./logout";
 
 export const Navigation = () => (
-  <>
-    <div tw="flex flex-col w-12 h-full bg-monochrome-black" style={{ padding: "6px" }}>
-      <div tw="flex justify-center items-center w-full h-22 flex-grow-0 text-monochrome-white">
-        <Icons.TransparentLogo width={24} height={24} viewBox="0 0 24 24" />
-      </div>
-      <ActionsWrapper>
-        <SelectAgent />
-        <SelectedAgent />
-        <AgentPlugins />
-        <Notifications />
-        <Logout />
-      </ActionsWrapper>
+  <div tw="flex flex-col w-12 h-full px-[6px] bg-monochrome-black">
+    <div tw="flex justify-center items-center w-full h-22 flex-grow-0 text-monochrome-white">
+      <Icons.TransparentLogo width={24} height={24} viewBox="0 0 24 24" />
     </div>
-  </>
+    <ActionsWrapper>
+      <SelectAgent />
+      <SelectedAgent />
+      <AgentPlugins />
+      <Notifications />
+      <Logout />
+    </ActionsWrapper>
+  </div>
 );
 
 const ActionsWrapper = styled.div`

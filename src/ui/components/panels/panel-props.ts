@@ -16,4 +16,5 @@
 export interface PanelProps {
   isOpen: boolean;
   onClosePanel: () => void;
+  payload: any;
 }

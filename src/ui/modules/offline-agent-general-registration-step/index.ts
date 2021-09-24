@@ -13,12 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Panel } from "@drill4j/ui-kit";
-import { PanelProps } from "./panel-props";
-
-export const AgentRegistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => (
-  <Panel header={<div>Agent Registration</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
-    <div style={{ width: "1100px" }} />
-  </Panel>
-);
+export { OfflineAgentGeneralRegistrationStep } from "./offline-agent-general-registration-step";

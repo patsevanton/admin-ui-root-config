@@ -15,18 +15,17 @@
  */
 import React from "react";
 import { Button, Icons } from "@drill4j/ui-kit";
-import { Link } from "react-router-dom";
 import "twin.macro";
 
-import { PageHeader, Stub } from "components";
+import { PageHeader, Stub, useSetPanelContext } from "components";
 import { useAdminConnection } from "hooks";
 import { Agent } from "types/agent";
 import { ServiceGroup } from "types/service-group";
-import { getPagePath } from "common";
 import { AgentsTable } from "./agents-table";
 import NoAgentsSvg from "./no-agents.svg";
 
 export const AgentsPage = () => {
+  const setPanel = useSetPanelContext();
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
   const serviceGroups = useAdminConnection<ServiceGroup[]>("/api/groups") || [];
   const agents = [
@@ -44,12 +43,10 @@ export const AgentsPage = () => {
         title="Agents"
         itemsCount={agentsList.length}
         actions={(
-          <Link to={getPagePath({ name: "agentPreregistration" })}>
-            <Button className="flex gap-x-2" secondary size="large">
-              <Icons.Register />
-              <span>Preregister Offline Agent</span>
-            </Button>
-          </Link>
+          <Button secondary size="large" onClick={() => setPanel({ type: "OFFLINE_AGENT_PREREGISTRATION", payload: "asd" })}>
+            <Icons.Register />
+            <span>Preregister Offline Agent</span>
+          </Button>
         )}
       />
       <div tw="flex flex-row flex-grow flex-wrap m-6">

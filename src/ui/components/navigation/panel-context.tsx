@@ -17,11 +17,21 @@ import React, {
   createContext, Dispatch, SetStateAction, useContext, useState,
 } from "react";
 
-export type PanelsType = "NOTIFICATIONS" | "ADD_AGENT" | "SELECT_AGENT" | "AGENT_REGISTRATION";
+export type PanelsType = "NOTIFICATIONS"
+| "ADD_AGENT"
+| "SELECT_AGENT"
+| "JAVA_AGENT_REGISTRATION"
+| "OFFLINE_AGENT_PREREGISTRATION"
+| "JS_AGENT_REGISTRATION";
 
-export const PanelContext = createContext<PanelsType | null>(null);
+interface Panel {
+  type: PanelsType;
+  payload?: any;
+}
 
-export const SetPanelContext = createContext<Dispatch<SetStateAction<PanelsType | null>>>(() => {});
+export const PanelContext = createContext<Panel | null>(null);
+
+export const SetPanelContext = createContext<Dispatch<SetStateAction<Panel | null>>>(() => {});
 
 export function usePanelContext() {
   return useContext(PanelContext);
@@ -32,7 +42,7 @@ export function useSetPanelContext() {
 }
 
 export const PanelProvider = ({ children }: {children: React.ReactNode}) => {
-  const [selectedPanel, setSelectedPanel] = useState<PanelsType | null>(null);
+  const [selectedPanel, setSelectedPanel] = useState<Panel | null>(null);
 
   return (
     <PanelContext.Provider value={selectedPanel}>

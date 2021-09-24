@@ -29,12 +29,11 @@ import {
   PageHeader, Wizard, Step,
 } from "components";
 import { useAgent } from "hooks";
-import { CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep } from "modules";
+import {
+  CancelAgentRegistrationModal, InstallPluginsStep, SystemSettingsStep, JsGeneralRegistrationForm, JsSystemRegistrationForm,
+} from "modules";
 import { Agent } from "types/agent";
 import { getPagePath } from "common";
-import { JavaGeneralRegistrationForm } from "./java-general-registration-form";
-import { JsGeneralRegistrationForm } from "./js-general-registration-form";
-import { JsSystemRegistrationForm } from "./js-system-registration-form";
 
 interface Props {
   isOfflineAgent?: boolean;
@@ -99,7 +98,7 @@ export const AgentRegistrationPage = ({ isOfflineAgent }: Props) => {
       >
         <Step
           name="General Settings"
-          component={agent.agentType === "Node.js" ? JsGeneralRegistrationForm : JavaGeneralRegistrationForm}
+          component={JsGeneralRegistrationForm}
           validate={composeValidators(
             !agentId && idValidator("id", "Agent ID"),
             !agentId && required("id", "Agent ID"),

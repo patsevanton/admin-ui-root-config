@@ -20,3 +20,7 @@ export { UnlockingSystemSettingsFormModal } from "./unlocking-system-settings-fo
 export { CancelAgentRegistrationModal } from "./cancel-agent-registration-modal";
 export { InstallPluginsStep } from "./install-plugins-step";
 export { SystemSettingsStep } from "./system-setting-step";
+export { JavaGeneralRegistrationForm } from "./java-general-registration-form";
+export { JsGeneralRegistrationForm } from "./js-general-registration-form";
+export { JsSystemRegistrationForm } from "./js-system-registration-form";
+export { OfflineAgentGeneralRegistrationStep } from "./offline-agent-general-registration-step";

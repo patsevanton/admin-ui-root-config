@@ -1,3 +1,18 @@
+/*
+* Copyright 2020 EPAM Systems
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require("tailwindcss/plugin");
@@ -110,6 +125,9 @@ module.exports = {
         "ultralight-tint": "#e5f2ff",
       },
       monochrome: {
+        gray: "#81868B",
+        dark: "#444244",
+        dark100: "#2F2D2F",
         black: "#1b191b",
         white: "#ffffff",
         default: "#687481",

@@ -25,7 +25,7 @@ export {
 export { Toolbar } from "./toolbar";
 export { Footer } from "./footer";
 export { Sidebar, SidebarLink } from "./sidebar";
-export { PluginListEntry } from "./plugin-list-entry";
+export { PluginListEntry, PluginCard } from "./plugin-list-entry";
 export { Step, Wizard } from "./wizard";
 export {
   Navigation, useSetPanelContext, usePanelContext, PanelProvider, PanelContext, SetPanelContext,

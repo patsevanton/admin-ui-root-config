@@ -23,10 +23,8 @@ export const SelectAgent = () => {
   const activePanel = usePanelContext();
   const isAgent = true;
   return (
-    <>
-      <ActionBlock tooltip="Select Agent" isActive={activePanel === "SELECT_AGENT"} onClick={() => setPanel("SELECT_AGENT")}>
-        {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
-      </ActionBlock>
-    </>
+    <ActionBlock tooltip="Select Agent" isActive={activePanel?.type === "SELECT_AGENT"} onClick={() => setPanel({ type: "SELECT_AGENT" })}>
+      {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
+    </ActionBlock>
   );
 };

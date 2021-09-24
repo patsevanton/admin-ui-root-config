@@ -15,51 +15,53 @@
 */
 /* eslint-disable max-len */
 import React from "react";
-import "twin.macro";
-import { Icons, Field } from "@drill4j/ui-kit";
+import { Icons, Field, Checkbox } from "@drill4j/ui-kit";
+import tw, { styled } from "twin.macro";
 
-import { PluginListEntry } from "components";
-import { Plugin } from "types/plugin";
+import { PluginCard } from "components";
+import { useAdminConnection } from "hooks";
+import { Plugin } from "types";
 
-interface Props {
-  formValues?: { plugins?: string[], availablePlugins?: Plugin[] };
-  infoPanel?: React.ReactNode;
-}
+export const InstallPluginsStep = (Props: any) => {
+  const availablePlugins = useAdminConnection<Plugin[]>("/plugins");
 
-export const InstallPluginsStep = ({ infoPanel, formValues: { plugins = [], availablePlugins = [] } = {} }: Props) => (
-  <div tw="min-w-850px">
-    {infoPanel}
-    <div tw="pt-4 pb-4 mr-10 ml-10 text-20 leading-32 text-monochrome-default">
-      {plugins.length}
-      &nbsp;of&nbsp;
-      {availablePlugins.length}
-      &nbsp;selected
+  if (!availablePlugins) return null;
+  return (
+    <div tw="px-6 space-y-2">
+      <div tw="flex justify-between text-14 leading-24 text-monochrome-gray">
+        <span>Choose at least one plugin to install on your Agent (you will also be able to add them later in Agent’s settings):</span>
+        <span><Field name="plugins">{({ field }: any) => <span>{field?.value?.length || 0}</span>}</Field> of {availablePlugins.length} selected</span>
+      </div>
+      <div role="group" aria-labelledby="checkbox-group">
+        {availablePlugins.map(({
+          id, name, description, version,
+        }) => (
+          <label key={id}>
+            <Field
+              type="checkbox"
+              name="plugins"
+              value={id}
+            >
+              {({ field }: any) => (
+                <PluginWrapper selected={field?.checked}>
+                  <PluginCard
+                    name={name}
+                    version={version}
+                    icon={name as keyof typeof Icons}
+                    description={description}
+                    checkbox={<Checkbox field={field} tw="text-blue-default" />}
+                  />
+                </PluginWrapper>
+              )}
+            </Field>
+          </label>
+        ))}
+      </div>
     </div>
-    <div tw="mr-6 ml-6" role="group" aria-labelledby="checkbox-group">
-      {availablePlugins.map(({
-        id, name, description, version,
-      }) => (
-        <label tw="text-blue-default" key={id}>
-          <Field
-            type="checkbox"
-            name="plugins"
-            value={id}
-          >
-            {({ field }: any) => (
-              <PluginListEntry
-                field={field}
-                icon={name as keyof typeof Icons}
-                description={description}
-              >
-                <div tw="flex items-center w-full mb-3 text-14 leading-20">
-                  <div tw="font-bold text-monochrome-black">{name}&nbsp;</div>
-                  {version && <div tw="text-monochrome-default">({version})</div>}
-                </div>
-              </PluginListEntry>
-            )}
-          </Field>
-        </label>
-      ))}
-    </div>
-  </div>
-);
+  );
+};
+
+const PluginWrapper = styled.div`
+  ${tw`border border-monochrome-dark100 rounded-lg hover:(border-blue-default border-opacity-50)`}
+  ${({ selected }: { selected: boolean }) => selected && tw`border-blue-default`}
+`;

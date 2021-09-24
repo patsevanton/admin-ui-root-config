@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import { Panel } from "@drill4j/ui-kit";
+import { Panel } from "./panel";
 import { PanelProps } from "./panel-props";
 
 export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => (

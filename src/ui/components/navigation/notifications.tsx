@@ -23,7 +23,11 @@ export const Notifications = () => {
   const activePane = usePanelContext();
 
   return (
-    <ActionBlock tooltip="Notifications" isActive={activePane === "NOTIFICATIONS"} onClick={() => openModal("NOTIFICATIONS")}>
+    <ActionBlock
+      tooltip="Notifications"
+      isActive={activePane?.type === "NOTIFICATIONS"}
+      onClick={() => openModal({ type: "NOTIFICATIONS" })}
+    >
       <Icons.Notification />
     </ActionBlock>
   );

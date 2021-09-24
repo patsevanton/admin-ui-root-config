@@ -15,37 +15,75 @@
  */
 import React from "react";
 import {
-  Field, FormGroup, GeneralAlerts, Fields, dotsAndSlashesToSlash,
+  Field,
+  FormGroup,
+  Fields,
+  dotsAndSlashesToSlash,
+  Icons,
+  Tooltip,
 } from "@drill4j/ui-kit";
 
 import "twin.macro";
 
 export const SystemSettingsStep = () => (
   <div tw="space-y-10">
-    <GeneralAlerts type="INFO">
-      Provide information related to your application / project.
-    </GeneralAlerts>
     <div tw="flex flex-col items-center">
       <div tw="w-97 space-y-6">
         <div tw="space-y-2">
-          <FormGroup tw="w-97" label="Project Package(s)">
+          <FormGroup
+            label={(
+              <div tw="flex gap-x-2 items-center">
+                Application Packages
+                <Tooltip
+                  message={(
+                    <div tw="space-y-2">
+                      <div>
+                        Specify all necessary parts of your application.
+                      </div>
+                      <div>
+                        Please, use:{"\n"}- new line as a separator;{"\n"}-
+                        &quot;!&quot; before package/class for excluding;{"\n"}-
+                        &quot;/&quot; in a package path.
+                      </div>
+                    </div>
+                  )}
+                >
+                  <Icons.Info />
+                </Tooltip>
+              </div>
+            )}
+          >
             <Field
               tw="h-20"
-              component={Fields.Textarea}
+              component={Fields.DarkTextarea}
               name="systemSettings.packages"
-              placeholder="e.g. com/example/mypackage&#10;foo/bar/baz&#10;and so on."
-              normalize={(str: string) => dotsAndSlashesToSlash(str).replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
+              placeholder="e.g., package_name/class_name/method_name"
+              normalize={(str: string) =>
+                dotsAndSlashesToSlash(str).replace(
+                  /(?:(?:\r\n|\r|\n)\s*){2}/gm,
+                  "",
+                )}
             />
           </FormGroup>
-          <div tw="w-97 text-12 leading-16 text-monochrome-default">
-            Make sure you add application packages only, otherwise agent&apos;s performance will be affected.
-            Use new line as a separator, &quot;!&quot; before package/class for excluding and use &quot;/&quot; in a package path.
+          <div tw="text-14 leading-20 text-monochrome-light-tint">
+            Make sure you add application packages only, otherwise Agent&apos;s
+            performance will be affected.
           </div>
         </div>
-        <FormGroup tw="w-97" label="Header Mapping" optional>
+        <FormGroup
+          label={(
+            <div tw="flex gap-x-2 items-center">
+              Header Mapping
+              <Tooltip message="Session header name to track User actions on your target app.">
+                <Icons.Info />
+              </Tooltip>
+            </div>
+          )}
+          optional
+        >
           <Field
             name="systemSettings.sessionIdHeaderName"
-            component={Fields.Input}
+            component={Fields.DarkInput}
             placeholder="Enter session header name"
             label="Session header name"
           />

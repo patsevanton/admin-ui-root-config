@@ -13,12 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Panel } from "./panel";
-import { PanelProps } from "./panel-props";
-
-export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => (
-  <Panel header={<div>Add Agent</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
-    <div style={{ width: "1100px" }} />
-  </Panel>
-);
+export { Stepper } from "./stepper";

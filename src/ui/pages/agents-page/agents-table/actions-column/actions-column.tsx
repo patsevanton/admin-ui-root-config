@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Icons, Button, Tooltip } from "@drill4j/ui-kit";
+import {
+  Icons, Button, Tooltip, FormGroup, Fields, Field,
+} from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { AGENT_STATUS } from "common/constants";
 import { ServiceGroupEntity } from "types/service-group-entity";
 import { Agent } from "types/agent";
 import { getPagePath } from "common";
+import { useSetPanelContext } from "components";
 
 interface ServiceGroup extends ServiceGroupEntity {
   name: string;
@@ -33,6 +36,8 @@ interface Props {
 }
 
 export const ActionsColumn = ({ agent }: Props) => {
+  const setPanel = useSetPanelContext();
+
   const {
     id: agentId = "", status, agentType = "", group = "",
   } = agent;
@@ -67,30 +72,31 @@ export const ActionsColumn = ({ agent }: Props) => {
             )
           }
         >
-          <Link
-            to={agentType === "ServiceGroup"
-              ? getPagePath({ name: "serviceGroupRegistration", params: { groupId: agentId } })
-              : getPagePath({ name: "agentRegistration", params: { agentId } })}
+          <Button
+            data-test="action-column:icons-register"
+            primary
+            size="small"
+            {...(agentType === "ServiceGroup" || !group
+              ? "primary"
+              : "secondary")}
+            disabled={
+              agentType === "ServiceGroup" && !isJavaAgentsServiceGroup
+            }
+            tw="flex items-center w-full gap-x-2"
+            onClick={() => setPanel({
+              type: agentType === "Java"
+                ? "JAVA_AGENT_REGISTRATION"
+                : "JS_AGENT_REGISTRATION",
+              payload: agentId,
+            })}
           >
-            <Button
-              data-test="action-column:icons-register"
-              primary
-              size="small"
-              {...(agentType === "ServiceGroup" || !group
-                ? "primary"
-                : "secondary")}
-              disabled={
-                agentType === "ServiceGroup" && !isJavaAgentsServiceGroup
-              }
-              tw="flex items-center w-full gap-x-2"
-            >
-              <Icons.Register />
-              Register{" "}
-              {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ""}
-            </Button>
-          </Link>
+            <Icons.Register />
+            Register
+            {unregisteredAgentsCount ? `(${unregisteredAgentsCount})` : ""}
+          </Button>
         </Tooltip>
       )}
+
       {((status === AGENT_STATUS.ONLINE && agentType !== "ServiceGroup") ||
         (!hasOfflineAgent && !unregisteredAgentsCount && agentType === "ServiceGroup")) && (
         <Link

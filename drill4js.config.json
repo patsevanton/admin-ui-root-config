@@ -1,0 +1,28 @@
+{
+  "sources": {
+    "pattern": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "ignore": [
+      "src/**/*.spec.ts",
+      "src/ui/types/**/*.ts",
+      "cypress/**/*.ts",
+      "node_modules/**/*.ts",
+      "node_modules/**/*.d.ts",
+      "node_modules/**/*.tsx",
+      "node_modules/**/*.js",
+      "node_modules/**/*.jsx"
+    ]
+  },
+  "bundle": {
+    "pattern": "**/Drill4J-admin-ui-container.js"
+  },
+  "sourcemaps": {
+    "pattern": "**/Drill4J-admin-ui-container.js.map"
+  },
+  "output": {
+    "agentId": "admin-ui-root-config",
+    "agentApiUrl": "http://localhost:9404"
+  }
+}

@@ -9,7 +9,18 @@
         "coverage": "15.9%"
       },
       "visits-service": {
-        "coverage": "42.9%"
+        "coverage": "42.9%",
+        "associatedTests": {
+          "packageName": "org/springframework/samples/petclinic/visits/model",
+          "packageCoverage": "57.8%",
+          "testsCount": "1",
+          "methodsCovered": "7"
+        },
+        "coveredMethods": {
+          "testName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]",
+          "testCoverage": "42.9",
+          "methodsCount": "8"
+        }
       },
       "api-gateway": {
         "coverage": "0%"

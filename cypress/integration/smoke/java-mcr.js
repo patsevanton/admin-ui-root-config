@@ -102,7 +102,7 @@ context("Test to code", () => {
     cy.get('[data-test="dashboard-header-cell:coverage:value"]').should("have.text", this.data.builds["0.1.0"].summary.coverage);
   });
 
-  it("Check associated tests for api-gateway service", function () {
+  it("Check associated tests for visits-service service", function () {
     const service = this.data.builds["0.1.0"]["visits-service"];
     const PACKAGE_NAME = service.associatedTests.packageName;
     const ASSOCIATED_TESTS_COUNT = service.associatedTests.testsCount;
@@ -131,6 +131,41 @@ context("Test to code", () => {
     cy.get('[data-test="associated-tests-list:item"]').should("have.length", ASSOCIATED_TESTS_COUNT);
     cy.get('[data-test="dropdown:selected-value"]').should("have.text", "All tests");
     cy.get('[data-test="modal:close-button"]').click();
+  });
+
+  it("Check covered methods for visits-service service", function () {
+    const service = this.data.builds["0.1.0"]["visits-service"];
+    const TEST_NAME = service.coveredMethods.testName;
+    const TEST_TYPE = service.coveredMethods.testType;
+    const TEST_COVERAGE = service.coveredMethods.testCoverage;
+    const COVERED_METHODS_COUNT = service.coveredMethods.coveredMethodsCount;
+
+    cy.get('a[data-test="test-to-code-name-cell:name-cell"]').contains("visits-service").click();
+    cy.get('[data-test="sidebar:link:Test2Code"]').click();
+
+    cy.get('[data-test="build-overview:tab:build-tests"]').click();
+
+    cy.get("table")
+      .find("tbody")
+      .contains("tr", TEST_NAME).then($row => {
+        expect($row.find('[data-test="td-row-type"]').text()).to.be.eq(TEST_TYPE);
+        expect($row.find('[data-test="td-row-cell-coverage.percentage"]').text()).to.be.eq(TEST_COVERAGE);
+        expect($row.find('[data-test="td-row-cell-coverage.methodCount.covered"]').text()).to.be.eq(COVERED_METHODS_COUNT);
+      });
+
+    cy.get('[data-test="test-details:table-wrapper"]')
+      .find("table")
+      .find("tbody")
+      .contains("tr", TEST_NAME)
+      .find('[data-test="td-row-coverage.methodCount.covered"]')
+      .find("a")
+      .click({ force: true });
+
+    cy.get("header").should("have.text", `Covered methods${COVERED_METHODS_COUNT}`);
+    cy.get('[data-test="covered-methods-by-test-sidebar:test-name"]').should("have.text", TEST_NAME);
+    cy.get('[data-test="covered-methods-by-test-sidebar:test-type"]').should("have.text", TEST_TYPE);
+    cy.get('[data-test="covered-methods-list:item"]').should("have.length", COVERED_METHODS_COUNT);
+    cy.get('[data-test="dropdown:selected-value"]').should("have.text", "All methods");
   });
 
   it("Check the coverage percentage is empty after deploy the second build", () => {

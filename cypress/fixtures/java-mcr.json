@@ -18,8 +18,9 @@
         },
         "coveredMethods": {
           "testName": "[engine:junit-jupiter]/[class:api.microservices.McrApiTest]/[method:junit5CreateNewVisitTest()]",
+          "testType": "Auto",
           "testCoverage": "42.9",
-          "methodsCount": "8"
+          "coveredMethodsCount": "8"
         }
       },
       "api-gateway": {

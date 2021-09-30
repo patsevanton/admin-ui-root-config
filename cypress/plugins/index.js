@@ -86,6 +86,27 @@ module.exports = (on) => {
       await promisifiedExec("docker-compose -f docker-compose-pet-mcr.yml --env-file java-mcr-agent-example.env up -d");
       return null;
     },
+    async startPetclinicMultinstaces({ agentId = "pet-multinstances", build = "0.1.0" }) {
+      const data = `
+      adminAddress=drill-admin:8090
+      PET_STANDALONE_BUILD=${build}
+      PET_STANDALONE_BUILD_NODE_1=${build}
+      PET_STANDALONE_BUILD_NODE_2=${build}
+      AGENT_VERSION=latest
+      agentId=${agentId}
+      LOG_LEVEL=DEBUG
+      PET_NODE_1_PORT=8085
+      PET_NODE_2_PORT=8086
+      BALANCER_PORT=8087
+      `;
+      writeFile("./multinstance-agent.env", data, "utf-8", (err) => {
+        if (err) {
+          console.log(err.message);
+        }
+      });
+      await promisifiedExec("docker-compose -f docker-compose-pet-multinstances.yml --env-file multinstance-agent.env up -d");
+      return null;
+    },
     async startPetclinicAutoTests() {
       await promisifiedExec("docker-compose -f start-petclinic-tests.yml up");
       console.log("petclinic tests container exited");

@@ -16,9 +16,10 @@
 import { matchPath, useLocation } from "react-router-dom";
 import { routes } from "../common";
 
-export const useAgentRouteParams = (): { agentId: string; buildVersion: string; } => {
+export const useAgentRouteParams = () => {
   const { pathname } = useLocation();
-  const { params: { agentId = "", buildVersion = "" } = {} } = matchPath<{
-    agentId?: string; buildVersion?: string; }>(pathname, { path: [routes.agentPlugin, routes.agentDashboard] }) || {};
-  return { agentId, buildVersion };
+  const { params: { agentId = "", buildVersion = "", groupId = "" } = {} } = matchPath<{
+    agentId?: string; buildVersion?: string; groupId?: string;
+  }>(pathname, { path: [routes.agentPlugin, routes.agentDashboard, routes.serviceGroupDashboard, routes.serviceGroupPlugin] }) || {};
+  return { agentId, buildVersion, groupId };
 };

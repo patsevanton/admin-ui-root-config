@@ -13,12 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Icons } from "@drill4j/ui-kit";
-import { CubeWithTooltip } from "../cubes";
-
-export const Logout = () => (
-  <CubeWithTooltip tooltip="Log Out" isActive={false}>
-    <Icons.Logout />
-  </CubeWithTooltip>
-);
+export { CubeWithTooltip, Cube } from "./cube-with-tooltip";

@@ -13,22 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Icons } from "@drill4j/ui-kit";
-import { CubeWithTooltip } from "../cubes";
-import { usePanelContext, useSetPanelContext } from "./panel-context";
-
-export const SelectAgent = () => {
-  const setPanel = useSetPanelContext();
-  const activePanel = usePanelContext();
-  const isAgent = true;
-  return (
-    <CubeWithTooltip
-      tooltip="Select Agent"
-      isActive={activePanel?.type === "SELECT_AGENT"}
-      onClick={() => setPanel({ type: "SELECT_AGENT" })}
-    >
-      {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
-    </CubeWithTooltip>
-  );
+export const convertAgentName = (name: string) => {
+  const convertedName = name.split(" ").map((word) => word[0]);
+  if (convertedName.length === 1) {
+    return name.slice(0, 2);
+  }
+  return `${convertedName[0]}${convertedName[1]}`;
 };

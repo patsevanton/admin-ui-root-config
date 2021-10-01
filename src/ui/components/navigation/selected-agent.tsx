@@ -21,7 +21,8 @@ import "twin.macro";
 import { useAgentRouteParams } from "hooks/use-agent-route-params";
 import { useAgent } from "hooks";
 import { getPagePath } from "common";
-import { ActionBlock } from "./action-block";
+import { convertAgentName } from "utils";
+import { CubeWithTooltip } from "../cubes";
 
 export const SelectedAgent = () => {
   const { agentId } = useAgentRouteParams();
@@ -37,17 +38,9 @@ export const SelectedAgent = () => {
 
   return (
     <Link to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } })}>
-      <ActionBlock tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
+      <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
-      </ActionBlock>
+      </CubeWithTooltip>
     </Link>
   );
-};
-
-const convertAgentName = (name: string) => {
-  const convertedName = name.split(" ").map((word) => word[0]);
-  if (convertedName.length === 1) {
-    return name.slice(0, 2);
-  }
-  return `${convertedName[0]}${convertedName[1]}`;
 };

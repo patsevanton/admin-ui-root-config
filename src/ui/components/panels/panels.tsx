@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
+import React, { useEffect } from "react";
 import { JavaAgentRegistrationPanel } from "./java-agent-registration-panel";
 import { SelectAgentPanel } from "./select-agent-panel";
 import { AddAgentPanel } from "./add-agent-panel";
@@ -35,13 +35,16 @@ const panels: Record<PanelsType, ({ isOpen, onClosePanel }: PanelProps) => JSX.E
 export const Panels = () => {
   const activePanel = usePanelContext();
   const setActivePanel = useSetPanelContext();
-  console.log(activePanel);
+
+  useEffect(() => {
+    setActivePanel({ type: "SELECT_AGENT" });
+  }, []);
+
   if (!activePanel) {
     return null;
   }
 
   const Panel = panels[activePanel?.type];
-  console.log(Panel);
 
   return <Panel isOpen onClosePanel={() => setActivePanel(null)} payload={activePanel?.payload} />;
 };

@@ -20,7 +20,7 @@ import "twin.macro";
 
 import { useAgentRouteParams, useAgent } from "hooks";
 import { getPagePath, routes } from "common";
-import { ActionBlock } from "./action-block";
+import { CubeWithTooltip } from "../cubes";
 
 export const AgentPlugins = () => {
   const { agentId, buildVersion } = useAgentRouteParams();
@@ -38,9 +38,9 @@ export const AgentPlugins = () => {
 
         return (
           <Link to={getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: id } })}>
-            <ActionBlock tooltip={name} isActive={selectedPluginId === id}>
+            <CubeWithTooltip tooltip={name} isActive={selectedPluginId === id}>
               <Icon width={24} height={24} />
-            </ActionBlock>
+            </CubeWithTooltip>
           </Link>
         );
       })}

@@ -31,27 +31,7 @@ export const SystemSettingsStep = () => (
       <div tw="w-97 space-y-6">
         <div tw="space-y-2">
           <FormGroup
-            label={(
-              <div tw="flex gap-x-2 items-center">
-                Application Packages
-                <Tooltip
-                  message={(
-                    <div tw="space-y-2">
-                      <div>
-                        Specify all necessary parts of your application.
-                      </div>
-                      <div>
-                        Please, use:{"\n"}- new line as a separator;{"\n"}-
-                        &quot;!&quot; before package/class for excluding;{"\n"}-
-                        &quot;/&quot; in a package path.
-                      </div>
-                    </div>
-                  )}
-                >
-                  <Icons.Info />
-                </Tooltip>
-              </div>
-            )}
+            label="asd"
           >
             <Field
               tw="h-20"
@@ -71,14 +51,7 @@ export const SystemSettingsStep = () => (
           </div>
         </div>
         <FormGroup
-          label={(
-            <div tw="flex gap-x-2 items-center">
-              Header Mapping
-              <Tooltip message="Session header name to track User actions on your target app.">
-                <Icons.Info />
-              </Tooltip>
-            </div>
-          )}
+          label="asd"
           optional
         >
           <Field

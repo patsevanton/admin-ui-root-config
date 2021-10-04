@@ -129,6 +129,7 @@ module.exports = {
         dark: "#444244",
         dark100: "#2F2D2F",
         black: "#1b191b",
+        black100: "#2B292B",
         white: "#ffffff",
         default: "#687481",
         shade: "#58626d",

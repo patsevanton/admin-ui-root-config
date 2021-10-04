@@ -73,25 +73,36 @@ const AgentRow = ({
       isRegistering={isRegistering}
       isPreregisteredAgent={isPreregisteredAgent}
       onClick={() => {
-        push(getPagePath({
-          name: "agentDashboard",
-          params: { agentId: id, buildVersion },
-        }));
-        setPanel(null);
+        if (!String(window.getSelection())) {
+          push(getPagePath({
+            name: "agentDashboard",
+            params: { agentId: id, buildVersion },
+          }));
+          setPanel(null);
+        }
       }}
     >
       <Badge color="green" bold tw="opacity-0">NEW</Badge>
       {isRegistering
         ? <div tw="flex justify-center items-center"><Spinner /></div>
         : <CubeWrapper tw="ml-2" isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>}
-      <ColumnWithMargin title={name}>
+      <ColumnWithMargin tw="text-monochrome-medium-tint" title={name}>
         {isRegistering && "Registering: "}
         {isPreregisteredAgent && "Preregistered "}
         {name}
       </ColumnWithMargin>
       <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
       <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
-      {!isRegistering && <Icons.Settings width={16} height={16} tw="text-monochrome-white cursor-pointer" />}
+      {!isRegistering && (
+        <Icons.Settings
+          width={16}
+          height={16}
+          onClick={((event: any) => {
+            event?.stopPropagation();
+          }) as any}
+          tw="text-monochrome-white cursor-pointer"
+        />
+      )}
     </Row>
   );
 };
@@ -109,26 +120,44 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
   const isSelectedGroup = groupId === id;
 
   return (
-    <div tw="rounded-lg bg-[#2B292B]">
+    <div tw="rounded-lg bg-monochrome-black100">
       <GroupExpanderLayout
         selected={isSelectedGroup}
         isOpen={isOpen}
         onClick={() => {
-          push(getPagePath({
-            name: "serviceGroupDashboard",
-            params: { groupId: id },
-          }));
-          setPanel(null);
+          if (!String(window.getSelection())) {
+            push(getPagePath({
+              name: "serviceGroupDashboard",
+              params: { groupId: id },
+            }));
+            setPanel(null);
+          }
         }}
       >
         <div tw="flex items-center justify-center">
-          <Icons.Expander rotate={isOpen ? 90 : 0} width={9} height={16} onClick={() => setIsOpen(!isOpen)} tw="cursor-pointer" />
+          <Icons.Expander
+            rotate={isOpen ? 90 : 0}
+            width={9}
+            height={16}
+            onClick={((event: any) => {
+              event?.stopPropagation();
+              setIsOpen(!isOpen);
+            }) as any}
+            tw="cursor-pointer"
+          />
         </div>
         <CubeWrapper tw="ml-2" isActive={isSelectedGroup} title={groupName}>{convertAgentName(groupName)}</CubeWrapper>
-        <ColumnWithMargin title={groupName}>{groupName}</ColumnWithMargin>
+        <ColumnWithMargin tw="text-monochrome-medium-tint" title={groupName}>{groupName}</ColumnWithMargin>
         <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
         <ColumnWithMargin title="Multiservice">Multiservice</ColumnWithMargin>
-        <Icons.Settings width={16} height={16} tw="text-monochrome-white cursor-pointer" />
+        <Icons.Settings
+          width={16}
+          height={16}
+          tw="text-monochrome-white cursor-pointer"
+          onClick={((event: any) => {
+            event?.stopPropagation();
+          }) as any}
+        />
       </GroupExpanderLayout>
       {isOpen && agents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
     </div>
@@ -145,7 +174,7 @@ const Row = styled(Layout)(({
   tw`rounded-lg bg-monochrome-dark100 box-border border border-monochrome-dark100 text-monochrome-dark-tint`,
   !isRegistering && !isPreregisteredAgent && tw`hover:(border border-blue-default border-opacity-50)`,
   selected && tw`border-blue-default border-opacity-100 hover:(border-blue-default border-opacity-100)`,
-  isGroupAgent && tw`bg-[#2B292B] border-[#2B292B]`,
+  isGroupAgent && tw`bg-monochrome-black100 border-monochrome-black100`,
   isRegistering && tw`text-monochrome-medium-tint text-opacity-40`,
   isPreregisteredAgent && tw`bg-monochrome-black text-opacity-40`,
 ]);

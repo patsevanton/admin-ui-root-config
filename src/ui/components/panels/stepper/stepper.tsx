@@ -93,7 +93,7 @@ export const Stepper = ({
           <Form>
             <PanelWithCloseIcon
               header={(
-                <div tw="space-y-6 pt-6 pb-4">
+                <div tw="space-y-8 pt-6 pb-4">
                   <div tw="flex justify-between">
                     {label}
                     <Button secondary size="large" onClick={() => setIsCancelModalOpened(true)}>

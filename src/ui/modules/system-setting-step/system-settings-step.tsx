@@ -26,69 +26,67 @@ import {
 import "twin.macro";
 
 export const SystemSettingsStep = () => (
-  <div tw="space-y-10">
-    <div tw="flex flex-col items-center">
-      <div tw="w-97 space-y-6">
-        <div tw="space-y-2">
-          <DarkFormGroup
-            label={(
-              <div tw="flex gap-x-2 items-center">
-                Application Packages
-                <Tooltip
-                  message={(
-                    <div tw="space-y-2">
-                      <div>
-                        Specify all necessary parts of your application.
-                      </div>
-                      <div>
-                        Please, use:{"\n"}- new line as a separator;{"\n"}-
-                        &quot;!&quot; before package/class for excluding;{"\n"}-
-                        &quot;/&quot; in a package path.
-                      </div>
-                    </div>
-                  )}
-                >
-                  <Icons.Info />
-                </Tooltip>
-              </div>
-            )}
-          >
-            <Field
-              tw="h-20"
-              component={Fields.DarkTextarea}
-              name="systemSettings.packages"
-              placeholder="e.g., package_name/class_name/method_name"
-              normalize={(str: string) =>
-                dotsAndSlashesToSlash(str).replace(
-                  /(?:(?:\r\n|\r|\n)\s*){2}/gm,
-                  "",
-                )}
-            />
-          </DarkFormGroup>
-          <div tw="text-14 leading-20 text-monochrome-light-tint">
-            Make sure you add application packages only, otherwise Agent&apos;s
-            performance will be affected.
-          </div>
-        </div>
+  <div tw="flex flex-col items-center">
+    <div tw="w-97 space-y-6">
+      <div tw="space-y-2">
         <DarkFormGroup
           label={(
             <div tw="flex gap-x-2 items-center">
-              Header Mapping
-              <Tooltip message="Session header name to track User actions on your target app.">
+              Application Packages
+              <Tooltip
+                message={(
+                  <div tw="space-y-2">
+                    <div>
+                      Specify all necessary parts of your application.
+                    </div>
+                    <div>
+                      Please, use:{"\n"}- new line as a separator;{"\n"}-
+                      &quot;!&quot; before package/class for excluding;{"\n"}-
+                      &quot;/&quot; in a package path.
+                    </div>
+                  </div>
+                )}
+              >
                 <Icons.Info />
               </Tooltip>
             </div>
           )}
-          optional
         >
           <Field
-            name="systemSettings.sessionIdHeaderName"
-            component={Fields.DarkInput}
-            placeholder="Enter session header name"
-            label="Session header name"
+            tw="h-20"
+            component={Fields.DarkTextarea}
+            name="systemSettings.packages"
+            placeholder="e.g., package_name/class_name/method_name"
+            normalize={(str: string) =>
+              dotsAndSlashesToSlash(str).replace(
+                /(?:(?:\r\n|\r|\n)\s*){2}/gm,
+                "",
+              )}
           />
         </DarkFormGroup>
+        <div tw="text-14 leading-20 text-monochrome-light-tint">
+          Make sure you add application packages only, otherwise Agent&apos;s
+          performance will be affected.
+        </div>
       </div>
+      <DarkFormGroup
+        label={(
+          <div tw="flex gap-x-2 items-center">
+            Header Mapping
+            <Tooltip message="Session header name to track User actions on your target app.">
+              <Icons.Info />
+            </Tooltip>
+          </div>
+        )}
+        optional
+      >
+        <Field
+          name="systemSettings.sessionIdHeaderName"
+          component={Fields.DarkInput}
+          placeholder="Enter session header name"
+          label="Session header name"
+        />
+      </DarkFormGroup>
     </div>
   </div>
 );

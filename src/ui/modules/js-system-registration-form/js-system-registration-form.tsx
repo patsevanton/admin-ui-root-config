@@ -15,31 +15,26 @@
  */
 import React from "react";
 import {
-  Field,
-  GeneralAlerts, Tooltip, Icons, Fields,
+  Field, Tooltip, Icons, Fields, DarkFormGroup,
 } from "@drill4j/ui-kit";
 
 import "twin.macro";
 
 export const JsSystemRegistrationForm = () => (
-  <div tw="space-y-10">
-    <GeneralAlerts type="INFO">
-      Provide information related to your application / project.
-    </GeneralAlerts>
-    <div tw="flex justify-center">
-      <div tw="w-97 space-y-2">
-        <div tw="flex items-center gap-x-2">
-          <span tw="font-bold text-14 leading-20 text-monochrome-black">Target Host</span>
-          <Tooltip message="Specify URL where your application is located">
-            <Icons.Info tw="text-monochrome-default" />
-          </Tooltip>
-        </div>
-        <Field
-          name="systemSettings.targetHost"
-          component={Fields.Input}
-          placeholder="http://example.com"
-        />
+  <DarkFormGroup
+    label={(
+      <div tw="flex gap-x-2 items-center">
+        Target Host
+        <Tooltip message="Specify URL where your application is located">
+          <Icons.Info />
+        </Tooltip>
       </div>
-    </div>
-  </div>
+    )}
+  >
+    <Field
+      name="systemSettings.targetHost"
+      component={Fields.DarkInput}
+      placeholder="http(s)://example.com"
+    />
+  </DarkFormGroup>
 );

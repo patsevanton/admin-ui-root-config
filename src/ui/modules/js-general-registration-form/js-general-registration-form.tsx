@@ -15,53 +15,37 @@
  */
 import React from "react";
 import {
-  Field, DarkFormGroup, GeneralAlerts, Fields,
+  Field, DarkFormGroup, Fields,
 } from "@drill4j/ui-kit";
 
-import { styled } from "twin.macro";
-import { useParams } from "react-router-dom";
+import "twin.macro";
 
-const Content = styled.div`height: calc(100vh - 270px);`;
-
-export const JsGeneralRegistrationForm = () => {
-  const { agentId = "" } = useParams<{ agentId: string }>();
-
-  return (
-    <>
-      <GeneralAlerts type="INFO">
-        Set up basic agent settings.
-      </GeneralAlerts>
-      <Content tw="flex flex-col items-center pt-10 overflow-auto">
-        <div tw="w-97 space-y-6">
-          <DarkFormGroup label="Agent ID">
-            <Field name="id" component={Fields.Input} placeholder={agentId ? "Enter agent's ID" : "agent-id-example-123"} disabled />
-          </DarkFormGroup>
-          <DarkFormGroup label="Agent version">
-            <Field name="agentVersion" component={Fields.Input} placeholder="n/a" disabled />
-          </DarkFormGroup>
-          <DarkFormGroup label="Service Group">
-            <Field name="group" component={Fields.Input} placeholder="n/a" disabled />
-          </DarkFormGroup>
-          <DarkFormGroup label="Agent name">
-            <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
-          </DarkFormGroup>
-          <DarkFormGroup label="Description" optional>
-            <Field
-              name="description"
-              component={Fields.Textarea}
-              normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
-              placeholder="Add agent's description"
-            />
-          </DarkFormGroup>
-          <DarkFormGroup label="Environment" optional>
-            <Field
-              name="environment"
-              component={Fields.Input}
-              placeholder="Specify an environment"
-            />
-          </DarkFormGroup>
-        </div>
-      </Content>
-    </>
-  );
-};
+export const JsGeneralRegistrationForm = () => (
+  <div tw="space-y-8">
+    <div tw="space-y-6 p-6 border border-monochrome-dark rounded">
+      <div>
+        <div tw="text-12 leading-24 text-monochrome-dark-tint font-bold">AGENT ID</div>
+        <Field name="id">
+          {({ field }: any) => <div tw="text-12 leading-24 text-monochrome-light-tint">{field?.value}</div>}
+        </Field>
+      </div>
+      <div>
+        <div tw="text-14 leading-24 text-monochrome-dark-tint">TYPE</div>
+        <Field name="agentType">
+          {({ field }: any) => <div tw="text-12 leading-24 text-monochrome-light-tint">{field?.value}</div>}
+        </Field>
+      </div>
+    </div>
+    <DarkFormGroup label="Agent name">
+      <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
+    </DarkFormGroup>
+    <DarkFormGroup label="Description" optional>
+      <Field
+        name="description"
+        component={Fields.DarkTextarea}
+        normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
+        placeholder="Add agent's description"
+      />
+    </DarkFormGroup>
+  </div>
+);

@@ -140,16 +140,6 @@ export const AgentRegistrationPage = ({ isOfflineAgent }: Props) => {
           )}
         />
       </Wizard>
-      {isCancelModalOpened && (
-        <CancelAgentRegistrationModal
-          isOpen={isCancelModalOpened}
-          onToggle={setIsCancelModalOpened}
-          header={`Abort ${agentId ? "Registration" : "Preregistration"}`}
-          message={`Are you sure you want to abort ${agentId
-            ? "agent registration"
-            : "offline agent preregistration"}? All your progress will be lost.`}
-        />
-      )}
     </div>
   );
 };

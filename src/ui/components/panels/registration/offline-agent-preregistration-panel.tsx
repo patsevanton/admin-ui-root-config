@@ -36,7 +36,14 @@ const idValidator = (id: string, alias?: string): FormValidator => {
 
 export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => (
   <Stepper
-    label="Agent Preregistration"
+    label={(
+      <div tw="space-y-2">
+        <div>Agent Preregistration</div>
+        <div tw="text-14 leading-24 text-monochrome-dark-tint">
+          Preconfiguration for background instrumentation until the Agent syncs with the Drill4j Admin.
+        </div>
+      </div>
+    )}
     onSubmit={preregisterOfflineAgent}
     onSuccessMessage="Agent has been registered"
     steps={[

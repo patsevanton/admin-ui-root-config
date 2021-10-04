@@ -15,19 +15,19 @@
  */
 import React from "react";
 import {
-  Field, FormGroup, Fields,
+  Field, DarkFormGroup, Fields,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
 export const OfflineAgentGeneralRegistrationStep = () => (
   <div tw="space-y-8">
-    <FormGroup label="Agent name">
+    <DarkFormGroup label="Agent name">
       <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </FormGroup>
-    <FormGroup label="Agent ID">
+    </DarkFormGroup>
+    <DarkFormGroup label="Agent ID">
       <Field name="id" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </FormGroup>
-    <FormGroup label="Agent Type">
+    </DarkFormGroup>
+    <DarkFormGroup label="Agent Type">
       <Field
         name="agentType"
         as="select"
@@ -46,14 +46,14 @@ export const OfflineAgentGeneralRegistrationStep = () => (
         <option value="green">Green</option>
         <option tw="border rounded border-monochrome-dark" value="blue">Blue</option>
       </Field>
-    </FormGroup>
-    <FormGroup label="Description" optional>
+    </DarkFormGroup>
+    <DarkFormGroup label="Description" optional>
       <Field
         name="description"
         component={Fields.DarkTextarea}
         normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
         placeholder="Add agent's description"
       />
-    </FormGroup>
+    </DarkFormGroup>
   </div>
 );

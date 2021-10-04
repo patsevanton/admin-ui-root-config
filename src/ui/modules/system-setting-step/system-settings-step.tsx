@@ -16,7 +16,7 @@
 import React from "react";
 import {
   Field,
-  FormGroup,
+  DarkFormGroup,
   Fields,
   dotsAndSlashesToSlash,
   Icons,
@@ -30,7 +30,7 @@ export const SystemSettingsStep = () => (
     <div tw="flex flex-col items-center">
       <div tw="w-97 space-y-6">
         <div tw="space-y-2">
-          <FormGroup
+          <DarkFormGroup
             label={(
               <div tw="flex gap-x-2 items-center">
                 Application Packages
@@ -64,13 +64,13 @@ export const SystemSettingsStep = () => (
                   "",
                 )}
             />
-          </FormGroup>
+          </DarkFormGroup>
           <div tw="text-14 leading-20 text-monochrome-light-tint">
             Make sure you add application packages only, otherwise Agent&apos;s
             performance will be affected.
           </div>
         </div>
-        <FormGroup
+        <DarkFormGroup
           label={(
             <div tw="flex gap-x-2 items-center">
               Header Mapping
@@ -87,7 +87,7 @@ export const SystemSettingsStep = () => (
             placeholder="Enter session header name"
             label="Session header name"
           />
-        </FormGroup>
+        </DarkFormGroup>
       </div>
     </div>
   </div>

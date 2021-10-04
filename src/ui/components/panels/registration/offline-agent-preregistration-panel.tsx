@@ -24,8 +24,8 @@ import {
   SystemSettingsStep, InstallPluginsStep, OfflineAgentGeneralRegistrationStep,
 } from "modules";
 import { Agent } from "types";
-import { PanelProps } from "./panel-props";
-import { Stepper } from "./stepper";
+import { PanelProps } from "../panel-props";
+import { Stepper } from "../stepper";
 
 const idValidator = (id: string, alias?: string): FormValidator => {
   const idRegexp = /^[a-z0-9-]{1,32}$/;

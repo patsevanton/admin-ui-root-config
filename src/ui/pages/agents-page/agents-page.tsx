@@ -43,7 +43,7 @@ export const AgentsPage = () => {
         title="Agents"
         itemsCount={agentsList.length}
         actions={(
-          <Button secondary size="large" onClick={() => setPanel({ type: "OFFLINE_AGENT_PREREGISTRATION", payload: "asd" })}>
+          <Button secondary size="large" onClick={() => setPanel({ type: "OFFLINE_AGENT_PREREGISTRATION" })}>
             <Icons.Register />
             <span>Preregister Offline Agent</span>
           </Button>

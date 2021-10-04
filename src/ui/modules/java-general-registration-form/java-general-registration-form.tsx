@@ -15,7 +15,7 @@
  */
 import React from "react";
 import {
-  Field, FormGroup, Fields,
+  Field, DarkFormGroup, Fields,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
@@ -35,16 +35,16 @@ export const JavaGeneralRegistrationForm = () => (
         </Field>
       </div>
     </div>
-    <FormGroup label="Agent name">
+    <DarkFormGroup label="Agent name">
       <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </FormGroup>
-    <FormGroup label="Description" optional>
+    </DarkFormGroup>
+    <DarkFormGroup label="Description" optional>
       <Field
         name="description"
         component={Fields.DarkTextarea}
         normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
         placeholder="Add agent's description"
       />
-    </FormGroup>
+    </DarkFormGroup>
   </div>
 );

@@ -17,7 +17,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { matchPath, useLocation } from "react-router-dom";
 import {
-  Icons, Tooltip, GeneralAlerts, FormGroup, Spinner, Button, composeValidators, Fields, requiredArray, sizeLimit,
+  Icons, Tooltip, GeneralAlerts, DarkFormGroup, Spinner, Button, composeValidators, Fields, requiredArray, sizeLimit,
   Formik, Field, Form,
   dotsAndSlashesToSlash, formatPackages, parsePackages,
 } from "@drill4j/ui-kit";
@@ -128,13 +128,13 @@ export const SystemSettingsForm = ({ agent }: Props) => {
                   </div>
                 )}
               </div>
-              <FormGroup label="Header Mapping" optional>
+              <DarkFormGroup label="Header Mapping" optional>
                 <Field
                   name="systemSettings.sessionIdHeaderName"
                   component={Fields.Input}
                   placeholder="Enter session header name"
                 />
-              </FormGroup>
+              </DarkFormGroup>
               <div tw="mt-4">
                 <Button
                   className="flex justify-center items-center gap-x-1 w-32"

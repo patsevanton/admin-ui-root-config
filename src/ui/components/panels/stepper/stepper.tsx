@@ -68,13 +68,12 @@ export const Stepper = ({
   });
 
   if (!initialValues) return null;
-  console.log("asd");
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={async (values: any) => {
         try {
-          console.log("asd");
           await onSubmit(values);
           sendNotificationEvent({ type: "SUCCESS", text: onSuccessMessage });
         } catch (e) {

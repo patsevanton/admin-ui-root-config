@@ -16,7 +16,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Icons, Button, Tooltip, FormGroup, Fields, Field,
+  Icons, Button, Tooltip, DarkFormGroup, Fields, Field,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 

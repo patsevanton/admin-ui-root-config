@@ -19,7 +19,7 @@ import axios from "axios";
 import {
   Formik, Field, Form,
 
-  Button, FormGroup, GeneralAlerts, Spinner, composeValidators, Fields, required, sizeLimit,
+  Button, DarkFormGroup, GeneralAlerts, Spinner, composeValidators, Fields, required, sizeLimit,
   formatPackages,
 } from "@drill4j/ui-kit";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
@@ -76,31 +76,31 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
           </GeneralAlerts>
           <div tw="flex flex-col items-center">
             <div tw="w-97 space-y-6">
-              <FormGroup label="Service Group ID">
+              <DarkFormGroup label="Service Group ID">
                 <Field name="id" component={Fields.Input} />
-              </FormGroup>
-              <FormGroup label="Service Group Name">
+              </DarkFormGroup>
+              <DarkFormGroup label="Service Group Name">
                 <Field
                   name="name"
                   component={Fields.Input}
                   placeholder="Enter service group's name"
                 />
-              </FormGroup>
-              <FormGroup label="Description" optional>
+              </DarkFormGroup>
+              <DarkFormGroup label="Description" optional>
                 <Field
                   name="description"
                   component={Fields.Textarea}
                   normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
                   placeholder="Add service group's description"
                 />
-              </FormGroup>
-              <FormGroup label="Environment" optional>
+              </DarkFormGroup>
+              <DarkFormGroup label="Environment" optional>
                 <Field
                   name="environment"
                   component={Fields.Input}
                   placeholder="Specify an environment"
                 />
-              </FormGroup>
+              </DarkFormGroup>
               <div tw="w-97 mt-4">
                 <Button
                   className="flex justify-center items-center gap-x-1 w-32"

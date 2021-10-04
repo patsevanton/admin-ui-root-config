@@ -19,7 +19,7 @@ import { matchPath, useLocation } from "react-router-dom";
 import {
   Formik, Field, Form,
 
-  Button, FormGroup, GeneralAlerts, Spinner, composeValidators, Fields, required, sizeLimit,
+  Button, DarkFormGroup, GeneralAlerts, Spinner, composeValidators, Fields, required, sizeLimit,
 } from "@drill4j/ui-kit";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 
@@ -69,33 +69,33 @@ export const GeneralSettingsForm = ({ agent }: Props) => {
           </GeneralAlerts>
           <div tw="flex flex-col items-center">
             <div tw="w-97 space-y-6">
-              <FormGroup label="Agent ID">
+              <DarkFormGroup label="Agent ID">
                 <Field id="id" name="id" component={Fields.Input} disabled />
-              </FormGroup>
-              <FormGroup label="Agent version">
+              </DarkFormGroup>
+              <DarkFormGroup label="Agent version">
                 <Field name="agentVersion" component={Fields.Input} placeholder="n/a" disabled />
-              </FormGroup>
-              <FormGroup label="Service Group">
+              </DarkFormGroup>
+              <DarkFormGroup label="Service Group">
                 <Field name="group" component={Fields.Input} placeholder="n/a" disabled />
-              </FormGroup>
-              <FormGroup label="Agent name">
+              </DarkFormGroup>
+              <DarkFormGroup label="Agent name">
                 <Field name="name" component={Fields.Input} placeholder="Enter agent's name" />
-              </FormGroup>
-              <FormGroup label="Description" optional>
+              </DarkFormGroup>
+              <DarkFormGroup label="Description" optional>
                 <Field
                   name="description"
                   component={Fields.Textarea}
                   normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
                   placeholder="Add agent's description"
                 />
-              </FormGroup>
-              <FormGroup label="Environment" optional>
+              </DarkFormGroup>
+              <DarkFormGroup label="Environment" optional>
                 <Field
                   name="environment"
                   component={Fields.Input}
                   placeholder="Specify an environment"
                 />
-              </FormGroup>
+              </DarkFormGroup>
               <div tw="mt-4">
                 <Button
                   className="flex justify-center items-center gap-x-1 w-32"

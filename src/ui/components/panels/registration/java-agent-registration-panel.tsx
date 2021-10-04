@@ -21,26 +21,26 @@ import {
 import "twin.macro";
 
 import {
-  SystemSettingsStep, CancelAgentRegistrationModal, InstallPluginsStep, JavaGeneralRegistrationForm,
+  SystemSettingsStep, InstallPluginsStep, JavaGeneralRegistrationForm,
 } from "modules";
 import { useAgent } from "hooks";
 import { Agent } from "types";
-import { PanelProps } from "./panel-props";
-import { Stepper } from "./stepper";
+import { PanelProps } from "../panel-props";
+import { Stepper } from "../stepper";
 
-export const JsAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
+export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
   const agent = useAgent(payload);
 
   return (
     <Stepper
       label="Agent Registration"
-      initialValues={Object.keys(agent).length && {
+      initialValues={Object.keys(agent).length ? {
         ...agent,
         systemSettings: {
           ...agent.systemSettings,
           packages: formatPackages(agent.systemSettings?.packages),
         },
-      }}
+      } : null}
       onSubmit={registerAgent}
       onSuccessMessage="Agent has been registered"
       steps={[

@@ -15,7 +15,7 @@
  */
 import React from "react";
 import {
-  Field, FormGroup, GeneralAlerts, Fields,
+  Field, DarkFormGroup, GeneralAlerts, Fields,
 } from "@drill4j/ui-kit";
 
 import { styled } from "twin.macro";
@@ -31,27 +31,27 @@ export const ServiceGroupGeneralRegistrationForm = () => (
     </GeneralAlerts>
     <Content tw="flex flex-col items-center pt-10 overflow-auto">
       <div tw="w-97 space-y-6">
-        <FormGroup label="Service Group ID">
+        <DarkFormGroup label="Service Group ID">
           <Field name="id" component={Fields.Input} placeholder="Enter agent's ID" disabled />
-        </FormGroup>
-        <FormGroup label="Service Group Name">
+        </DarkFormGroup>
+        <DarkFormGroup label="Service Group Name">
           <Field name="name" component={Fields.Input} placeholder="Enter service group's name" />
-        </FormGroup>
-        <FormGroup label="Description" optional>
+        </DarkFormGroup>
+        <DarkFormGroup label="Description" optional>
           <Field
             name="description"
             component={Fields.Textarea}
             normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
             placeholder="Add service group's description"
           />
-        </FormGroup>
-        <FormGroup label="Environment" optional>
+        </DarkFormGroup>
+        <DarkFormGroup label="Environment" optional>
           <Field
             name="environment"
             component={Fields.Input}
             placeholder="Specify an environment"
           />
-        </FormGroup>
+        </DarkFormGroup>
       </div>
     </Content>
   </>

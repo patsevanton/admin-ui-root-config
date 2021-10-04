@@ -16,7 +16,7 @@
 import React from "react";
 import axios from "axios";
 import {
-  requiredArray, sizeLimit, required, composeValidators, parsePackages, getPropertyByPath, toError, FormValidator,
+  requiredArray, sizeLimit, required, composeValidators, parsePackages, idValidator,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
@@ -26,13 +26,6 @@ import {
 import { Agent } from "types";
 import { PanelProps } from "../panel-props";
 import { Stepper } from "../stepper";
-
-const idValidator = (id: string, alias?: string): FormValidator => {
-  const idRegexp = /^[a-z0-9-]{1,32}$/;
-  return (validationItem: any) => (!idRegexp.exec(getPropertyByPath(validationItem, id))
-    ? toError(id, `Incorrect ${alias}. Use lowercase Latin letters, digits and dashes.`)
-    : undefined);
-};
 
 export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => (
   <Stepper

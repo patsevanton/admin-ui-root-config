@@ -86,7 +86,7 @@ export const Stepper = ({
       validate={currentValidationSchema}
       validateOnMount
     >
-      {({ isValid, handleSubmit }) => (
+      {({ isValid }) => (
         <Form>
           <PanelWithCloseIcon
             header={(
@@ -115,7 +115,13 @@ export const Stepper = ({
             footer={(
               <div tw="flex gap-4 items-center justify-center w-full h-full">
                 {stepNumber > 0 && (
-                  <Button secondary size="large" type="button" onClick={goToPrevStep}>
+                  <Button
+                    secondary
+                    size="large"
+                    type="button"
+                    onClick={goToPrevStep}
+                    disabled={!isValid}
+                  >
                     <Icons.StepperArrow rotate={180} width={7} height={12} />
                     Back
                   </Button>

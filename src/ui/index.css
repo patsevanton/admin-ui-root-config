@@ -915,12 +915,12 @@ button:focus {
   width: 30rem;
 }
 
-.w-97 {
-  width: 25rem;
-}
-
 .w-\[400px\] {
   width: 400px;
+}
+
+.w-97 {
+  width: 25rem;
 }
 
 .w-32 {
@@ -1372,10 +1372,6 @@ button:focus {
   padding-top: 2rem;
 }
 
-.pt-10 {
-  padding-top: 2.5rem;
-}
-
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -1414,6 +1410,10 @@ button:focus {
 
 .pr-6 {
   padding-right: 1.5rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
 }
 
 .text-center {

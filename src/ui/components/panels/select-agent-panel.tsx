@@ -32,8 +32,8 @@ import { useSetPanelContext } from "../navigation";
 export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
   const groupsList = useAdminConnection<ServiceGroup[]>("/api/groups") || [];
-  const agents = agentsList.filter((agent) => !agent.group);
-  const groupsAgents = agentsList.filter((agent) => agent.group);
+  const agents = agentsList.filter((agent) => !agent.group && agent.status !== AGENT_STATUS.NOT_REGISTERED);
+  const groupsAgents = agentsList.filter((agent) => agent.group && agent.status !== AGENT_STATUS.NOT_REGISTERED);
   const groups = groupsList.map((group) => ({
     group,
     agents: groupsAgents.filter((agent) => group.name === agent.group),
@@ -48,9 +48,8 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
           <ColumnWithMargin tw="col-start-5">Type</ColumnWithMargin>
         </Layout>
         <div tw="flex flex-col gap-y-[6px] overflow-y-auto">
-          {groups.map(({
-            group, agents: groupAgents,
-          }) => (<GroupRow key={group?.id} group={group} agents={groupAgents} />))}
+          {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
+            && <GroupRow key={group?.id} group={group} agents={groupAgents} />)}
           {agents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
         </div>
       </div>
@@ -84,7 +83,7 @@ const AgentRow = ({
       <Badge color="green" bold tw="opacity-0">NEW</Badge>
       {isRegistering
         ? <div tw="flex justify-center items-center"><Spinner /></div>
-        : <CubeWrapper tw="ml-2" isActive={isSelectedAgent} id="Agent 4">{convertAgentName(name)}</CubeWrapper>}
+        : <CubeWrapper tw="ml-2" isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>}
       <ColumnWithMargin title={name}>
         {isRegistering && "Registering: "}
         {isPreregisteredAgent && "Preregistered "}

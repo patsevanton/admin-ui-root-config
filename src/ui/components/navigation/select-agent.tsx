@@ -17,18 +17,20 @@ import React from "react";
 import { Icons } from "@drill4j/ui-kit";
 import { CubeWithTooltip } from "../cubes";
 import { usePanelContext, useSetPanelContext } from "./panel-context";
+import { useAgentRouteParams } from "../../hooks";
 
 export const SelectAgent = () => {
   const setPanel = useSetPanelContext();
   const activePanel = usePanelContext();
-  const isAgent = true;
+  const { groupId, agentId } = useAgentRouteParams();
   return (
     <CubeWithTooltip
       tooltip="Select Agent"
       isActive={activePanel?.type === "SELECT_AGENT"}
       onClick={() => setPanel({ type: "SELECT_AGENT" })}
     >
-      {isAgent ? <Icons.Agent /> : <Icons.ServiceGroup />}
+      {groupId && <Icons.ServiceGroup />}
+      {agentId && <Icons.Agent /> }
     </CubeWithTooltip>
   );
 };

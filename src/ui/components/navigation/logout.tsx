@@ -18,7 +18,7 @@ import { Icons } from "@drill4j/ui-kit";
 import { CubeWithTooltip } from "../cubes";
 
 export const Logout = () => (
-  <CubeWithTooltip tooltip="Log Out" isActive={false}>
+  <CubeWithTooltip tooltip="Log Out">
     <Icons.Logout />
   </CubeWithTooltip>
 );

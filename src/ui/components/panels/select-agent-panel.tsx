@@ -27,7 +27,6 @@ import { AGENT_STATUS, getPagePath } from "common";
 import { Panel } from "./panel";
 import { PanelProps } from "./panel-props";
 import { Cube } from "../cubes";
-import { useSetPanelContext } from "../navigation";
 
 export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
@@ -38,7 +37,6 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
     group,
     agents: groupsAgents.filter((agent) => group.name === agent.group),
   }));
-
   return (
     <Panel header={<div tw="flex items-center h-21">Select Agent</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
       <div tw="w-[1024px] text-monochrome-medium-tint text-14 leading-20">
@@ -62,10 +60,10 @@ const AgentRow = ({
 }: Agent) => {
   const { agentId } = useAgentRouteParams();
   const { push } = useHistory();
-  const setPanel = useSetPanelContext();
   const isPreregisteredAgent = agentType === "Java" && !agentVersion;
   const isRegistering = status === AGENT_STATUS.REGISTERING;
   const isSelectedAgent = agentId === id;
+
   return (
     <Row
       selected={isSelectedAgent}
@@ -78,7 +76,6 @@ const AgentRow = ({
             name: "agentDashboard",
             params: { agentId: id, buildVersion },
           }));
-          setPanel(null);
         }
       }}
     >
@@ -86,7 +83,7 @@ const AgentRow = ({
       {isRegistering
         ? <div tw="flex justify-center items-center"><Spinner /></div>
         : <CubeWrapper tw="ml-2" isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>}
-      <ColumnWithMargin tw="text-monochrome-medium-tint" title={name}>
+      <ColumnWithMargin tw="text-monochrome-medium-tint text-opacity-[inherit]" title={name}>
         {isRegistering && "Registering: "}
         {isPreregisteredAgent && "Preregistered "}
         {name}
@@ -116,7 +113,6 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
   const [isOpen, setIsOpen] = useState(false);
   const { groupId } = useAgentRouteParams();
   const { push } = useHistory();
-  const setPanel = useSetPanelContext();
   const isSelectedGroup = groupId === id;
 
   return (
@@ -130,20 +126,20 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
               name: "serviceGroupDashboard",
               params: { groupId: id },
             }));
-            setPanel(null);
           }
         }}
       >
-        <div tw="flex items-center justify-center">
+        <div
+          tw="flex items-center justify-center cursor-pointer"
+          onClick={((event: any) => {
+            event?.stopPropagation();
+            setIsOpen(!isOpen);
+          }) as any}
+        >
           <Icons.Expander
             rotate={isOpen ? 90 : 0}
             width={9}
             height={16}
-            onClick={((event: any) => {
-              event?.stopPropagation();
-              setIsOpen(!isOpen);
-            }) as any}
-            tw="cursor-pointer"
           />
         </div>
         <CubeWrapper tw="ml-2" isActive={isSelectedGroup} title={groupName}>{convertAgentName(groupName)}</CubeWrapper>
@@ -173,9 +169,9 @@ const Row = styled(Layout)(({
 }:{ selected?: boolean; isGroupAgent?: boolean; isRegistering?: boolean; isPreregisteredAgent?: boolean }) => [
   tw`rounded-lg bg-monochrome-dark100 box-border border border-monochrome-dark100 text-monochrome-dark-tint`,
   !isRegistering && !isPreregisteredAgent && tw`hover:(border border-blue-default border-opacity-50)`,
-  selected && tw`border-blue-default border-opacity-100 hover:(border-blue-default border-opacity-100)`,
   isGroupAgent && tw`bg-monochrome-black100 border-monochrome-black100`,
-  isRegistering && tw`text-monochrome-medium-tint text-opacity-40`,
+  selected && tw`border-blue-default border-opacity-100 hover:(border-blue-default border-opacity-100)`,
+  isRegistering && tw`text-opacity-40`,
   isPreregisteredAgent && tw`bg-monochrome-black text-opacity-40`,
 ]);
 
@@ -190,14 +186,4 @@ const CubeWrapper = styled(Cube)`
 
 const ColumnWithMargin = styled.div`
   ${tw`mx-3 text-ellipsis`}
-`;
-
-const Circle = styled.div<{isHidden?: boolean; }>`
-  ${tw`relative`}
-  &::after {
-    content: "";
-    ${({ isHidden }) => isHidden && tw`hidden`}
-    ${tw`absolute w-3 h-3 rounded-lg border-2 border-monochrome-dark100 bg-green-medium-tint`}
-    ${tw`top-0 right-0 transform translate-x-1/2 -translate-y-1/2`}
-  }
 `;

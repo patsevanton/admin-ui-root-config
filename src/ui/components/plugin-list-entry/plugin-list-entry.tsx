@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import { FieldInputProps, Icons, Checkbox } from "@drill4j/ui-kit";
+import { Icons } from "@drill4j/ui-kit";
 
 import tw, { styled } from "twin.macro";
 
@@ -26,23 +26,6 @@ interface Props {
   checkbox?: React.ReactNode;
   button?: React.ReactNode;
 }
-
-export const PluginListEntry = ({
-  name, version, description, field, icon, children,
-}: any) => (
-  <div tw="py-5 px-6 bg-monochrome-dark100 rounded-lg">
-    <div tw="flex gap-x-4">
-      {icon}
-      <div tw="space-y-2">
-        <div tw="flex gap-x-2">
-          <Label>{name}</Label>
-          <Version>{version}</Version>
-        </div>
-        <Description>{description}</Description>
-      </div>
-    </div>
-  </div>
-);
 
 export const PluginCard = ({
   name, version, description, icon, checkbox, button,
@@ -63,6 +46,9 @@ export const PluginCard = ({
             <Version>({version})</Version>
           </div>
           <Description>{description}</Description>
+        </div>
+        <div tw="flex justify-end items-center w-full">
+          {button}
         </div>
       </div>
     </div>

@@ -22,11 +22,12 @@ export type PanelsType = "NOTIFICATIONS"
 | "SELECT_AGENT"
 | "JAVA_AGENT_REGISTRATION"
 | "OFFLINE_AGENT_PREREGISTRATION"
-| "JS_AGENT_REGISTRATION";
+| "JS_AGENT_REGISTRATION"
+| "SETTINGS"
 
 interface Panel {
   type: PanelsType;
-  payload?: any;
+  payload?: string;
 }
 
 export const PanelContext = createContext<Panel | null>(null);

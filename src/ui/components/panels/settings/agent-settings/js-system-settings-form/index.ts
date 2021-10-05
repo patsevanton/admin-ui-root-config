@@ -13,18 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import axios from "axios";
-
-export const loadPlugins = (
-  connectionTopic: string,
-  { onSuccess, onError }: { onSuccess?: () => void; onError?: (message: string) => void } = {},
-) => async (selectedPlugins: string[]) => {
-  try {
-    await Promise.all(
-      selectedPlugins.map((pluginId) => axios.post(connectionTopic, { pluginId })),
-    );
-    onSuccess && onSuccess();
-  } catch ({ response: { data: { message } = {} } = {} }) {
-    onError && onError(message as string || "Internal service error");
-  }
-};
+export { JsSystemSettingsForm } from "./js-system-settings-form";

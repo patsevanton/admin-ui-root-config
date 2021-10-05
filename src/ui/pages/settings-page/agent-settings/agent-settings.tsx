@@ -22,7 +22,6 @@ import "twin.macro";
 
 import { PageHeader } from "components";
 import { useAdminConnection } from "hooks";
-import { PluginsSettingsTab, SystemSettingsForm } from "modules";
 import { Agent } from "types/agent";
 import { getPagePath, routes } from "common";
 import { GeneralSettingsForm } from "./general-settings-form";
@@ -36,7 +35,7 @@ export const AgentSettings = () => {
   }) || {};
 
   const agent = useAdminConnection<Agent>(`/api/agents/${agentId}`) || {};
-  const SystemSettings = agent.agentType === "Node.js" ? JsSystemSettingsForm : SystemSettingsForm;
+  const SystemSettings = JsSystemSettingsForm;
 
   return (
     <div tw="flex flex-col w-full">
@@ -67,7 +66,7 @@ export const AgentSettings = () => {
         />
         <Route
           path={routes.agentPluginsSettings}
-          render={() => <PluginsSettingsTab agent={agent} />}
+          // render={() => <PluginsSettingsTab agent={agent} />}
         />
         <Route
           path={routes.agentGeneralSettings}

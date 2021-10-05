@@ -16,6 +16,7 @@
 import React from "react";
 import { JavaAgentRegistrationPanel, OfflineAgentPreregistrationPanel, JsAgentRegistrationPanel } from "./registration";
 import { SelectAgentPanel } from "./select-agent-panel";
+import { SettingsPanel } from "./settings";
 import { AddAgentPanel } from "./add-agent-panel";
 import { NotificationsPanel } from "./notifications-panel";
 import { PanelsType, usePanelContext, useSetPanelContext } from "../navigation";
@@ -28,6 +29,7 @@ const panels: Record<PanelsType, ({ isOpen, onClosePanel }: PanelProps) => JSX.E
   NOTIFICATIONS: NotificationsPanel,
   ADD_AGENT: AddAgentPanel,
   SELECT_AGENT: SelectAgentPanel,
+  SETTINGS: SettingsPanel,
 };
 
 export const Panels = () => {

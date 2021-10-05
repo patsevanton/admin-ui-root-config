@@ -99,18 +99,15 @@ export const ActionsColumn = ({ agent }: Props) => {
 
       {((status === AGENT_STATUS.ONLINE && agentType !== "ServiceGroup") ||
         (!hasOfflineAgent && !unregisteredAgentsCount && agentType === "ServiceGroup")) && (
-        <Link
-          to={agentType === "ServiceGroup"
-            ? getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId: agentId } })
-            : getPagePath({ name: "agentGeneralSettings", params: { agentId } })}
-          tw="link"
-        >
-          <Icons.Settings
-            height={16}
-            width={16}
-            data-test="action-column:icons-settings"
-          />
-        </Link>
+        <Icons.Settings
+          height={16}
+          width={16}
+          data-test="action-column:icons-settings"
+          onClick={() => setPanel({
+            type: "SETTINGS",
+            payload: agentId,
+          })}
+        />
       )}
     </div>
   );

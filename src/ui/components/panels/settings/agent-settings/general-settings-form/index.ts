@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { AddPluginsModal } from "./add-plugins-modal";
+export { GeneralSettingsForm } from "./general-settings-form";

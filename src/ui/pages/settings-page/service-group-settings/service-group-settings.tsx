@@ -21,7 +21,6 @@ import { Icons, Tab } from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { PageHeader } from "components";
-import { PluginsSettingsTab, SystemSettingsForm } from "modules";
 import { useAdminConnection } from "hooks";
 import { ServiceGroupEntity } from "types/service-group-entity";
 import { getPagePath, routes } from "common";
@@ -58,11 +57,11 @@ export const ServiceGroupSettings = () => {
       <Switch>
         <Route
           path={routes.serviceGroupSystemSettings}
-          render={() => <SystemSettingsForm agent={serviceGroup} />}
+          // render={() => <SystemSettingsForm agent={serviceGroup} />}
         />
         <Route
           path={routes.serviceGroupPluginsSettings}
-          render={() => <PluginsSettingsTab agent={serviceGroup} />}
+          // render={() => <PluginsSettingsTab agent={serviceGroup} />}
         />
         <Route
           path={routes.serviceGroupGeneralSettings}

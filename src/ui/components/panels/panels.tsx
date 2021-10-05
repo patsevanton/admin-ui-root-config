@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { JavaAgentRegistrationPanel } from "./java-agent-registration-panel";
 import { SelectAgentPanel } from "./select-agent-panel";
 import { AddAgentPanel } from "./add-agent-panel";
@@ -35,10 +36,11 @@ const panels: Record<PanelsType, ({ isOpen, onClosePanel }: PanelProps) => JSX.E
 export const Panels = () => {
   const activePanel = usePanelContext();
   const setActivePanel = useSetPanelContext();
+  const { listen } = useHistory();
 
-  useEffect(() => {
-    setActivePanel({ type: "SELECT_AGENT" });
-  }, []);
+  useEffect(() => listen(() => {
+    setActivePanel(null);
+  }), []);
 
   if (!activePanel) {
     return null;

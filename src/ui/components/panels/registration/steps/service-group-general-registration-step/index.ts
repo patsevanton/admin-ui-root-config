@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { AgentRegistrationPage } from "./agent-registration-page";
+export { ServiceGroupGeneralRegistrationStep } from "./service-group-general-registration-step";

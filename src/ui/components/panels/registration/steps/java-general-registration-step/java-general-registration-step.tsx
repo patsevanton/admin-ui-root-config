@@ -15,27 +15,13 @@
  */
 import React from "react";
 import {
-  Field, DarkFormGroup, Fields,
+  Field, DarkFormGroup, Fields, DisabledFormGroup,
 } from "@drill4j/ui-kit";
-
 import "twin.macro";
 
-export const JsGeneralRegistrationForm = () => (
+export const JavaGeneralRegistrationStep = () => (
   <div tw="space-y-8">
-    <div tw="space-y-6 p-6 border border-monochrome-dark rounded">
-      <div>
-        <div tw="text-12 leading-24 text-monochrome-dark-tint font-bold">AGENT ID</div>
-        <Field name="id">
-          {({ field }: any) => <div tw="text-12 leading-24 text-monochrome-light-tint">{field?.value}</div>}
-        </Field>
-      </div>
-      <div>
-        <div tw="text-14 leading-24 text-monochrome-dark-tint">TYPE</div>
-        <Field name="agentType">
-          {({ field }: any) => <div tw="text-12 leading-24 text-monochrome-light-tint">{field?.value}</div>}
-        </Field>
-      </div>
-    </div>
+    <DisabledFormGroup fields={["id", "agentType"]} />
     <DarkFormGroup label="Agent name">
       <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
     </DarkFormGroup>

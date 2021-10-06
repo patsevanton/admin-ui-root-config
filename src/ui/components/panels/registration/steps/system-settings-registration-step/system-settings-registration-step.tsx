@@ -25,7 +25,7 @@ import {
 
 import "twin.macro";
 
-export const SystemSettingsStep = () => (
+export const SystemSettingsRegistrationStep = () => (
   <div tw="flex flex-col items-center">
     <div tw="w-97 space-y-6">
       <div tw="space-y-2">

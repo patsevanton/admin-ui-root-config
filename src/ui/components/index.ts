@@ -34,3 +34,4 @@ export {
   Panels, useSetPanelContext, usePanelContext, PanelProvider, PanelContext, SetPanelContext,
 } from "./panels";
 export { NoAgentsRegisteredStub, NoAgentSelectedStub } from "./stubs";
+export { Breadcrumbs } from "./breadcrumbs";

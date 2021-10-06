@@ -22,8 +22,8 @@ import { TOKEN_KEY } from "common/constants";
 import { Notification } from "types/notificaiton";
 import { useAdminConnection } from "hooks";
 import { getPagePath } from "common";
-import { Breadcrumbs } from "modules";
 import { useQueryParams } from "@drill4j/common-hooks";
+import { Breadcrumbs } from "components";
 import { NotificationsSidebar } from "./notifications-sidebar";
 
 const NOTIFICATION_SIDEBAR = "NOTIFICATION_SIDEBAR";

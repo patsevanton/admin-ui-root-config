@@ -13,11 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { Breadcrumbs } from "./breadcrumbs";
-export { CancelAgentRegistrationModal } from "./cancel-agent-registration-modal";
-export { InstallPluginsStep } from "./install-plugins-step";
-export { SystemSettingsStep } from "./system-setting-step";
-export { JavaGeneralRegistrationForm } from "./java-general-registration-form";
-export { JsGeneralRegistrationForm } from "./js-general-registration-form";
-export { JsSystemRegistrationForm } from "./js-system-registration-form";
-export { OfflineAgentGeneralRegistrationStep } from "./offline-agent-general-registration-step";
+export { SystemSettingsRegistrationStep } from "./system-settings-registration-step";

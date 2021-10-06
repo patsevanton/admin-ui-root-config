@@ -20,9 +20,9 @@ import {
 import "twin.macro";
 
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
-import { CancelAgentRegistrationModal } from "modules";
+import { CancelAgentRegistrationModal } from "../cancel-agent-registration-modal";
 import { StepLabel } from "./step-label";
-import { PanelWithCloseIcon } from "../panel-with-close-icon";
+import { PanelWithCloseIcon } from "../../panel-with-close-icon";
 
 interface Step {
   stepLabel: string;
@@ -90,7 +90,7 @@ export const Stepper = ({
         validateOnMount
       >
         {({ isValid }) => (
-          <Form>
+          <Form autoComplete="off">
             <PanelWithCloseIcon
               header={(
                 <div tw="space-y-8 pt-6 pb-4">

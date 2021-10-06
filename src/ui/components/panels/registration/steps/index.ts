@@ -13,4 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { JavaGeneralRegistrationForm } from "./java-general-registration-form";
+export { InstallPluginsStep } from "./install-plugins-step";
+export { SystemSettingsRegistrationStep } from "./system-settings-registration-step";
+export { OfflineAgentGeneralRegistrationStep } from "./offline-agent-general-registration-step";
+export { JavaGeneralRegistrationStep } from "./java-general-registration-step";
+export { JsGeneralRegistrationStep } from "./js-general-registration-step";
+export { JsSystemSettingsRegistrationStep } from "./js-system-settings-registration-step";

@@ -13,28 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import {
-  Field, Tooltip, Icons, Fields, DarkFormGroup,
-} from "@drill4j/ui-kit";
-
-import "twin.macro";
-
-export const JsSystemRegistrationForm = () => (
-  <DarkFormGroup
-    label={(
-      <div tw="flex gap-x-2 items-center">
-        Target Host
-        <Tooltip message="Specify URL where your application is located">
-          <Icons.Info />
-        </Tooltip>
-      </div>
-    )}
-  >
-    <Field
-      name="systemSettings.targetHost"
-      component={Fields.DarkInput}
-      placeholder="http(s)://example.com"
-    />
-  </DarkFormGroup>
-);
+export { JsGeneralRegistrationStep } from "./js-general-registration-step";

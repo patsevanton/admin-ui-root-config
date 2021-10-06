@@ -20,13 +20,13 @@ import {
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import {
-  SystemSettingsStep, InstallPluginsStep, JavaGeneralRegistrationForm,
-} from "modules";
 import { useAgent } from "hooks";
 import { Agent } from "types";
+import {
+  SystemSettingsRegistrationStep, InstallPluginsStep, JavaGeneralRegistrationStep,
+} from "./steps";
 import { PanelProps } from "../panel-props";
-import { Stepper } from "../stepper";
+import { Stepper } from "./stepper";
 
 export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
   const agent = useAgent(payload);
@@ -52,7 +52,7 @@ export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: Pa
             sizeLimit({ name: "environment" }),
             sizeLimit({ name: "description", min: 3, max: 256 }),
           ),
-          component: <JavaGeneralRegistrationForm />,
+          component: <JavaGeneralRegistrationStep />,
         },
         {
           stepLabel: "System Settings",
@@ -63,7 +63,7 @@ export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: Pa
             max: 256,
           }),
           requiredArray("systemSettings.packages", "Path prefix is required.")),
-          component: <SystemSettingsStep />,
+          component: <SystemSettingsRegistrationStep />,
         },
         {
           stepLabel: "Plugins",

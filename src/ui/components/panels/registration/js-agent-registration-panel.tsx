@@ -20,13 +20,13 @@ import {
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import {
-  JsSystemRegistrationForm, InstallPluginsStep, JsGeneralRegistrationForm,
-} from "modules";
 import { useAgent } from "hooks";
 import { Agent } from "types";
+import {
+  JsSystemSettingsRegistrationStep, InstallPluginsStep, JsGeneralRegistrationStep,
+} from "./steps";
 import { PanelProps } from "../panel-props";
-import { Stepper } from "../stepper";
+import { Stepper } from "./stepper";
 
 export const JsAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
   const agent = useAgent(payload);
@@ -46,14 +46,14 @@ export const JsAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: Pane
             sizeLimit({ name: "environment" }),
             sizeLimit({ name: "description", min: 3, max: 256 }),
           ),
-          component: <JsGeneralRegistrationForm />,
+          component: <JsGeneralRegistrationStep />,
         },
         {
           stepLabel: "System Settings",
           validationSchema: composeValidators(
             required("systemSettings.targetHost", "Target Host"),
           ),
-          component: <JsSystemRegistrationForm />,
+          component: <JsSystemSettingsRegistrationStep />,
         },
         {
           stepLabel: "Plugins",

@@ -15,7 +15,7 @@
  */
 import React from "react";
 import {
-  Field, DarkFormGroup, Fields,
+  Field, DarkFormGroup, Fields, Inputs,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
@@ -28,23 +28,8 @@ export const OfflineAgentGeneralRegistrationStep = () => (
       <Field name="id" component={Fields.DarkInput} placeholder="Enter agent's name" />
     </DarkFormGroup>
     <DarkFormGroup label="Agent Type">
-      <Field
-        name="agentType"
-        as="select"
-        placeholder="Select Agent type"
-        tw="
-    appearance-none
-    w-[400px] h-10 px-4
-    box-border outline-none
-    font-regular text-14 leading-24 text-monochrome-medium-tint
-    bg-monochrome-black border rounded border-monochrome-dark
-    placeholder-monochrome-dark
-    focus:border-monochrome-white
-    "
-      >
-        <option tw="bg-red-default rounded border-monochrome-dark" value="red">Red</option>
-        <option value="green">Green</option>
-        <option tw="border rounded border-monochrome-dark" value="blue">Blue</option>
+      <Field name="agentType">
+        {(props: any) => <Inputs.Select options={["Java", "Node.js", ".Net"]} placeholder="Select Agent type" {...props} />}
       </Field>
     </DarkFormGroup>
     <DarkFormGroup label="Description" optional>

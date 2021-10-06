@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { ServiceGroupGeneralRegistrationForm } from "./service-group-general-registration-form";
+export { JavaGeneralRegistrationStep } from "./java-general-registration-step";

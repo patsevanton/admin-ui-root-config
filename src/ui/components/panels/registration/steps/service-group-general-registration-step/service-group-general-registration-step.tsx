@@ -24,7 +24,7 @@ const HEADERS_HEIGHT = 275;
 
 const Content = styled.div`height: calc(100vh - ${HEADERS_HEIGHT}px);`;
 
-export const ServiceGroupGeneralRegistrationForm = () => (
+export const ServiceGroupGeneralRegistrationStep = () => (
   <>
     <GeneralAlerts type="INFO">
       Set up basic Service Group settings.

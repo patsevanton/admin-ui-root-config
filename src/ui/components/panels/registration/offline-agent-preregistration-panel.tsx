@@ -20,12 +20,12 @@ import {
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import {
-  SystemSettingsStep, InstallPluginsStep, OfflineAgentGeneralRegistrationStep,
-} from "modules";
 import { Agent } from "types";
+import {
+  SystemSettingsRegistrationStep, InstallPluginsStep, OfflineAgentGeneralRegistrationStep,
+} from "./steps";
+import { Stepper } from "./stepper";
 import { PanelProps } from "../panel-props";
-import { Stepper } from "../stepper";
 
 export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => (
   <Stepper
@@ -64,7 +64,7 @@ export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: Panel
           max: 256,
         }),
         requiredArray("systemSettings.packages", "Path prefix is required.")),
-        component: <SystemSettingsStep />,
+        component: <SystemSettingsRegistrationStep />,
       },
       {
         stepLabel: "Plugins",
@@ -89,11 +89,12 @@ async function preregisterOfflineAgent({
   description,
   plugins,
   systemSettings,
+  agentType,
 }: Agent) {
   await axios.post("/agents", {
     id,
     name,
-    agentType: "JAVA",
+    agentType,
     environment,
     description,
     plugins,

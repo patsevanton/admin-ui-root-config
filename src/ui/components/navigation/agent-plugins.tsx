@@ -18,19 +18,21 @@ import { Icons } from "@drill4j/ui-kit";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import "twin.macro";
 
-import { useRouteParams, useAgent } from "hooks";
+import { useAgent, useRouteParams } from "hooks";
 import { getPagePath, routes } from "common";
 import { CubeWithTooltip } from "../cubes";
 
 export const AgentPlugins = () => {
-  const { agentId, buildVersion } = useRouteParams();
+  const { agentId, buildVersion, groupId } = useRouteParams();
   const { pathname } = useLocation();
   const { params: { pluginId: selectedPluginId = "" } = {} } = matchPath<{
     pluginId?: string; }>(pathname, { path: routes.agentPlugin }) || {};
   const { plugins = [] } = useAgent(agentId);
-  if (!agentId) {
-    return <div />;
+
+  if (!agentId && !groupId) {
+    return null;
   }
+
   return (
     <div tw="py-4 rounded bg-[#2F2D2F]">
       {plugins.map(({ name = "", id = "" }) => {

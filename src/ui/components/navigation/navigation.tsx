@@ -18,10 +18,10 @@ import { Icons } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
 
 import { SelectAgent } from "./select-agent";
-import { SelectedAgent } from "./selected-agent";
 import { AgentPlugins } from "./agent-plugins";
 import { Notifications } from "./notifications";
 import { Logout } from "./logout";
+import { SelectedEntity } from "./selected-entity";
 
 export const Navigation = () => (
   <div tw="flex flex-col w-12 h-full px-[6px] bg-monochrome-black">
@@ -30,7 +30,7 @@ export const Navigation = () => (
     </div>
     <ActionsWrapper>
       <SelectAgent />
-      <SelectedAgent />
+      <SelectedEntity />
       <AgentPlugins />
       <Notifications />
       <Logout />

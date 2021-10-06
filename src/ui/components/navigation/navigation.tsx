@@ -18,7 +18,7 @@ import { Icons } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
 
 import { SelectAgent } from "./select-agent";
-import { AgentPlugins } from "./agent-plugins";
+import { PluginsSelector } from "./plugins-selector";
 import { Notifications } from "./notifications";
 import { Logout } from "./logout";
 import { SelectedEntity } from "./selected-entity";
@@ -31,7 +31,7 @@ export const Navigation = () => (
     <ActionsWrapper>
       <SelectAgent />
       <SelectedEntity />
-      <AgentPlugins />
+      <PluginsSelector />
       <Notifications />
       <Logout />
     </ActionsWrapper>

@@ -140,7 +140,7 @@ export const Wizard = ({
                       data-test="wizard:finishng-button"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? <Spinner disabled /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
+                      {isSubmitting ? <Spinner /> : <Icons.Check height={10} width={14} viewBox="0 0 14 10" />}
                       <span>Finish</span>
                     </Button>
                   )}

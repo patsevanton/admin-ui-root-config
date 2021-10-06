@@ -144,7 +144,7 @@ export const SystemSettingsForm = ({ agent }: Props) => {
                   disabled={isSubmitting || !isValid || !dirty}
                   data-test="system-settings-form:save-changes-button"
                 >
-                  {isSubmitting ? <Spinner disabled /> : "Save Changes"}
+                  {isSubmitting ? <Spinner /> : "Save Changes"}
                 </Button>
               </div>
               <UnlockingSystemSettingsFormModal

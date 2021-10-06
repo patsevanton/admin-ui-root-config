@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Icons } from "@drill4j/ui-kit";
-import { CubeWithTooltip } from "../cubes";
-
-export const Logout = () => (
-  <CubeWithTooltip tooltip="Log Out">
-    <Icons.Logout />
-  </CubeWithTooltip>
-);
+export const convertAgentName = (name: string) => {
+  const convertedName = name.split(" ").map((word) => word[0]);
+  if (convertedName.length === 1) {
+    return name.slice(0, 2);
+  }
+  return `${convertedName[0]}${convertedName[1]}`;
+};

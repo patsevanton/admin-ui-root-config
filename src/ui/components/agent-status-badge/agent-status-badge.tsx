@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import React from "react";
+import "twin.macro";
 import { Icons } from "@drill4j/ui-kit";
-import { CubeWithTooltip } from "../cubes";
 
-export const Logout = () => (
-  <CubeWithTooltip tooltip="Log Out">
-    <Icons.Logout />
-  </CubeWithTooltip>
+export const AgentStatusBadge = () => (
+  <div tw="flex items-center justify-center w-3 h-3 rounded-full bg-green-default">
+    <Icons.Check width={6} height={6} />
+  </div>
 );

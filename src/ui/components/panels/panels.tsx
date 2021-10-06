@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { JavaAgentRegistrationPanel, OfflineAgentPreregistrationPanel, JsAgentRegistrationPanel } from "./registration";
 import { SelectAgentPanel } from "./select-agent-panel";
 import { SettingsPanel } from "./settings";
@@ -35,6 +36,11 @@ const panels: Record<PanelsType, ({ isOpen, onClosePanel }: PanelProps) => JSX.E
 export const Panels = () => {
   const activePanel = usePanelContext();
   const setActivePanel = useSetPanelContext();
+  const { listen } = useHistory();
+
+  useEffect(() => listen(() => {
+    setActivePanel(null);
+  }), []);
 
   if (!activePanel) {
     return null;

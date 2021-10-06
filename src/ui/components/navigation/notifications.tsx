@@ -15,7 +15,7 @@
  */
 import React from "react";
 import { Icons } from "@drill4j/ui-kit";
-import { ActionBlock } from "./action-block";
+import { CubeWithTooltip } from "../cubes";
 import { usePanelContext, useSetPanelContext } from "./panel-context";
 
 export const Notifications = () => {
@@ -23,12 +23,12 @@ export const Notifications = () => {
   const activePane = usePanelContext();
 
   return (
-    <ActionBlock
+    <CubeWithTooltip
       tooltip="Notifications"
       isActive={activePane?.type === "NOTIFICATIONS"}
       onClick={() => openModal({ type: "NOTIFICATIONS" })}
     >
       <Icons.Notification />
-    </ActionBlock>
+    </CubeWithTooltip>
   );
 };

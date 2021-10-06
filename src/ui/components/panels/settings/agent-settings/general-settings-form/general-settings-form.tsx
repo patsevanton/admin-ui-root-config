@@ -97,7 +97,7 @@ export const GeneralSettingsForm = ({ agent }: Props) => (
           disabled={isSubmitting || !isValid || !dirty}
           data-test="general-settings-form:save-changes-button"
         >
-          {isSubmitting ? <Spinner disabled /> : "Save Changes"}
+          {isSubmitting ? <Spinner /> : "Save Changes"}
         </Button>
         <UnSaveChangeModal />
       </Form>

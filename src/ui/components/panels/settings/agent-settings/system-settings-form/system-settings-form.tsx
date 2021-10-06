@@ -16,7 +16,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import {
-  Icons, Tooltip, DarkFormGroup, Spinner, Button, composeValidators, Fields, requiredArray, sizeLimit,
+  Icons, DarkFormGroup, Spinner, Button, composeValidators, Fields, requiredArray, sizeLimit,
   Formik, Field, Form,
   dotsAndSlashesToSlash, formatPackages, parsePackages,
 } from "@drill4j/ui-kit";
@@ -118,7 +118,7 @@ export const SystemSettingsForm = ({ agent }: Props) => {
             disabled={isSubmitting || !isValid || !dirty}
             data-test="system-settings-form:save-changes-button"
           >
-            {isSubmitting ? <Spinner disabled /> : "Save Changes"}
+            {isSubmitting ? <Spinner /> : "Save Changes"}
           </Button>
           <UnSaveChangeModal />
         </Form>

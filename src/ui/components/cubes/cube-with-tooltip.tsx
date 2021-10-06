@@ -18,23 +18,24 @@ import { Tooltip } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
 
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
   children: React.ReactNode;
   tooltip: string;
   onClick?: () => void;
 }
 
-export const ActionBlock = ({
+export const CubeWithTooltip = ({
   isActive, children, tooltip, onClick,
 }: Props) => (
   <Tooltip message={tooltip} position="right">
-    <Wrapper isActive={isActive} onClick={onClick}>
+    <Cube isActive={isActive} onClick={onClick}>
       {children}
-    </Wrapper>
+    </Cube>
   </Tooltip>
 );
 
-const Wrapper = styled.div(({ isActive }: {isActive: boolean}) => [
+export const Cube = styled.div(({ isActive }: {isActive?: boolean}) => [
   tw`flex justify-center items-center w-9 h-9 rounded text-monochrome-white cursor-pointer`,
-  isActive ? tw`bg-blue-default` : tw`bg-transparent hover:(bg-monochrome-white bg-opacity-10)`,
+  tw`bg-transparent hover:(bg-monochrome-white bg-opacity-10)`,
+  isActive && tw`bg-blue-default hover:bg-blue-default`,
 ]);

@@ -16,7 +16,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Badge, Icons, Spinner } from "@drill4j/ui-kit";
-import tw, { styled } from "twin.macro";
+import "twin.macro";
 
 import { convertAgentName } from "utils";
 import { useAdminConnection, useRouteParams } from "hooks";
@@ -24,10 +24,13 @@ import {
   Agent, ServiceGroup,
 } from "types";
 import { AGENT_STATUS, getPagePath } from "common";
-import { Panel } from "./panel";
-import { PanelProps } from "./panel-props";
-import { Cube } from "../cubes";
-import { AgentStatusBadge } from "../agent-status-badge";
+import { Panel } from "../panel";
+import { PanelProps } from "../panel-props";
+import { AgentStatusBadge } from "../../agent-status-badge";
+import {
+  ColumnWithMargin, CubeWrapper, GroupExpanderLayout, Layout, NameColumn, Row, AgentRow as StyledAgentRow, GroupAgentRow,
+} from "./elements";
+import { useSetPanelContext } from "../panel-context";
 
 export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
@@ -57,23 +60,32 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   );
 };
 
-const AgentRow = ({
-  name = "", description = "", agentType = "", status, id = "", group, buildVersion = "", agentVersion,
-}: Agent) => {
+const AgentRow = (props: Agent) => {
+  const {
+    name = "", description = "", agentType = "", status, id = "", group, buildVersion = "", agentVersion,
+  } = props;
   const { agentId } = useRouteParams();
   const { push } = useHistory();
+  const setPanel = useSetPanelContext();
   const isPreregisteredAgent = agentType === "Java" && !agentVersion;
   const isRegistering = status === AGENT_STATUS.REGISTERING;
   const isSelectedAgent = agentId === id;
 
+  if (isRegistering) {
+    return <RegisteringAgentRow {...props} />;
+  }
+
+  if (isPreregisteredAgent) {
+    return <PreregisteredAgentRow {...props} />;
+  }
+
+  const Wrapper = group ? GroupAgentRow : StyledAgentRow;
+
   return (
-    <Row
+    <Wrapper
       selected={isSelectedAgent}
-      isGroupAgent={Boolean(group)}
-      isRegistering={isRegistering}
-      isPreregisteredAgent={isPreregisteredAgent}
       onClick={() => {
-        if (!String(window.getSelection()) && !isPreregisteredAgent && !isRegistering) {
+        if (!String(window.getSelection())) {
           push(getPagePath({
             name: "agentDashboard",
             params: { agentId: id, buildVersion },
@@ -82,30 +94,23 @@ const AgentRow = ({
       }}
     >
       <Badge color="green" bold tw="opacity-0">NEW</Badge>
-      {isRegistering
-        ? <div tw="flex justify-center items-center"><Spinner /></div>
-        : <CubeWrapper tw="ml-2" isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>}
-      <ColumnWithMargin tw="flex gap-x-1 items-center text-monochrome-medium-tint text-opacity-[inherit]" title={name}>
+      <CubeWrapper tw="ml-2" isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>
+      <NameColumn title={name}>
         <AgentStatusBadge status={status} />
-        <span>
-          {isRegistering && "Registering: "}
-          {isPreregisteredAgent && "Preregistered "}
-          {name}
-        </span>
-      </ColumnWithMargin>
+        <span>{name}</span>
+      </NameColumn>
       <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
       <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
-      {!isRegistering && (
-        <Icons.Settings
-          width={16}
-          height={16}
-          onClick={((event: any) => {
-            event?.stopPropagation();
-          }) as any}
-          tw="text-monochrome-white cursor-pointer"
-        />
-      )}
-    </Row>
+      <Icons.Settings
+        width={16}
+        height={16}
+        onClick={((event: any) => {
+          event?.stopPropagation();
+          setPanel({ type: "SETTINGS", payload: id });
+        }) as any}
+        tw="text-monochrome-white cursor-pointer"
+      />
+    </Wrapper>
   );
 };
 
@@ -118,6 +123,7 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
   const [isOpen, setIsOpen] = useState(false);
   const { groupId } = useRouteParams();
   const { push } = useHistory();
+  const setPanel = useSetPanelContext();
   const isSelectedGroup = groupId === id;
 
   return (
@@ -147,7 +153,7 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
             height={16}
           />
         </div>
-        <CubeWrapper tw="ml-2" isActive={isSelectedGroup} title={groupName}>{convertAgentName(groupName)}</CubeWrapper>
+        <CubeWrapper isActive={isSelectedGroup} title={groupName}>{convertAgentName(groupName)}</CubeWrapper>
         <ColumnWithMargin tw="text-monochrome-medium-tint" title={groupName}>{groupName}</ColumnWithMargin>
         <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
         <ColumnWithMargin title="Multiservice">Multiservice</ColumnWithMargin>
@@ -157,6 +163,7 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
           tw="text-monochrome-white cursor-pointer"
           onClick={((event: any) => {
             event?.stopPropagation();
+            setPanel({ type: "SETTINGS", payload: id });
           }) as any}
         />
       </GroupExpanderLayout>
@@ -165,30 +172,43 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
   );
 };
 
-const Layout = styled.div`
-  ${tw`grid items-center grid-cols-[28px 44px 3fr 4fr 112px 16px] h-[60px] px-4`}
-`;
+const PreregisteredAgentRow = ({
+  id, name = "", status, description, agentType,
+}: Agent) => {
+  const setPanel = useSetPanelContext();
 
-const Row = styled(Layout)(({
-  selected, isGroupAgent, isRegistering, isPreregisteredAgent,
-}:{ selected?: boolean; isGroupAgent?: boolean; isRegistering?: boolean; isPreregisteredAgent?: boolean }) => [
-  tw`rounded-lg bg-monochrome-dark100 box-border border border-monochrome-dark100 text-monochrome-dark-tint`,
-  !isRegistering && !isPreregisteredAgent && tw`hover:(border border-blue-default border-opacity-50)`,
-  isGroupAgent && tw`bg-monochrome-black100 border-monochrome-black100`,
-  selected && tw`border-blue-default border-opacity-100 hover:(border-blue-default border-opacity-100)`,
-  isRegistering && tw`text-opacity-40`,
-  isPreregisteredAgent && tw`bg-monochrome-black text-opacity-40`,
-]);
+  return (
+    <Row tw="bg-monochrome-black text-opacity-40">
+      <CubeWrapper tw="col-start-2">{convertAgentName(name)}</CubeWrapper>
+      <NameColumn title={name}>
+        <AgentStatusBadge status={status} />
+        <span>Preregistered {name}</span>
+      </NameColumn>
+      <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
+      <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
+      <Icons.Settings
+        width={16}
+        height={16}
+        onClick={((event: any) => {
+          event?.stopPropagation();
+          setPanel({ type: "SETTINGS", payload: id });
+        }) as any}
+        tw="text-monochrome-white cursor-pointer"
+      />
+    </Row>
+  );
+};
 
-const GroupExpanderLayout = styled(Row)(({ isOpen }: {isOpen: boolean}) => [
-  isOpen && tw`rounded-br-none rounded-bl-none`,
-]);
-
-const CubeWrapper = styled(Cube)`
-  ${tw`text-monochrome-medium-tint cursor-default`}
-  ${({ isActive }) => !isActive && tw`bg-monochrome-dark hover:bg-monochrome-dark`}
-`;
-
-const ColumnWithMargin = styled.div`
-  ${tw`mx-3 text-ellipsis`}
-`;
+const RegisteringAgentRow = ({
+  name = "", status, description, agentType,
+}: Agent) => (
+  <Row tw="text-opacity-40">
+    <div tw="flex justify-center items-center"><Spinner /></div>
+    <NameColumn title={name}>
+      <AgentStatusBadge status={status} />
+      <span>Registering: {name}</span>
+    </NameColumn>
+    <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
+    <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
+  </Row>
+);

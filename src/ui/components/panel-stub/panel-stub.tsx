@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import "twin.macro";
+import tw, { styled } from "twin.macro";
 
 interface Props {
   icon: React.ReactNode;
@@ -22,20 +22,26 @@ interface Props {
   message: React.ReactNode;
 }
 
-export const Stub = ({ icon, title, message }: Props) => (
-  <div tw="flex flex-col justify-center items-center w-full h-full flex-grow text-monochrome-medium-tint py-10">
-    {icon}
-    <div
-      tw="mt-4 mb-2 text-20 leading-32 text-monochrome-default"
-      data-test="stub:title"
-    >
-      {title}
-    </div>
-    <div
-      tw="mt-2 text-14 leading-20 text-monochrome-default text-center"
-      data-test="stub:message"
-    >
-      {message}
-    </div>
-  </div>
+export const PanelStub = ({ icon, title, message }: Props) => (
+  <Content>
+    <React.Fragment key="stub-icon">{ icon }</React.Fragment>
+    <Title data-test="stub:title">
+      { title }
+    </Title>
+    <Message data-test="stub:message">
+      { message }
+    </Message>
+  </Content>
 );
+
+const Content = styled.div`
+  ${tw`flex flex-col flex-grow py-10 px-0 justify-center items-center w-full h-full text-monochrome-dark-tint`};
+`;
+
+const Title = styled.div`
+  ${tw`mt-4 mb-2 text-20 leading-32`};
+`;
+
+const Message = styled.div`
+  ${tw`text-14 leading-20 text-center`};
+`;

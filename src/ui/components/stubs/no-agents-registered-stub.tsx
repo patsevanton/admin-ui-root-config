@@ -18,13 +18,13 @@ import { Button, Icons, Stub } from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { useSetPanelContext } from "../panels";
-import NoAgentsSvg from "./no-agents.svg";
+import { NoAgentsSvg } from "./no-agents-svg";
 
 export const NoAgentsRegisteredStub = () => {
   const setPanel = useSetPanelContext();
   return (
     <Stub
-      icon={<img src={NoAgentsSvg} alt="" />}
+      icon={<NoAgentsSvg />}
       title="No registered agents at the moment"
       message={(
         <>

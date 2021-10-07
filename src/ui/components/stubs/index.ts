@@ -15,3 +15,4 @@
  */
 export { NoAgentSelectedStub } from "./no-agent-selected-stub";
 export { NoAgentsRegisteredStub } from "./no-agents-registered-stub";
+export { NoAgentsSvg } from "./no-agents-svg";

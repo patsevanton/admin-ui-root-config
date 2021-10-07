@@ -17,14 +17,14 @@ import React from "react";
 import { Button, Stub } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import NoAgentsSvg from "./no-agents.svg";
 import { useSetPanelContext } from "../panels";
+import { NoAgentsSvg } from "./no-agents-svg";
 
 export const NoAgentSelectedStub = () => {
   const setPanel = useSetPanelContext();
   return (
     <Stub
-      icon={<img src={NoAgentsSvg} alt="" />}
+      icon={<NoAgentsSvg />}
       title="No Agent selected"
       message={(
         <>

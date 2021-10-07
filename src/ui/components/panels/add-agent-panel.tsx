@@ -23,16 +23,17 @@ import { AGENT_STATUS } from "common";
 import { PanelProps } from "./panel-props";
 import { PanelWithCloseIcon } from "./panel-with-close-icon";
 import { useSetPanelContext } from "./panel-context";
+import { PanelStub } from "../panel-stub";
 
 export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
   const groupsList = useAdminConnection<ServiceGroup[]>("/api/groups") || [];
   const setPanel = useSetPanelContext();
-  const agents = agentsList.filter((agent) => !agent.group && agent.status === AGENT_STATUS.NOT_REGISTERED);
-  const groupsAgents = agentsList.filter((agent) => agent.group && agent.status === AGENT_STATUS.NOT_REGISTERED);
+  const notRegisteredAgents = agentsList.filter((agent) => !agent.group && agent.status === AGENT_STATUS.NOT_REGISTERED);
+  const notRegisteredGroupsAgents = agentsList.filter((agent) => agent.group && agent.status === AGENT_STATUS.NOT_REGISTERED);
   const groups = groupsList.map((group) => ({
     group,
-    agents: groupsAgents.filter((agent) => group.name === agent.group),
+    agents: notRegisteredGroupsAgents.filter((agent) => group.name === agent.group),
   }));
 
   return (
@@ -51,15 +52,37 @@ export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
       isOpen={isOpen}
       onClosePanel={onClosePanel}
     >
-      <Layout tw="text-monochrome-dark font-bold text-14 leading-24">
-        <Column tw="col-start-2">Name</Column>
-        <Column tw="col-start-3">Type</Column>
-      </Layout>
-      <div tw="flex flex-col gap-y-[6px] overflow-y-auto text-monochrome-dark-tint">
-        {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
-          && <GroupRow key={group?.id} group={group} agents={groupAgents} />)}
-        {agents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
-      </div>
+      {notRegisteredAgents.length || notRegisteredGroupsAgents.length ? (
+        <>
+          <Layout tw="text-monochrome-dark font-bold text-14 leading-24">
+            <Column tw="col-start-2">Name</Column>
+            <Column tw="col-start-3">Type</Column>
+          </Layout>
+          <div tw="flex flex-col gap-y-[6px] overflow-y-auto text-monochrome-dark-tint">
+            {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
+            && <GroupRow key={group?.id} group={group} agents={groupAgents} />)}
+            {notRegisteredAgents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
+          </div>
+        </>
+      ) : (
+        <PanelStub
+          icon={<Icons.Register width={80} height={70} />}
+          title="There are no agents to register"
+          message={(
+            <span>
+              Run your application with Drill4J Agent using&nbsp;
+              <a
+                tw="text-blue-default font-semibold"
+                href="https://drill4j.github.io/how-to-start/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                this guide <Icons.OpenInNewTab tw="inline" />
+              </a>
+            </span>
+          )}
+        />
+      )}
     </PanelWithCloseIcon>
   );
 };

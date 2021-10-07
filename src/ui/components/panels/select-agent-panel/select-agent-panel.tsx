@@ -21,6 +21,7 @@ import {
 import "twin.macro";
 
 import { convertAgentName } from "utils";
+import { AgentStatusBadge, NoAgentsSvg, PanelStub } from "components";
 import { useAdminConnection, useRouteParams } from "hooks";
 import {
   Agent, ServiceGroup,
@@ -28,7 +29,6 @@ import {
 import { AGENT_STATUS, getPagePath } from "common";
 import { Panel } from "../panel";
 import { PanelProps } from "../panel-props";
-import { AgentStatusBadge } from "../../agent-status-badge";
 import {
   Column, CubeWrapper, GroupRow as StyledGroupRow, Layout, NameColumn, Row, AgentRow as StyledAgentRow, GroupAgentRow,
 } from "./elements";
@@ -48,7 +48,7 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   return (
     <Panel
       header={(
-        <div tw="flex justify-between items-center h-21">
+        <div tw="w-[1024px] flex justify-between items-center h-21">
           Select Agent
           <Button onClick={() => setPanel({ type: "ADD_AGENT" })} secondary size="small"><Icons.Plus /> Add Agent</Button>
         </div>
@@ -56,18 +56,39 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
       isOpen={isOpen}
       onClosePanel={onClosePanel}
     >
-      <div tw="w-[1024px] text-monochrome-medium-tint text-14 leading-20">
-        <Layout tw="text-monochrome-dark font-bold leading-24">
-          <Column tw="col-start-3">Name</Column>
-          <Column tw="col-start-4">Description</Column>
-          <Column tw="col-start-5">Type</Column>
-        </Layout>
-        <div tw="flex flex-col gap-y-[6px] overflow-y-auto">
-          {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
+      {agents.length || groupsAgents.length ? (
+        <div tw="text-monochrome-medium-tint text-14 leading-20">
+          <Layout tw="text-monochrome-dark font-bold leading-24">
+            <Column tw="col-start-3">Name</Column>
+            <Column tw="col-start-4">Description</Column>
+            <Column tw="col-start-5">Type</Column>
+          </Layout>
+          <div tw="flex flex-col gap-y-[6px] overflow-y-auto">
+            {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
             && <GroupRow key={group?.id} group={group} agents={groupAgents} />)}
-          {agents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
+            {agents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
+          </div>
         </div>
-      </div>
+      ) : (
+        <PanelStub
+          icon={<NoAgentsSvg />}
+          title="No registered agents at the moment"
+          message={(
+            <span>
+              Run your application with Drill4J Agent using&nbsp;
+              <a
+                tw="text-blue-default font-semibold"
+                href="https://drill4j.github.io/how-to-start/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                this guide <Icons.OpenInNewTab tw="inline" />
+              </a>
+              &nbsp;and add it.
+            </span>
+          )}
+        />
+      )}
     </Panel>
   );
 };

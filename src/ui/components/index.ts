@@ -16,7 +16,7 @@
 export { HUD } from "./hud";
 export { PrivateRoute } from "./private-route";
 export { PageHeader } from "./page-header";
-export { Stub } from "./stub";
+export { PanelStub } from "./panel-stub";
 export {
   TableErrorFallback,
   PageNotFoundErrorFallback,
@@ -33,5 +33,6 @@ export {
 export {
   Panels, useSetPanelContext, usePanelContext, PanelProvider, PanelContext, SetPanelContext,
 } from "./panels";
-export { NoAgentsRegisteredStub, NoAgentSelectedStub } from "./stubs";
+export { NoAgentsRegisteredStub, NoAgentSelectedStub, NoAgentsSvg } from "./stubs";
 export { Breadcrumbs } from "./breadcrumbs";
+export { AgentStatusBadge } from "./agent-status-badge";

@@ -22,15 +22,14 @@ import { usePanelContext, useSetPanelContext } from "../panels";
 export const SelectAgent = () => {
   const setPanel = useSetPanelContext();
   const activePanel = usePanelContext();
-  const { groupId, agentId } = useRouteParams();
+  const { groupId } = useRouteParams();
   return (
     <CubeWithTooltip
       tooltip="Select Agent"
       isActive={activePanel?.type === "SELECT_AGENT"}
       onClick={() => setPanel({ type: "SELECT_AGENT" })}
     >
-      {groupId && <Icons.ServiceGroup />}
-      {agentId && <Icons.Agent /> }
+      {groupId ? <Icons.ServiceGroup /> : <Icons.Agent />}
     </CubeWithTooltip>
   );
 };

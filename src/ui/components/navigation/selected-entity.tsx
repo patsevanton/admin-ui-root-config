@@ -14,30 +14,39 @@
  * limitations under the License.
  */
 import React from "react";
-import { Tooltip } from "@drill4j/ui-kit";
 import { Link } from "react-router-dom";
 import "twin.macro";
 
-import { useRouteParams } from "hooks/use-route-params";
-import { useAgent } from "hooks";
+import { useAgent, useGroup, useRouteParams } from "hooks";
 import { getPagePath } from "common";
 import { convertAgentName } from "utils";
 import { CubeWithTooltip } from "../cubes";
 
-export const SelectedAgent = () => {
-  const { agentId } = useRouteParams();
-  const { name = "", buildVersion = "" } = useAgent(agentId);
+export const SelectedEntity = () => {
+  const { agentId, groupId } = useRouteParams();
 
-  if (!agentId) {
-    return (
-      <Tooltip message="No Agent selected" position="right">
-        <span tw="flex justify-center items-center w-9 h-9 text-14 text-monochrome-medium-tint text-opacity-40">––</span>
-      </Tooltip>
-    );
+  if (!agentId && !groupId) {
+    return <div />; // need that layout can display correct
   }
 
+  return agentId ? <SelectedAgent /> : <SelectedGroup />;
+};
+
+const SelectedAgent = () => {
+  const { name = "", id = "", buildVersion = "" } = useAgent();
   return (
-    <Link to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } })}>
+    <Link to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
+      <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
+        {convertAgentName(name)}
+      </CubeWithTooltip>
+    </Link>
+  );
+};
+
+const SelectedGroup = () => {
+  const { name = "", id = "" } = useGroup();
+  return (
+    <Link to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
       <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
       </CubeWithTooltip>

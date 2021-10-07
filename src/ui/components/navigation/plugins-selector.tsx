@@ -18,27 +18,35 @@ import { Icons } from "@drill4j/ui-kit";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import "twin.macro";
 
-import { useRouteParams, useAgent } from "hooks";
+import {
+  useAdminConnection, useRouteParams,
+} from "hooks";
 import { getPagePath, routes } from "common";
+import { Plugin } from "types";
 import { CubeWithTooltip } from "../cubes";
 
-export const AgentPlugins = () => {
-  const { agentId, buildVersion } = useRouteParams();
+export const PluginsSelector = () => {
+  const { agentId, groupId, buildVersion } = useRouteParams();
+  const plugins = useAdminConnection<Plugin[]>(agentId ? `/agents/${agentId}/plugins` : `/groups/${groupId}/plugins`) || [];
   const { pathname } = useLocation();
   const { params: { pluginId: selectedPluginId = "" } = {} } = matchPath<{
-    pluginId?: string; }>(pathname, { path: routes.agentPlugin }) || {};
-  const { plugins = [] } = useAgent(agentId);
-  if (!agentId) {
-    return <div />;
+    pluginId?: string; }>(pathname, { path: [routes.agentPlugin, routes.serviceGroupPlugin] }) || {};
+
+  if (!agentId && !groupId) {
+    return <div />; // need that layout can display correct
   }
+
   return (
     <div tw="py-4 rounded bg-[#2F2D2F]">
-      {plugins.map(({ name = "", id = "" }) => {
+      {plugins.map(({ name = "", id: pluginId = "" }) => {
         const Icon = Icons[name as keyof typeof Icons];
+        const pageObject = agentId
+          ? { name: "agentPlugin", params: { agentId, buildVersion, pluginId } }
+          : { name: "serviceGroupPlugin", params: { groupId, pluginId } };
 
         return (
-          <Link to={getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: id } })}>
-            <CubeWithTooltip tooltip={name} isActive={selectedPluginId === id}>
+          <Link to={getPagePath(pageObject as any)}>
+            <CubeWithTooltip tooltip={name} isActive={selectedPluginId === pluginId}>
               <Icon width={24} height={24} />
             </CubeWithTooltip>
           </Link>

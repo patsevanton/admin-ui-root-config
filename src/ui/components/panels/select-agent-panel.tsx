@@ -73,7 +73,7 @@ const AgentRow = ({
       isRegistering={isRegistering}
       isPreregisteredAgent={isPreregisteredAgent}
       onClick={() => {
-        if (!String(window.getSelection())) {
+        if (!String(window.getSelection()) && !isPreregisteredAgent && !isRegistering) {
           push(getPagePath({
             name: "agentDashboard",
             params: { agentId: id, buildVersion },

@@ -45,7 +45,7 @@ export const CubeWrapper = styled(Cube)`
 `;
 
 export const Column = styled.div`
-  ${tw`mx-3 text-ellipsis`}
+  ${tw`px-3 text-ellipsis`}
 `;
 
 export const NameColumn = styled(Column)`

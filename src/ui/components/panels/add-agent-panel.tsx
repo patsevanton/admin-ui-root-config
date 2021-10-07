@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 import React, { useState } from "react";
+import { Button, LinkButton, Icons } from "@drill4j/ui-kit";
 import tw, { styled } from "twin.macro";
-import { Button, Icons } from "@drill4j/ui-kit";
-import { PanelWithCloseIcon } from "./panel-with-close-icon";
+
+import { useAdminConnection } from "hooks";
+import { Agent, ServiceGroup } from "types";
+import { AGENT_STATUS } from "common";
 import { PanelProps } from "./panel-props";
-import { useAdminConnection } from "../../hooks";
-import { Agent, ServiceGroup } from "../../types";
-import { AGENT_STATUS } from "../../common";
+import { PanelWithCloseIcon } from "./panel-with-close-icon";
 import { useSetPanelContext } from "./panel-context";
 
 export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
   const groupsList = useAdminConnection<ServiceGroup[]>("/api/groups") || [];
+  const setPanel = useSetPanelContext();
   const agents = agentsList.filter((agent) => !agent.group && agent.status === AGENT_STATUS.NOT_REGISTERED);
   const groupsAgents = agentsList.filter((agent) => agent.group && agent.status === AGENT_STATUS.NOT_REGISTERED);
   const groups = groupsList.map((group) => ({
@@ -34,7 +36,21 @@ export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   }));
 
   return (
-    <PanelWithCloseIcon header={<div tw="w-[1024px] flex items-center h-20">Add Agent</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
+    <PanelWithCloseIcon
+      header={(
+        <div tw="w-[1024px] flex justify-between items-center h-20">
+          Add Agent
+          <LinkButton
+            tw="text-14 leading-24"
+            onClick={() => setPanel({ type: "OFFLINE_AGENT_PREREGISTRATION" })}
+          >
+            <Icons.Register /> Preregister Agent
+          </LinkButton>
+        </div>
+      )}
+      isOpen={isOpen}
+      onClosePanel={onClosePanel}
+    >
       <Layout tw="text-monochrome-dark font-bold text-14 leading-24">
         <Column tw="col-start-2">Name</Column>
         <Column tw="col-start-3">Type</Column>
@@ -52,14 +68,6 @@ interface GroupRowProps {
   agents: Agent[];
   group: ServiceGroup;
 }
-
-const Layout = styled.div`
-  ${tw`grid items-center grid-cols-[28px 3fr 1fr 104px] h-[60px] px-4`}
-`;
-
-const Column = styled.div`
-  ${tw`px-3 text-ellipsis`}
-`;
 
 const GroupRow = ({ group: { name }, agents }:GroupRowProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -118,8 +126,17 @@ const GroupAgentRow = ({ id, name, agentType }:Agent) => {
         onClick={() => setPanel({ type: agentType === "Java" ? "JAVA_AGENT_REGISTRATION" : "JS_AGENT_REGISTRATION", payload: id })}
         secondary
         size="small"
-      ><Icons.Register width={16} height={16} /> Register
+      >
+        <Icons.Register width={16} height={16} /> Register
       </Button>
     </Layout>
   );
 };
+
+const Layout = styled.div`
+  ${tw`grid items-center grid-cols-[28px 3fr 1fr 104px] h-[60px] px-4`}
+`;
+
+const Column = styled.div`
+  ${tw`px-3 text-ellipsis`}
+`;

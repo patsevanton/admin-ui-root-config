@@ -15,7 +15,9 @@
  */
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Badge, Icons, Spinner } from "@drill4j/ui-kit";
+import {
+  Badge, Icons, Spinner, Button,
+} from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { convertAgentName } from "utils";
@@ -35,6 +37,7 @@ import { useSetPanelContext } from "../panel-context";
 export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
   const groupsList = useAdminConnection<ServiceGroup[]>("/api/groups") || [];
+  const setPanel = useSetPanelContext();
   const agents = agentsList.filter((agent) => !agent.group && agent.status !== AGENT_STATUS.NOT_REGISTERED);
   const groupsAgents = agentsList.filter((agent) => agent.group && agent.status !== AGENT_STATUS.NOT_REGISTERED);
   const groups = groupsList.map((group) => ({
@@ -43,7 +46,16 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   }));
 
   return (
-    <Panel header={<div tw="flex items-center h-21">Select Agent</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
+    <Panel
+      header={(
+        <div tw="flex justify-between items-center h-21">
+          Select Agent
+          <Button onClick={() => setPanel({ type: "ADD_AGENT" })} secondary size="small"><Icons.Plus /> Add Agent</Button>
+        </div>
+      )}
+      isOpen={isOpen}
+      onClosePanel={onClosePanel}
+    >
       <div tw="w-[1024px] text-monochrome-medium-tint text-14 leading-20">
         <Layout tw="text-monochrome-dark font-bold leading-24">
           <Column tw="col-start-3">Name</Column>

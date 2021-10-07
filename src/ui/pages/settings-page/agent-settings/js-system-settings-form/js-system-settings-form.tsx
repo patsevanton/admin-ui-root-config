@@ -26,7 +26,6 @@ import "twin.macro";
 
 import { Agent } from "types/agent";
 import { routes } from "common";
-import { UnSaveChangeModal } from "pages/settings-page/un-save-changes-modal";
 
 interface Props {
   agent: Agent;
@@ -88,7 +87,6 @@ export const JsSystemSettingsForm = ({ agent }: Props) => {
               </Button>
             </div>
           </div>
-          <UnSaveChangeModal />
         </Form>
       )}
     </Formik>

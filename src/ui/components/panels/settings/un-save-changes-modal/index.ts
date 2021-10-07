@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { UnSaveChangeModal } from "./un-save-changes-modal";
+export { UnSaveChangesModal } from "./un-save-changes-modal";

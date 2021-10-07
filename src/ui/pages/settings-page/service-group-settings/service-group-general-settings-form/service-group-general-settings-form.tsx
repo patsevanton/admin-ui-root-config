@@ -29,7 +29,6 @@ import "twin.macro";
 import { ServiceGroupEntity } from "types/service-group-entity";
 
 import { routes } from "common";
-import { UnSaveChangeModal } from "pages/settings-page/un-save-changes-modal";
 
 interface Props {
   serviceGroup: ServiceGroupEntity;
@@ -115,7 +114,6 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
               </div>
             </div>
           </div>
-          <UnSaveChangeModal />
         </Form>
       )}
     </Formik>

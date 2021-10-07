@@ -35,7 +35,7 @@ export const GroupAgentRow = styled(AgentRow)(({ selected }:{ selected?: boolean
   selected && tw`border-blue-default border-opacity-100`,
 ]);
 
-export const GroupExpanderLayout = styled(AgentRow)(({ isOpen }: { isOpen: boolean; }) => [
+export const GroupRow = styled(AgentRow)(({ isOpen }: { isOpen: boolean; }) => [
   isOpen && tw`rounded-br-none rounded-bl-none`,
 ]);
 
@@ -44,10 +44,10 @@ export const CubeWrapper = styled(Cube)`
   ${({ isActive }) => !isActive && tw`bg-monochrome-dark hover:bg-monochrome-dark`}
 `;
 
-export const ColumnWithMargin = styled.div`
+export const Column = styled.div`
   ${tw`mx-3 text-ellipsis`}
 `;
 
-export const NameColumn = styled(ColumnWithMargin)`
+export const NameColumn = styled(Column)`
   ${tw`flex gap-x-1 items-center text-monochrome-medium-tint text-opacity-[inherit]`}
 `;

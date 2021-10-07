@@ -28,7 +28,7 @@ import { Panel } from "../panel";
 import { PanelProps } from "../panel-props";
 import { AgentStatusBadge } from "../../agent-status-badge";
 import {
-  ColumnWithMargin, CubeWrapper, GroupExpanderLayout, Layout, NameColumn, Row, AgentRow as StyledAgentRow, GroupAgentRow,
+  Column, CubeWrapper, GroupRow as StyledGroupRow, Layout, NameColumn, Row, AgentRow as StyledAgentRow, GroupAgentRow,
 } from "./elements";
 import { useSetPanelContext } from "../panel-context";
 
@@ -46,9 +46,9 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
     <Panel header={<div tw="flex items-center h-21">Select Agent</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
       <div tw="w-[1024px] text-monochrome-medium-tint text-14 leading-20">
         <Layout tw="text-monochrome-dark font-bold leading-24">
-          <ColumnWithMargin tw="col-start-3">Name</ColumnWithMargin>
-          <ColumnWithMargin tw="col-start-4">Description</ColumnWithMargin>
-          <ColumnWithMargin tw="col-start-5">Type</ColumnWithMargin>
+          <Column tw="col-start-3">Name</Column>
+          <Column tw="col-start-4">Description</Column>
+          <Column tw="col-start-5">Type</Column>
         </Layout>
         <div tw="flex flex-col gap-y-[6px] overflow-y-auto">
           {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
@@ -71,13 +71,9 @@ const AgentRow = (props: Agent) => {
   const isRegistering = status === AGENT_STATUS.REGISTERING;
   const isSelectedAgent = agentId === id;
 
-  if (isRegistering) {
-    return <RegisteringAgentRow {...props} />;
-  }
+  if (isRegistering) return <RegisteringAgentRow {...props} />;
 
-  if (isPreregisteredAgent) {
-    return <PreregisteredAgentRow {...props} />;
-  }
+  if (isPreregisteredAgent) return <PreregisteredAgentRow {...props} />;
 
   const Wrapper = group ? GroupAgentRow : StyledAgentRow;
 
@@ -94,13 +90,13 @@ const AgentRow = (props: Agent) => {
       }}
     >
       <Badge color="green" bold tw="opacity-0">NEW</Badge>
-      <CubeWrapper tw="ml-2" isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>
+      <CubeWrapper isActive={isSelectedAgent}>{convertAgentName(name)}</CubeWrapper>
       <NameColumn title={name}>
         <AgentStatusBadge status={status} />
         <span>{name}</span>
       </NameColumn>
-      <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
-      <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
+      <Column title={description}>{description}</Column>
+      <Column title={agentType}>{agentType}</Column>
       <Icons.Settings
         width={16}
         height={16}
@@ -128,7 +124,7 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
 
   return (
     <div tw="rounded-lg bg-monochrome-black100">
-      <GroupExpanderLayout
+      <StyledGroupRow
         selected={isSelectedGroup}
         isOpen={isOpen}
         onClick={() => {
@@ -154,9 +150,9 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
           />
         </div>
         <CubeWrapper isActive={isSelectedGroup} title={groupName}>{convertAgentName(groupName)}</CubeWrapper>
-        <ColumnWithMargin tw="text-monochrome-medium-tint" title={groupName}>{groupName}</ColumnWithMargin>
-        <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
-        <ColumnWithMargin title="Multiservice">Multiservice</ColumnWithMargin>
+        <Column tw="text-monochrome-medium-tint" title={groupName}>{groupName}</Column>
+        <Column title={description}>{description}</Column>
+        <Column title="Multiservice">Multiservice</Column>
         <Icons.Settings
           width={16}
           height={16}
@@ -166,7 +162,7 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
             setPanel({ type: "SETTINGS", payload: id });
           }) as any}
         />
-      </GroupExpanderLayout>
+      </StyledGroupRow>
       {isOpen && agents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
     </div>
   );
@@ -184,8 +180,8 @@ const PreregisteredAgentRow = ({
         <AgentStatusBadge status={status} />
         <span>Preregistered {name}</span>
       </NameColumn>
-      <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
-      <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
+      <Column title={description}>{description}</Column>
+      <Column title={agentType}>{agentType}</Column>
       <Icons.Settings
         width={16}
         height={16}
@@ -208,7 +204,7 @@ const RegisteringAgentRow = ({
       <AgentStatusBadge status={status} />
       <span>Registering: {name}</span>
     </NameColumn>
-    <ColumnWithMargin title={description}>{description}</ColumnWithMargin>
-    <ColumnWithMargin title={agentType}>{agentType}</ColumnWithMargin>
+    <Column title={description}>{description}</Column>
+    <Column title={agentType}>{agentType}</Column>
   </Row>
 );

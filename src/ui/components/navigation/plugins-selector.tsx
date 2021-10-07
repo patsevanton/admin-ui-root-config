@@ -33,7 +33,7 @@ export const PluginsSelector = () => {
     pluginId?: string; }>(pathname, { path: [routes.agentPlugin, routes.serviceGroupPlugin] }) || {};
 
   if (!agentId && !groupId) {
-    return null;
+    return <div />; // need that layout can display correct
   }
 
   return (

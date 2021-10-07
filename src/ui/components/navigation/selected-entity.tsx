@@ -26,7 +26,7 @@ export const SelectedEntity = () => {
   const { agentId, groupId } = useRouteParams();
 
   if (!agentId && !groupId) {
-    return null;
+    return <div />; // need that layout can display correct
   }
 
   return agentId ? <SelectedAgent /> : <SelectedGroup />;

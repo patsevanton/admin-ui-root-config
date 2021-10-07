@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import {
-  Icons, Button, Tooltip, DarkFormGroup, Fields, Field,
+  Icons, Button, Tooltip,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { AGENT_STATUS } from "common/constants";
 import { ServiceGroupEntity } from "types/service-group-entity";
 import { Agent } from "types/agent";
-import { getPagePath } from "common";
 import { useSetPanelContext } from "components";
 
 interface ServiceGroup extends ServiceGroupEntity {

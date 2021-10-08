@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from "react";
-import { Panel } from "./panel";
-import { PanelProps } from "./panel-props";
+import axios from "axios";
 
-export const NotificationsPanel = ({ isOpen, onClosePanel }: PanelProps) => (
-  <Panel header={<div>Notifications</div>} isOpen={isOpen} onClosePanel={onClosePanel}>
-    <div style={{ width: "400px" }} />
-  </Panel>
-);
+export async function readAllNotifications({
+  onSuccess,
+  onError,
+}: { onSuccess?: () => void; onError?: (message: string) => void } = {}) {
+  try {
+    await axios.patch("/notifications/read");
+    onSuccess && onSuccess();
+  } catch ({ response: { data: { message } = {} } = {} }) {
+    onError &&
+      onError(
+        message as string || "There is some issue with your action. Please try again.",
+      );
+  }
+}

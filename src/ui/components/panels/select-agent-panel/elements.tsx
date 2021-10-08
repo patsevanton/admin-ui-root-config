@@ -50,4 +50,8 @@ export const Column = styled.div`
 
 export const NameColumn = styled(Column)`
   ${tw`flex gap-x-1 items-center text-monochrome-medium-tint text-opacity-[inherit]`}
+  
+  & > svg {
+    ${tw`text-transparent`}
+  }
 `;

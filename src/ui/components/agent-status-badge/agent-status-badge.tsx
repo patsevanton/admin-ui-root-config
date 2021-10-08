@@ -51,7 +51,7 @@ export const AgentStatusBadge = ({ status }: Props) => {
 
 const Wrapper: React.FC = ({ children }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <rect width="16" height="16" rx="8" fill="#2F2D2F" />
+    <rect width="16" height="16" rx="8" fill="currentColor" />
     {children}
   </svg>
 );

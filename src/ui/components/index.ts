@@ -22,7 +22,6 @@ export {
   PageNotFoundErrorFallback,
   ErrorFallback,
 } from "./error-fallback";
-export { Toolbar } from "./toolbar";
 export { Footer } from "./footer";
 export { Sidebar, SidebarLink } from "./sidebar";
 export { PluginCard } from "./plugin-list-entry";

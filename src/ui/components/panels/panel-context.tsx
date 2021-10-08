@@ -43,7 +43,7 @@ export function useSetPanelContext() {
 }
 
 export const PanelProvider = ({ children }: {children: React.ReactNode}) => {
-  const [selectedPanel, setSelectedPanel] = useState<Panel | null>({ type: "NOTIFICATIONS" });
+  const [selectedPanel, setSelectedPanel] = useState<Panel | null>(null);
 
   return (
     <PanelContext.Provider value={selectedPanel}>

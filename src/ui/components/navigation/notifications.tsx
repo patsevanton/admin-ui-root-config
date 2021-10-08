@@ -15,12 +15,19 @@
  */
 import React from "react";
 import { Icons } from "@drill4j/ui-kit";
+import { useAdminConnection } from "hooks";
+import { Notification as NotificationType } from "types";
+import "twin.macro";
+
 import { CubeWithTooltip } from "../cubes";
 import { usePanelContext, useSetPanelContext } from "../panels";
+import { IndicatorInEdge } from "../indicator-in-edge";
 
 export const Notifications = () => {
   const openModal = useSetPanelContext();
   const activePane = usePanelContext();
+  const notifications = useAdminConnection<NotificationType[]>("/notifications") || [];
+  const hasUnreadNotification = notifications.some((notification) => !notification.read);
 
   return (
     <CubeWithTooltip
@@ -28,7 +35,16 @@ export const Notifications = () => {
       isActive={activePane?.type === "NOTIFICATIONS"}
       onClick={() => openModal({ type: "NOTIFICATIONS" })}
     >
-      <Icons.Notification />
+      <div tw="text-monochrome-black">
+        <IndicatorInEdge
+          position="top-right"
+          isHidden={!hasUnreadNotification}
+          indicatorContent={<div tw="rounded-lg w-2 h-2 bg-blue-default" />}
+          style={{ top: "4px", right: "3px" }}
+        >
+          <Icons.Notification tw="text-monochrome-white" />
+        </IndicatorInEdge>
+      </div>
     </CubeWithTooltip>
   );
 };

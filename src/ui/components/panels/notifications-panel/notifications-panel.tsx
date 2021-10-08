@@ -31,7 +31,12 @@ export const NotificationsPanel = ({ isOpen, onClosePanel }: PanelProps) => {
 
   return (
     <PanelWithCloseIcon
-      header={<div tw="w-[400px] flex justify-between items-center h-20">Notifications</div>}
+      header={(
+        <div tw="w-[400px] flex justify-between items-center h-20">
+          <span>Notifications</span>
+          <span tw="text-monochrome-gray">{notifications.length}</span>
+        </div>
+      )}
       isOpen={isOpen}
       onClosePanel={onClosePanel}
     >

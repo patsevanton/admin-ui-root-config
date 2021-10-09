@@ -103,7 +103,7 @@ const Content = styled.div`
 `;
 
 const BuildVersion = styled.div(({ unread }: { unread?: boolean }) => [
-  tw`grid grid-cols-[288px 48px] gap-4 leading-20 text-monochrome-light-tint text-14`,
+  tw`grid grid-cols-[336px 48px] gap-4 leading-20 text-monochrome-light-tint text-14`,
   unread && tw`font-bold`,
 ]);
 

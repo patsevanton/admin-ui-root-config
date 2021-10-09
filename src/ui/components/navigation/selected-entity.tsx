@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import "twin.macro";
 
 import { useAgent, useGroup, useRouteParams } from "hooks";
-import { getPagePath } from "common";
+import { getPagePath, routes } from "common";
 import { convertAgentName } from "utils";
 import { IndicatorInEdge } from "components/indicator-in-edge";
 import { CubeWithTooltip } from "../cubes";
@@ -38,6 +38,8 @@ const SelectedAgent = () => {
   const {
     name = "", id = "", buildVersion = "", status,
   } = useAgent();
+  const { pathname } = useLocation();
+  const { isExact } = matchPath(pathname, { path: routes.agentDashboard }) || {};
   return (
     <Link to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
       <IndicatorInEdge
@@ -46,7 +48,7 @@ const SelectedAgent = () => {
         indicatorContent={<AgentStatusBadge status={status} />}
         style={{ bottom: "3px", right: "3px" }}
       >
-        <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
+        <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
           {convertAgentName(name)}
         </CubeWithTooltip>
       </IndicatorInEdge>
@@ -56,9 +58,11 @@ const SelectedAgent = () => {
 
 const SelectedGroup = () => {
   const { name = "", id = "" } = useGroup();
+  const { pathname } = useLocation();
+  const { isExact } = matchPath(pathname, { path: routes.serviceGroupDashboard }) || {};
   return (
     <Link to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
-      <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
+      <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
       </CubeWithTooltip>
     </Link>

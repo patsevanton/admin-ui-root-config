@@ -41,7 +41,7 @@ const SelectedAgent = () => {
   const { pathname } = useLocation();
   const { isExact } = matchPath(pathname, { path: routes.agentDashboard }) || {};
   return (
-    <Link to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
+    <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
       <IndicatorInEdge
         isHidden={false}
         position="bottom-right"
@@ -61,7 +61,7 @@ const SelectedGroup = () => {
   const { pathname } = useLocation();
   const { isExact } = matchPath(pathname, { path: routes.serviceGroupDashboard }) || {};
   return (
-    <Link to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
+    <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
       <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
       </CubeWithTooltip>

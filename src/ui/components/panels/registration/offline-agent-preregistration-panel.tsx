@@ -26,61 +26,69 @@ import {
 } from "./steps";
 import { Stepper } from "./stepper";
 import { PanelProps } from "../panel-props";
+import { useSetPanelContext } from "../panel-context";
 
-export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => (
-  <Stepper
-    label={(
-      <div tw="space-y-2">
-        <div>Agent Preregistration</div>
-        <div tw="text-14 leading-24 text-monochrome-dark-tint">
-          Preconfiguration for background instrumentation until the Agent syncs with the Drill4j Admin.
+export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => {
+  const setPanel = useSetPanelContext();
+
+  return (
+    <Stepper
+      label={(
+        <div tw="space-y-2">
+          <div>Agent Preregistration</div>
+          <div tw="text-14 leading-24 text-monochrome-dark-tint">
+            Preconfiguration for background instrumentation until the Agent syncs with the Drill4j Admin.
+          </div>
         </div>
-      </div>
-    )}
-    onSubmit={preregisterOfflineAgent}
-    onSuccessMessage="Agent has been registered"
-    steps={[
-      {
-        stepLabel: "General Info",
-        validationSchema: composeValidators(
-          idValidator("id", "Agent ID"),
-          required("id"),
-          sizeLimit({
-            name: "id", alias: "Agent ID", min: 3, max: 32,
+      )}
+      onSubmit={(values) => {
+        setPanel({ type: "SELECT_AGENT" });
+        return preregisterOfflineAgent(values);
+      }}
+      onSuccessMessage="Agent has been registered"
+      steps={[
+        {
+          stepLabel: "General Info",
+          validationSchema: composeValidators(
+            idValidator("id", "Agent ID"),
+            required("id"),
+            sizeLimit({
+              name: "id", alias: "Agent ID", min: 3, max: 32,
+            }),
+            required("name"),
+            sizeLimit({ name: "name" }),
+            sizeLimit({ name: "environment" }),
+            sizeLimit({ name: "description", min: 3, max: 256 }),
+          ),
+          component: <OfflineAgentGeneralRegistrationStep />,
+        },
+        {
+          stepLabel: "System Settings",
+          validationSchema: composeValidators(sizeLimit({
+            name: "systemSettings.sessionIdHeaderName",
+            alias: "Session header name",
+            min: 1,
+            max: 256,
           }),
-          required("name"),
-          sizeLimit({ name: "name" }),
-          sizeLimit({ name: "environment" }),
-          sizeLimit({ name: "description", min: 3, max: 256 }),
-        ),
-        component: <OfflineAgentGeneralRegistrationStep />,
-      },
-      {
-        stepLabel: "System Settings",
-        validationSchema: composeValidators(sizeLimit({
-          name: "systemSettings.sessionIdHeaderName",
-          alias: "Session header name",
-          min: 1,
-          max: 256,
-        }),
-        requiredArray("systemSettings.packages", "Path prefix is required.")),
-        component: <SystemSettingsRegistrationStep />,
-      },
-      {
-        stepLabel: "Plugins",
-        validationSchema: composeValidators(
-          required("name"),
-          sizeLimit({ name: "name" }),
-          sizeLimit({ name: "environment" }),
-          sizeLimit({ name: "description", min: 3, max: 256 }),
-        ),
-        component: <InstallPluginsStep />,
-      },
-    ]}
-    isOpen={isOpen}
-    setIsOpen={onClosePanel}
-  />
-);
+          requiredArray("systemSettings.packages", "Path prefix is required.")),
+          component: <SystemSettingsRegistrationStep />,
+        },
+        {
+          stepLabel: "Plugins",
+          validationSchema: composeValidators(
+            required("name"),
+            sizeLimit({ name: "name" }),
+            sizeLimit({ name: "environment" }),
+            sizeLimit({ name: "description", min: 3, max: 256 }),
+          ),
+          component: <InstallPluginsStep />,
+        },
+      ]}
+      isOpen={isOpen}
+      setIsOpen={onClosePanel}
+    />
+  );
+};
 
 async function preregisterOfflineAgent({
   id,

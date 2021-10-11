@@ -54,12 +54,12 @@ export const SettingsPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => 
         ...agent,
         systemSettings: {
           ...agent.systemSettings,
-          packages: Array.isArray(agent.systemSettings?.packages)
+          packages: (Array.isArray(agent.systemSettings?.packages)
             ? formatPackages(agent.systemSettings?.packages)
-            : agent.systemSettings?.packages,
+            : agent.systemSettings?.packages) as any,
         },
       }}
-      validate={getTabValidationSchema(activeTab)}
+      validate={getTabValidationSchema(activeTab) as any}
       enableReinitialize
     >
       {({

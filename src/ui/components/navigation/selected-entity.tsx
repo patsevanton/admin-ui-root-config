@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import "twin.macro";
 
 import { useAgent, useGroup, useRouteParams } from "hooks";
-import { getPagePath } from "common";
+import { getPagePath, routes } from "common";
 import { convertAgentName } from "utils";
+import { IndicatorInEdge } from "components/indicator-in-edge";
 import { CubeWithTooltip } from "../cubes";
+import { AgentStatusBadge } from "../agent-status-badge";
 
 export const SelectedEntity = () => {
   const { agentId, groupId } = useRouteParams();
@@ -33,21 +35,34 @@ export const SelectedEntity = () => {
 };
 
 const SelectedAgent = () => {
-  const { name = "", id = "", buildVersion = "" } = useAgent();
+  const {
+    name = "", id = "", buildVersion = "", status,
+  } = useAgent();
+  const { pathname } = useLocation();
+  const { isExact } = matchPath(pathname, { path: routes.agentDashboard }) || {};
   return (
-    <Link to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
-      <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
-        {convertAgentName(name)}
-      </CubeWithTooltip>
+    <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
+      <IndicatorInEdge
+        isHidden={false}
+        position="bottom-right"
+        indicatorContent={<AgentStatusBadge status={status} />}
+        style={{ bottom: "3px", right: "3px" }}
+      >
+        <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
+          {convertAgentName(name)}
+        </CubeWithTooltip>
+      </IndicatorInEdge>
     </Link>
   );
 };
 
 const SelectedGroup = () => {
   const { name = "", id = "" } = useGroup();
+  const { pathname } = useLocation();
+  const { isExact } = matchPath(pathname, { path: routes.serviceGroupDashboard }) || {};
   return (
-    <Link to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
-      <CubeWithTooltip tooltip={name} isActive tw="text-14 text-monochrome-medium-tint">
+    <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
+      <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
       </CubeWithTooltip>
     </Link>

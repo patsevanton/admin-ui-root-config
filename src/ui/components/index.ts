@@ -22,7 +22,6 @@ export {
   PageNotFoundErrorFallback,
   ErrorFallback,
 } from "./error-fallback";
-export { Toolbar } from "./toolbar";
 export { Footer } from "./footer";
 export { Sidebar, SidebarLink } from "./sidebar";
 export { PluginCard } from "./plugin-list-entry";
@@ -36,3 +35,4 @@ export {
 export { NoAgentsRegisteredStub, NoAgentSelectedStub, NoAgentsSvg } from "./stubs";
 export { Breadcrumbs } from "./breadcrumbs";
 export { AgentStatusBadge } from "./agent-status-badge";
+export { IndicatorInEdge } from "./indicator-in-edge";

@@ -16,34 +16,38 @@
 import React from "react";
 import { Button, Popup } from "@drill4j/ui-kit";
 import "twin.macro";
+import { useSetPanelContext } from "components";
 
 interface Props {
   isOpen: boolean;
   onToggle: (value: boolean) => void;
 }
 
-export const CancelAgentRegistrationModal = ({ isOpen, onToggle }: Props) => (
-  <Popup
-    isOpen={isOpen}
-    onToggle={onToggle}
-    header="Cancel Registration"
-    closeOnFadeClick
-  >
-    <div tw="w-108">
-      <div tw="mx-6 mb-6 mt-4">
-        <div tw="text-14 pr-24">
-          Are you sure you want to cancel the registration?
-          All your progress will be lost.
-        </div>
-        <div tw="flex mt-6 gap-4">
-          <Button primary size="large" onClick={() => onToggle(false)}>
-            No, Continue
-          </Button>
-          <Button secondary size="large" onClick={() => onToggle(false)}>
-            Yes, Cancel
-          </Button>
+export const CancelAgentRegistrationModal = ({ isOpen, onToggle }: Props) => {
+  const setPanel = useSetPanelContext();
+  return (
+    <Popup
+      isOpen={isOpen}
+      onToggle={onToggle}
+      header="Cancel Registration"
+      closeOnFadeClick
+    >
+      <div tw="w-108">
+        <div tw="mx-6 mb-6 mt-4">
+          <div tw="text-14 pr-24">
+            Are you sure you want to cancel the registration?
+            All your progress will be lost.
+          </div>
+          <div tw="flex mt-6 gap-4">
+            <Button primary size="large" onClick={() => onToggle(false)}>
+              No, Continue
+            </Button>
+            <Button secondary size="large" onClick={() => setPanel({ type: "ADD_AGENT" })}>
+              Yes, Cancel
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
-  </Popup>
-);
+    </Popup>
+  );
+};

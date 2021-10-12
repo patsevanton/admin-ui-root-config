@@ -97,7 +97,7 @@ async function preregisterOfflineAgent({
   description,
   plugins,
   systemSettings,
-  agentType,
+  agentType = "Java",
 }: Agent) {
   await axios.post("/agents", {
     id,

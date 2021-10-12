@@ -27,21 +27,15 @@ import {
 } from "./steps";
 import { PanelProps } from "../panel-props";
 import { Stepper } from "./stepper";
-import { useSetPanelContext } from "../panel-context";
 
 export const JsAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
   const agent = useAgent(payload);
-  const setPanel = useSetPanelContext();
 
   return (
     <Stepper
       label="Agent Registration"
       initialValues={Object.keys(agent).length && agent}
-      onSubmit={(values) => {
-        setPanel({ type: "SELECT_AGENT" });
-        return registerAgent(values);
-      }}
-      onSuccessMessage="Agent has been registered"
+      onSubmit={registerAgent}
       steps={[
         {
           stepLabel: "General Info",

@@ -20,6 +20,7 @@ import {
 import "twin.macro";
 
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
+import { useSetPanelContext } from "components";
 import { CancelAgentRegistrationModal } from "../cancel-agent-registration-modal";
 import { StepLabel } from "./step-label";
 import { PanelWithCloseIcon } from "../../panel-with-close-icon";
@@ -35,7 +36,6 @@ interface Props {
   steps: Step[];
   initialValues?: any;
   onSubmit: (val: Record<string, unknown>) => Promise<void>;
-  onSuccessMessage: string;
   isOpen?: any;
   setIsOpen?: any;
 }
@@ -45,10 +45,10 @@ export const Stepper = ({
   steps,
   initialValues = {},
   onSubmit,
-  onSuccessMessage,
   isOpen,
   setIsOpen,
 }: Props) => {
+  const setPanel = useSetPanelContext();
   const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
   const isLastStep = steps.length - 1;
@@ -75,10 +75,10 @@ export const Stepper = ({
     <>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values: any) => {
+        onSubmit={(values: any) => {
           try {
-            await onSubmit(values);
-            sendNotificationEvent({ type: "SUCCESS", text: onSuccessMessage });
+            onSubmit(values);
+            setPanel({ type: "SELECT_AGENT" });
           } catch (e) {
             sendNotificationEvent({
               type: "ERROR",
@@ -96,7 +96,7 @@ export const Stepper = ({
                 <div tw="space-y-8 pt-6 pb-4">
                   <div tw="flex justify-between">
                     {label}
-                    <Button secondary size="large" onClick={() => setIsCancelModalOpened(true)}>
+                    <Button secondary size="large" type="button" onClick={() => setIsCancelModalOpened(true)}>
                       Return to List
                     </Button>
                   </div>

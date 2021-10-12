@@ -27,11 +27,9 @@ import {
 } from "./steps";
 import { PanelProps } from "../panel-props";
 import { Stepper } from "./stepper";
-import { useSetPanelContext } from "../panel-context";
 
 export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
   const agent = useAgent(payload);
-  const setPanel = useSetPanelContext();
 
   return (
     <Stepper
@@ -43,11 +41,7 @@ export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: Pa
           packages: formatPackages(agent.systemSettings?.packages),
         },
       } : null}
-      onSubmit={(values) => {
-        setPanel({ type: "SELECT_AGENT" });
-        return registerAgent(values);
-      }}
-      onSuccessMessage="Agent has been registered"
+      onSubmit={registerAgent}
       steps={[
         {
           stepLabel: "General Info",

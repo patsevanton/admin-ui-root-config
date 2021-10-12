@@ -35,7 +35,7 @@ export const CubeWithTooltip = ({
 );
 
 export const Cube = styled.div(({ isActive }: {isActive?: boolean}) => [
-  tw`flex justify-center items-center w-9 h-9 rounded text-monochrome-white cursor-pointer`,
+  tw`flex justify-center items-center w-9 h-9 rounded text-monochrome-white cursor-pointer uppercase`,
   tw`bg-transparent hover:(bg-monochrome-white bg-opacity-10)`,
   isActive && tw`bg-blue-default hover:bg-blue-default`,
 ]);

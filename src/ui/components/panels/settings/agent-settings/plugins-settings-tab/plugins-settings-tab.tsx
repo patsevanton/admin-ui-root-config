@@ -72,7 +72,7 @@ export const PluginsSettingsTab = ({ agent }: Props) => {
             )
             : (
               <Link
-                to={getPagePath({ name: "agentPlugin", params: { agentId, buildVersion, pluginId: id } })}
+                to={getPagePath({ name: "agentPlugin", params: { agentId, pluginId: id } })}
                 tw="link"
               >
                 Go to Plugin

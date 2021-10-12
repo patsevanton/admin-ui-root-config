@@ -52,7 +52,7 @@ export const LoginPage = () => {
 
   useLayoutEffect(() => {
     if (localStorage.getItem(TOKEN_KEY)) {
-      push(routes.agentsTable);
+      push("/");
     }
   }, []);
 

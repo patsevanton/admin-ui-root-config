@@ -96,7 +96,7 @@ export const NameColumn = ({
           to={
             isServiceGroup
               ? getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })
-              : getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })
+              : getPagePath({ name: "agentDashboard", params: { agentId: id } })
           }
           disabled={agentIsDisabled}
           data-test="name-column"

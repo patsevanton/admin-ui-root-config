@@ -45,7 +45,7 @@ export const PluginsSelector = () => {
           : { name: "serviceGroupPlugin", params: { groupId, pluginId } };
 
         return (
-          <Link to={getPagePath(pageObject as any)}>
+          <Link to={getPagePath(pageObject as any)} key={pluginId}>
             <CubeWithTooltip tooltip={name} isActive={selectedPluginId === pluginId}>
               <Icon width={24} height={24} />
             </CubeWithTooltip>

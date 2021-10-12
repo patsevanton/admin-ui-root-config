@@ -44,7 +44,7 @@ export const Builds = () => {
                 <NameCell title={buildVersion}>
                   <Link
                     tw="link text-ellipsis"
-                    to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } })}
+                    to={getPagePath({ name: "agentDashboard", params: { agentId } })}
                   >
                     <Typography.MiddleEllipsis>
                       <span>{buildVersion}</span>

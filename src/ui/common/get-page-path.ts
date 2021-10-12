@@ -17,39 +17,19 @@ import { createRouter, getPagePath as getPage } from "nanostores";
 
 interface Routes {
   login: void
-  agentsTable: void
   builds: "agentId"
-  agentDashboard: "agentId" | "buildVersion"
-  agentPlugin: "agentId" | "buildVersion" | "pluginId"
-  agentSystemSettings: "agentId"
-  agentGeneralSettings: "agentId"
-  agentPluginsSettings: "agentId"
-  agentRegistration: "agentId"
-  agentPreregistration: void
-  serviceGroupGeneralSettings: "groupId"
-  serviceGroupSystemSettings: "groupId"
-  serviceGroupPluginsSettings: "groupId"
+  agentDashboard: "agentId"
+  agentPlugin: "agentId" | "pluginId"
   serviceGroupDashboard: "groupId"
   serviceGroupPlugin: "groupId" | "pluginId"
-  serviceGroupRegistration: "groupId"
 }
 
 export const routes = {
-  agentDashboard: "/agents/:agentId/builds/:buildVersion/dashboard",
-  agentPlugin: "/agents/:agentId/builds/:buildVersion/dashboard/:pluginId",
-  agentGeneralSettings: "/agents/:agentId/general-settings",
-  agentSystemSettings: "/agents/:agentId/system-settings",
-  agentPluginsSettings: "/agents/:agentId/plugins-settings",
-  agentRegistration: "/agents/:agentId/registration",
-  agentPreregistration: "/agents/offline-agent-preregistration",
-  serviceGroupPlugin: "/agents/group/:groupId/dashboard/:pluginId",
-  serviceGroupGeneralSettings: "/agents/group/:groupId/general-settings",
-  serviceGroupSystemSettings: "/agents/group/:groupId/system-settings",
-  serviceGroupPluginsSettings: "/agents/group/:groupId/plugins-settings",
-  serviceGroupDashboard: "/agents/group/:groupId/dashboard",
-  serviceGroupRegistration: "/agents/group/:groupId/registration",
+  agentDashboard: "/agents/:agentId",
+  agentPlugin: "/agents/:agentId/plugins/:pluginId",
+  serviceGroupPlugin: "/groups/:groupId/plugins/:pluginId",
+  serviceGroupDashboard: "/groups/group/:groupId/dashboard",
   login: "/login",
-  agentsTable: "/agents",
   builds: "/agents/:agentId/builds",
 };
 

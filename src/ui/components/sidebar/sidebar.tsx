@@ -45,7 +45,7 @@ export const Sidebar = ({ links, matchParams }: Props) => {
     <div tw="w-20 h-full bg-monochrome-light-tint">
       <Link
         tw="flex justify-center items-center w-full h-20 cursor-pointer border-b border-monochrome-medium-tint"
-        to={routes.agentsTable}
+        to="/"
       >
         <img src={LogoSvg} alt="" />
       </Link>

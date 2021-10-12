@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 import singleSpaReact from "single-spa-react";
-import React, { useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import {
   Application, getAppNames, registerApplication, unregisterApplication,
 } from "single-spa";
@@ -25,13 +25,13 @@ import { Icons, Stub } from "@drill4j/ui-kit";
 
 import { useAdminConnection, usePluginUrls } from "hooks";
 import { Plugin } from "types";
-import { HUD } from "components";
+import { HUD, PanelType } from "components";
 import { getPagePath, routes } from "common";
 
 interface Props {
   id: string;
-  buildVersion?: string;
   isGroup?: boolean;
+  setPanel: Dispatch<SetStateAction<PanelType | null>>;
 }
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -43,7 +43,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
   </BrowserRouter>
 );
 
-const DashboardComponent = ({ id, isGroup, buildVersion = "" }: Props) => {
+const DashboardComponent = ({ id, isGroup, setPanel }: Props) => {
   const plugins = useAdminConnection<Plugin[]>(isGroup ? `/groups/${id}/plugins` : `/agents/${id}/plugins`) || [];
   const installedPlugins = plugins.filter((plugin) => !plugin.available);
   const paths = usePluginUrls();
@@ -62,14 +62,12 @@ const DashboardComponent = ({ id, isGroup, buildVersion = "" }: Props) => {
             <div>
               There are no enabled plugins on this {isGroup ? "service Group" : "agent"} to collect the data from.
               <br /> To install a plugin go to
-              <Link
+              <div
+                onClick={() => setPanel({ type: "SETTINGS", payload: id })}
                 tw="link block mt-1 font-bold"
-                to={isGroup
-                  ? getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId: id } })
-                  : getPagePath({ name: "agentGeneralSettings", params: { agentId: id } })}
               >
                 {isGroup ? "Service Group" : "Agent"} settings page
-              </Link>
+              </div>
             </div>
           )}
         />
@@ -89,7 +87,7 @@ const DashboardComponent = ({ id, isGroup, buildVersion = "" }: Props) => {
             customProps={{
               pluginPagePath: isGroup
                 ? getPagePath({ name: "serviceGroupPlugin", params: { groupId: id, pluginId } })
-                : getPagePath({ name: "agentPlugin", params: { agentId: id, buildVersion, pluginId } }),
+                : getPagePath({ name: "agentPlugin", params: { agentId: id, pluginId } }),
             }}
           />
         );
@@ -106,7 +104,7 @@ const DashboardLifecycle = singleSpaReact({
   errorBoundary: () => <div>smth went wrong</div>,
 });
 
-export const Dashboard = ({ id = "", buildVersion = "", isGroup = false }: Props) => {
+export const Dashboard = ({ id = "", isGroup = false, setPanel }: Props) => {
   useEffect(() => {
     !getAppNames().includes(isGroup ? "group-dashboard" : "agent-dashboard") && registerApplication({
       name: isGroup ? "group-dashboard" : "agent-dashboard",
@@ -121,7 +119,7 @@ export const Dashboard = ({ id = "", buildVersion = "", isGroup = false }: Props
         bootstrap: DashboardLifecycle.bootstrap,
       } as Application),
       activeWhen: [routes.agentDashboard, routes.serviceGroupDashboard],
-      customProps: { id, isGroup, buildVersion },
+      customProps: { id, isGroup, setPanel },
     });
     return () => {
       unregisterApplication(isGroup ? "group-dashboard" : "agent-dashboard");

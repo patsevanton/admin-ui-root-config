@@ -31,6 +31,7 @@ export {
 export {
   Panels, useSetPanelContext, usePanelContext, PanelProvider, PanelContext, SetPanelContext,
 } from "./panels";
+export type { PanelsType, PanelType } from "./panels";
 export { NoAgentsRegisteredStub, NoAgentSelectedStub, NoAgentsSvg } from "./stubs";
 export { Breadcrumbs } from "./breadcrumbs";
 export { AgentStatusBadge } from "./agent-status-badge";

@@ -17,4 +17,4 @@ export { Panels } from "./panels";
 export {
   useSetPanelContext, PanelContext, PanelProvider, usePanelContext, SetPanelContext,
 } from "./panel-context";
-export type { PanelsType } from "./panel-context";
+export type { PanelsType, PanelType } from "./panel-context";

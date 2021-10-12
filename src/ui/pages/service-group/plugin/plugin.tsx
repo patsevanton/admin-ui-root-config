@@ -35,14 +35,14 @@ export const Plugin = () => {
       return;
     }
     registerAgentPlugin(pluginId, paths[pluginId], {
-      getAgentPluginPath: ({ agentId, buildVersion, path = "" }:
-      { agentId: string; buildVersion: string; path?: string }) => `${getPagePath(
-        { name: "agentPlugin", params: { agentId, buildVersion, pluginId } },
+      getAgentPluginPath: ({ agentId, path = "" }:
+      { agentId: string; path?: string }) => `${getPagePath(
+        { name: "agentPlugin", params: { agentId, pluginId } },
       )}${path}`,
-      getAgentDashboardPath: ({ agentId, buildVersion }: { agentId: string; buildVersion: string; }) => getPagePath(
-        { name: "agentDashboard", params: { agentId, buildVersion } },
+      getAgentDashboardPath: ({ agentId }: { agentId: string; }) => getPagePath(
+        { name: "agentDashboard", params: { agentId } },
       ),
-      getAgentSettingsPath: (agentId: string) => getPagePath({ name: "agentGeneralSettings", params: { agentId } }),
+      getAgentSettingsPath: (agentId: string) => "",
     });
   }, [pluginId, paths]);
 

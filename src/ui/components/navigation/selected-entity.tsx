@@ -41,7 +41,7 @@ const SelectedAgent = () => {
   const { pathname } = useLocation();
   const { isExact } = matchPath(pathname, { path: routes.agentDashboard }) || {};
   return (
-    <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "agentDashboard", params: { agentId: id, buildVersion } })}>
+    <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "agentDashboard", params: { agentId: id } })}>
       <IndicatorInEdge
         isHidden={false}
         position="bottom-right"

@@ -117,7 +117,7 @@ const AgentRow = (agent: Agent) => {
         if (!String(window.getSelection())) {
           push(getPagePath({
             name: "agentDashboard",
-            params: { agentId: id, buildVersion },
+            params: { agentId: id },
           }));
         }
       }}

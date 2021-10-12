@@ -39,7 +39,7 @@ export const ServiceGroupHeader = ({ agentsCount, name }: Props) => {
             Agents&nbsp;<span tw="text-monochrome-default">{agentsCount}</span>
           </div>
         </div>
-        <Link tw="link" to={getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId } })}>
+        <Link tw="link" to="/">
           <Icons.Settings
             width={32}
             height={32}

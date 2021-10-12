@@ -115,10 +115,7 @@ export const PluginHeader = ({ agentName, agentStatus }: Props) => {
         </div>
         <SettingsButton
           tw="link"
-          to={getPagePath({
-            name: "agentGeneralSettings",
-            params: { agentId },
-          })}
+          to=""
           disabled={agentStatus === AGENT_STATUS.OFFLINE}
           data-test="plugin-header:settings-button"
         >

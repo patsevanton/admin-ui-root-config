@@ -15,20 +15,16 @@
  */
 import React, { useEffect } from "react";
 import { getAppNames, registerApplication, unregisterApplication } from "single-spa";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import "twin.macro";
 
-import { getPagePath } from "common";
 import { usePluginUrls } from "hooks";
 
 export const Plugin = () => {
-  const { pluginId, agentId } = useParams<{ pluginId: string; agentId: string; }>();
-  const { push } = useHistory();
+  const { pluginId } = useParams<{ pluginId: string; agentId: string; }>();
   const paths = usePluginUrls();
-  const switchBuild = (version: string, path: string) => {
-    push(`${getPagePath({ name: "agentPlugin", params: { buildVersion: version, agentId, pluginId } })}${path}`);
-  };
+
   useEffect(() => {
     if (!paths) return;
     const isPluginAlreadyRegistered = getAppNames().includes(getPluginName(pluginId));
@@ -37,19 +33,18 @@ export const Plugin = () => {
       sendNotificationEvent({ type: "ERROR", text: "CRITICAL ERROR: Plugin URL is not exist. Check PLUGINS env variable value" });
       return;
     }
-    registerAgentPlugin(pluginId, paths[pluginId], { switchBuild });
+    registerAgentPlugin(pluginId, paths[pluginId]);
 
     // eslint-disable-next-line consistent-return
     return () => {
-      // it need that switchBuild take new agentId and build version, after redesign it can be delete
       unregisterApplication(getPluginName(pluginId));
     };
   }, [pluginId, paths]);
 
-  return <div tw="w-full h-full px-6" id={pluginId} />;
+  return <div tw="w-full h-full px-6 overflow-y-auto" id={pluginId} />;
 };
 
-const registerAgentPlugin = (pluginName: string, pluginPath: string, customProps: any) => {
+const registerAgentPlugin = (pluginName: string, pluginPath: string) => {
   registerApplication({
     name: getPluginName(pluginName),
     app: async () => {
@@ -58,7 +53,6 @@ const registerAgentPlugin = (pluginName: string, pluginPath: string, customProps
     },
     activeWhen: (location) =>
       !location.pathname.includes("group") && location.pathname.includes(pluginName),
-    customProps,
   });
 };
 

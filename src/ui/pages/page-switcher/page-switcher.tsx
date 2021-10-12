@@ -39,7 +39,6 @@ export const PageSwitcher = () => {
 
   return (
     <Switch>
-      <Route exact path="/" render={() => <Redirect to={routes.agentsTable} />} />
       <PrivateRoute path={[routes.agentPlugin, routes.agentDashboard]} component={AgentPage} />
       <PrivateRoute path={routes.builds} component={Builds} />
       <PrivateRoute

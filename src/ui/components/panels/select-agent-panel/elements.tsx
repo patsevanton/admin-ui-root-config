@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import tw, { styled } from "twin.macro";
+import tw, { styled, css } from "twin.macro";
 
 import { Cube } from "../../cubes";
 
@@ -35,7 +35,10 @@ export const GroupAgentRow = styled(AgentRow)(({ selected }:{ selected?: boolean
   selected && tw`border-blue-default border-opacity-100`,
 ]);
 
-export const GroupRow = styled(AgentRow)(({ isOpen }: { isOpen: boolean; }) => [
+export const GroupRow = styled(AgentRow)<{ isOpen: boolean; }>(({ isOpen, selected }) => [
+  isOpen && !selected && css`
+    border-bottom: 1px solid #444244;
+  `,
   isOpen && tw`rounded-br-none rounded-bl-none`,
 ]);
 

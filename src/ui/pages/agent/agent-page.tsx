@@ -26,11 +26,12 @@ import { Notification } from "types";
 import { Dashboard } from "../dashboard";
 import { Plugin } from "./plugin";
 import { PluginHeader } from "./plugin-header";
+import { useSetPanelContext } from "../../components";
 
 export const AgentPage = () => {
   const { agentId = "", buildVersion = "" } = useParams<{ agentId?: string; buildVersion?: string; }>();
   const agent = useAgent();
-
+  const setPanel = useSetPanelContext();
   const notifications = useAdminConnection<Notification[]>("/notifications") || [];
   const newBuildNotification = notifications.find((notification) => notification.agentId === agentId) || {};
   useEffect(() => {
@@ -51,7 +52,7 @@ export const AgentPage = () => {
         <Route
           exact
           path={routes.agentDashboard}
-          render={() => <Dashboard id={agentId} buildVersion={buildVersion} />}
+          render={() => <Dashboard id={agentId} setPanel={setPanel} />}
         />
         <Route path={routes.agentPlugin} component={Plugin} />
       </Switch>

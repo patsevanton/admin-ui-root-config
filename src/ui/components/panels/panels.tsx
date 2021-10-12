@@ -15,18 +15,17 @@
  */
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { JavaAgentRegistrationPanel, OfflineAgentPreregistrationPanel, JsAgentRegistrationPanel } from "./registration";
+import { JavaAgentRegistrationPanel, AgentPreregistrationPanel, JsAgentRegistrationPanel } from "./registration";
 import { SelectAgentPanel } from "./select-agent-panel";
 import { SettingsPanel } from "./settings";
 import { AddAgentPanel } from "./add-agent-panel";
 import { NotificationsPanel } from "./notifications-panel";
-import { PanelsType, usePanelContext, useSetPanelContext } from "./panel-context";
-import { PanelProps } from "./panel-props";
+import { usePanelContext, useSetPanelContext } from "./panel-context";
 
-const panels: Record<PanelsType, ({ isOpen, onClosePanel }: PanelProps) => JSX.Element> = {
+const panels = {
   JAVA_AGENT_REGISTRATION: JavaAgentRegistrationPanel,
   JS_AGENT_REGISTRATION: JsAgentRegistrationPanel,
-  OFFLINE_AGENT_PREREGISTRATION: OfflineAgentPreregistrationPanel,
+  AGENT_PREREGISTRATION: AgentPreregistrationPanel,
   NOTIFICATIONS: NotificationsPanel,
   ADD_AGENT: AddAgentPanel,
   SELECT_AGENT: SelectAgentPanel,

@@ -15,7 +15,7 @@
  */
 export { InstallPluginsStep } from "./install-plugins-step";
 export { SystemSettingsRegistrationStep } from "./system-settings-registration-step";
-export { OfflineAgentGeneralRegistrationStep } from "./offline-agent-general-registration-step";
+export { AgentGeneralPreregistrationStep } from "./agent-general-preregistration-step";
 export { JavaGeneralRegistrationStep } from "./java-general-registration-step";
 export { JsGeneralRegistrationStep } from "./js-general-registration-step";
 export { JsSystemSettingsRegistrationStep } from "./js-system-settings-registration-step";

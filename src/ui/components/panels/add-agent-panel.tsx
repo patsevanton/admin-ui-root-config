@@ -43,7 +43,10 @@ export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
           Add Agent
           <LinkButton
             tw="text-14 leading-24"
-            onClick={() => setPanel({ type: "OFFLINE_AGENT_PREREGISTRATION" })}
+            onClick={() => setPanel({
+              type: "AGENT_PREREGISTRATION",
+              payload: agentsList.map(({ id }) => id) as string[],
+            })}
           >
             <Icons.Register /> Preregister Agent
           </LinkButton>

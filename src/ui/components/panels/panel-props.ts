@@ -16,5 +16,5 @@
 export interface PanelProps {
   isOpen: boolean;
   onClosePanel: () => void;
-  payload?: string;
+  payload?: string | string[];
 }

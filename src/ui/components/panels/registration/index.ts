@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 export { JavaAgentRegistrationPanel } from "./java-agent-registration-panel";
-export { OfflineAgentPreregistrationPanel } from "./offline-agent-preregistration-panel";
+export { AgentPreregistrationPanel } from "./agent-preregistration-panel";
 export { JsAgentRegistrationPanel } from "./js-agent-registration-panel";

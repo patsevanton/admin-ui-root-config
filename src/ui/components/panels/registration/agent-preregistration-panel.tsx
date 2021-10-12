@@ -16,18 +16,18 @@
 import React from "react";
 import axios from "axios";
 import {
-  requiredArray, sizeLimit, required, composeValidators, parsePackages, idValidator,
+  requiredArray, sizeLimit, required, composeValidators, parsePackages, idValidator, alreadyExist,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { Agent } from "types";
 import {
-  SystemSettingsRegistrationStep, InstallPluginsStep, OfflineAgentGeneralRegistrationStep,
+  SystemSettingsRegistrationStep, InstallPluginsStep, AgentGeneralPreregistrationStep,
 } from "./steps";
 import { Stepper } from "./stepper";
 import { PanelProps } from "../panel-props";
 
-export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: PanelProps) => (
+export const AgentPreregistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => (
   <Stepper
     label={(
       <div tw="space-y-2">
@@ -42,6 +42,7 @@ export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: Panel
       {
         stepLabel: "General Info",
         validationSchema: composeValidators(
+          alreadyExist("id", payload as string[], "This name already exists"),
           idValidator("id", "Agent ID"),
           required("id"),
           sizeLimit({
@@ -52,7 +53,7 @@ export const OfflineAgentPreregistrationPanel = ({ isOpen, onClosePanel }: Panel
           sizeLimit({ name: "environment" }),
           sizeLimit({ name: "description", min: 3, max: 256 }),
         ),
-        component: <OfflineAgentGeneralRegistrationStep />,
+        component: <AgentGeneralPreregistrationStep />,
       },
       {
         stepLabel: "System Settings",

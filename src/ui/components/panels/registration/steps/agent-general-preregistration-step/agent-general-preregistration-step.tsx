@@ -19,13 +19,13 @@ import {
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-export const OfflineAgentGeneralRegistrationStep = () => (
+export const AgentGeneralPreregistrationStep = () => (
   <div tw="space-y-8">
-    <DarkFormGroup label="Agent name">
-      <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </DarkFormGroup>
     <DarkFormGroup label="Agent ID">
       <Field name="id" component={Fields.DarkInput} placeholder="Enter agent's name" />
+    </DarkFormGroup>
+    <DarkFormGroup label="Agent name">
+      <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
     </DarkFormGroup>
     <DarkFormGroup label="Description" optional>
       <Field

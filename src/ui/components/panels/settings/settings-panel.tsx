@@ -68,7 +68,7 @@ export const SettingsPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => 
         <PanelWithCloseIcon
           header={(
             <div tw="space-y-8 pt-6 pb-3 w-[1024px]">
-              <div tw="">Settings: {capitalize(payload)}</div>
+              <div tw="">Settings: {capitalize(payload as string)}</div>
               <div tw="flex justify-center gap-x-6">
                 {["general", "system", "plugins"].map((tab) => (
                   <Tab

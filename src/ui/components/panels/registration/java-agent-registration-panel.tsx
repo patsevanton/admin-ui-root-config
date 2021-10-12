@@ -29,7 +29,7 @@ import { PanelProps } from "../panel-props";
 import { Stepper } from "./stepper";
 
 export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
-  const agent = useAgent(payload);
+  const agent = useAgent(payload as string);
 
   return (
     <Stepper

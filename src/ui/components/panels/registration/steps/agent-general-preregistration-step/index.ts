@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { OfflineAgentGeneralRegistrationStep } from "./offline-agent-general-registration-step";
+export { AgentGeneralPreregistrationStep } from "./agent-general-preregistration-step";

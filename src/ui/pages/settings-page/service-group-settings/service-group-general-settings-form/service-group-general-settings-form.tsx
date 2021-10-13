@@ -110,7 +110,7 @@ export const ServiceGroupGeneralSettingsForm = ({ serviceGroup }: Props) => {
                   disabled={isSubmitting || !isValid || !dirty}
                   data-test="js-system-settings-form:save-changes-button"
                 >
-                  {isSubmitting ? <Spinner disabled /> : "Save Changes"}
+                  {isSubmitting ? <Spinner /> : "Save Changes"}
                 </Button>
               </div>
             </div>

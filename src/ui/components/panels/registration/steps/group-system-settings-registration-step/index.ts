@@ -13,11 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { InstallPluginsStep } from "./install-plugins-step";
-export { SystemSettingsRegistrationStep } from "./system-settings-registration-step";
-export { AgentGeneralPreregistrationStep } from "./agent-general-preregistration-step";
-export { JavaGeneralRegistrationStep } from "./java-general-registration-step";
-export { JsGeneralRegistrationStep } from "./js-general-registration-step";
-export { JsSystemSettingsRegistrationStep } from "./js-system-settings-registration-step";
-export { GroupGeneralRegistrationStep } from "./group-general-registration-step";
 export { GroupSystemSettingsRegistrationStep } from "./group-system-settings-registration-step";

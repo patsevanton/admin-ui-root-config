@@ -14,25 +14,22 @@
  * limitations under the License.
  */
 import React from "react";
-import {
-  Field, DarkFormGroup, Fields,
-} from "@drill4j/ui-kit";
+import { Inputs } from "@drill4j/ui-kit";
 import "twin.macro";
+import { SystemSettingsRegistrationStep } from "../system-settings-registration-step";
 
-export const AgentGeneralPreregistrationStep = () => (
+export const GroupSystemSettingsRegistrationStep = () => (
   <div tw="space-y-8">
-    <DarkFormGroup label="Agent ID">
-      <Field name="id" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </DarkFormGroup>
-    <DarkFormGroup label="Agent name">
-      <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </DarkFormGroup>
-    <DarkFormGroup label="Description" optional>
-      <Field
-        name="description"
-        component={Fields.DarkTextarea}
-        placeholder="Add agent's description"
-      />
-    </DarkFormGroup>
+    <div tw="space-y-4">
+      <label tw="flex items-center gap-2 text-14 leading-20">
+        <Inputs.Radio tw="text-blue-default" checked disabled />
+        Apply parameters to all Agents
+      </label>
+      <label tw="flex items-center gap-2 text-14 leading-20">
+        <Inputs.Radio tw="text-blue-default" disabled />
+        Add parameters separately
+      </label>
+    </div>
+    <SystemSettingsRegistrationStep />
   </div>
 );

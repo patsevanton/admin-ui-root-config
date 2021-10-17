@@ -34,6 +34,7 @@ export const SystemSettingsRegistrationStep = () => (
             <div tw="flex gap-x-2 items-center">
               Application Packages
               <Tooltip
+                tw="h-4"
                 message={(
                   <div tw="space-y-2">
                     <div>
@@ -69,10 +70,10 @@ export const SystemSettingsRegistrationStep = () => (
       </div>
       <DarkFormGroup
         label={(
-          <div tw="flex gap-x-2 items-center">
+          <div tw="flex gap-x-2 items-center h-4">
             Header Mapping
-            <Tooltip message="Session header name to track User actions on your target app.">
-              <Icons.Info />
+            <Tooltip tw="h-4" message="Session header name to track User actions on your target app.">
+              <Icons.Info height={16} />
             </Tooltip>
           </div>
         )}

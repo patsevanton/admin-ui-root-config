@@ -20,7 +20,6 @@ import {
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import { useAgent } from "hooks";
 import { Agent } from "types";
 import {
   SystemSettingsRegistrationStep, InstallPluginsStep, JavaGeneralRegistrationStep,
@@ -28,58 +27,54 @@ import {
 import { PanelProps } from "../panel-props";
 import { Stepper } from "./stepper";
 
-export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
-  const agent = useAgent(payload as string);
-
-  return (
-    <Stepper
-      label="Agent Registration"
-      initialValues={Object.keys(agent).length ? {
-        ...agent,
-        systemSettings: {
-          ...agent.systemSettings,
-          packages: formatPackages(agent.systemSettings?.packages),
-        },
-      } : null}
-      onSubmit={registerAgent}
-      steps={[
-        {
-          stepLabel: "General Info",
-          validationSchema: composeValidators(
-            required("name"),
-            sizeLimit({ name: "name" }),
-            sizeLimit({ name: "environment" }),
-            sizeLimit({ name: "description", min: 3, max: 256 }),
-          ),
-          component: <JavaGeneralRegistrationStep />,
-        },
-        {
-          stepLabel: "System Settings",
-          validationSchema: composeValidators(sizeLimit({
-            name: "systemSettings.sessionIdHeaderName",
-            alias: "Session header name",
-            min: 1,
-            max: 256,
-          }),
-          requiredArray("systemSettings.packages", "Path prefix is required.")),
-          component: <SystemSettingsRegistrationStep />,
-        },
-        {
-          stepLabel: "Plugins",
-          validationSchema: composeValidators(
-            required("name"),
-            sizeLimit({ name: "name" }),
-            sizeLimit({ name: "environment" }),
-            sizeLimit({ name: "description", min: 3, max: 256 }),
-          ),
-          component: <InstallPluginsStep />,
-        },
-      ]}
-      isOpen={isOpen}
-      setIsOpen={onClosePanel}
-    />
-  );
-};
+export const JavaAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => (
+  <Stepper
+    label="Agent Registration"
+    initialValues={{
+      ...payload,
+      systemSettings: {
+        ...payload.systemSettings,
+        packages: formatPackages(payload.systemSettings?.packages),
+      },
+    }}
+    onSubmit={registerAgent}
+    steps={[
+      {
+        stepLabel: "General Info",
+        validationSchema: composeValidators(
+          required("name"),
+          sizeLimit({ name: "name" }),
+          sizeLimit({ name: "environment" }),
+          sizeLimit({ name: "description", min: 3, max: 256 }),
+        ),
+        component: <JavaGeneralRegistrationStep />,
+      },
+      {
+        stepLabel: "System Settings",
+        validationSchema: composeValidators(sizeLimit({
+          name: "systemSettings.sessionIdHeaderName",
+          alias: "Session header name",
+          min: 1,
+          max: 256,
+        }),
+        requiredArray("systemSettings.packages", "Path prefix is required.")),
+        component: <SystemSettingsRegistrationStep />,
+      },
+      {
+        stepLabel: "Plugins",
+        validationSchema: composeValidators(
+          required("name"),
+          sizeLimit({ name: "name" }),
+          sizeLimit({ name: "environment" }),
+          sizeLimit({ name: "description", min: 3, max: 256 }),
+        ),
+        component: <InstallPluginsStep />,
+      },
+    ]}
+    isOpen={isOpen}
+    setIsOpen={onClosePanel}
+  />
+);
 
 async function registerAgent({
   id,

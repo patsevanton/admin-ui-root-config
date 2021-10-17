@@ -84,7 +84,6 @@ export const GeneralSettingsForm = ({ agent }: Props) => {
                 <Field
                   name="description"
                   component={Fields.Textarea}
-                  normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
                   placeholder="Add agent's description"
                 />
               </DarkFormGroup>

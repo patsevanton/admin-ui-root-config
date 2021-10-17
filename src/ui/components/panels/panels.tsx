@@ -15,7 +15,9 @@
  */
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { JavaAgentRegistrationPanel, AgentPreregistrationPanel, JsAgentRegistrationPanel } from "./registration";
+import {
+  JavaAgentRegistrationPanel, AgentPreregistrationPanel, JsAgentRegistrationPanel, GroupRegistrationPanel,
+} from "./registration";
 import { SelectAgentPanel } from "./select-agent-panel";
 import { SettingsPanel } from "./settings";
 import { AddAgentPanel } from "./add-agent-panel";
@@ -30,6 +32,7 @@ const panels = {
   ADD_AGENT: AddAgentPanel,
   SELECT_AGENT: SelectAgentPanel,
   SETTINGS: SettingsPanel,
+  GROUP_REGISTRATION: GroupRegistrationPanel,
 };
 
 export const Panels = () => {

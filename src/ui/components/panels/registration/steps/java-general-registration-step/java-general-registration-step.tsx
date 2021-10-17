@@ -21,7 +21,7 @@ import "twin.macro";
 
 export const JavaGeneralRegistrationStep = () => (
   <div tw="space-y-8">
-    <DisabledFormGroup fields={["id", "agentType"]} />
+    <DisabledFormGroup fields={[{ name: "id", label: "AGENT ID" }, { name: "agentType", label: "AGENT TYPE" }]} />
     <DarkFormGroup label="Agent name">
       <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
     </DarkFormGroup>
@@ -29,7 +29,6 @@ export const JavaGeneralRegistrationStep = () => (
       <Field
         name="description"
         component={Fields.DarkTextarea}
-        normalize={(str: string) => str.replace(/(?:(?:\r\n|\r|\n)\s*){2}/gm, "")}
         placeholder="Add agent's description"
       />
     </DarkFormGroup>

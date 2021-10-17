@@ -15,17 +15,14 @@
  */
 import React from "react";
 import {
-  Field, DisabledFormGroup, DarkFormGroup, Fields,
+  Field, DarkFormGroup, Fields, DisabledFormGroup,
 } from "@drill4j/ui-kit";
-
 import "twin.macro";
 
-export const GeneralSettingsForm = () => (
-  <>
-    <div tw="w-[400px]">
-      <DisabledFormGroup fields={[{ name: "id", label: "AGENT ID" }, { name: "agentType", label: "AGENT TYPE" }]} />
-    </div>
-    <DarkFormGroup label="Agent name">
+export const GroupGeneralRegistrationStep = () => (
+  <div tw="space-y-8">
+    <DisabledFormGroup fields={[{ label: "SERVICE GROUP ID", name: "id" }]} />
+    <DarkFormGroup label="Service Group Name">
       <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
     </DarkFormGroup>
     <DarkFormGroup label="Description" optional>
@@ -35,12 +32,5 @@ export const GeneralSettingsForm = () => (
         placeholder="Add agent's description"
       />
     </DarkFormGroup>
-    <DarkFormGroup label="Environment" optional>
-      <Field
-        name="environment"
-        component={Fields.DarkInput}
-        placeholder="Specify an environment"
-      />
-    </DarkFormGroup>
-  </>
+  </div>
 );

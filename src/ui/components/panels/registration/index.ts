@@ -16,3 +16,4 @@
 export { JavaAgentRegistrationPanel } from "./java-agent-registration-panel";
 export { AgentPreregistrationPanel } from "./agent-preregistration-panel";
 export { JsAgentRegistrationPanel } from "./js-agent-registration-panel";
+export { GroupRegistrationPanel } from "./group-registration-panel";

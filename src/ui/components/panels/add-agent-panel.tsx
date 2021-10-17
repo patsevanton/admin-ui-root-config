@@ -64,7 +64,11 @@ export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
           <div tw="flex flex-col gap-y-[6px] overflow-y-auto text-monochrome-dark-tint">
             {groups.map(({ group, agents: groupAgents }) => groupAgents.length > 0
             && <GroupRow key={group?.id} group={group} agents={groupAgents} />)}
-            {notRegisteredAgents.map((agent) => <AgentRow key={agent.id} {...agent} />)}
+            {notRegisteredAgents.map((agent) => (
+              <Layout key={agent.id} bordered>
+                <AgentRow agent={agent} />
+              </Layout>
+            ))}
           </div>
         </>
       ) : (
@@ -95,9 +99,9 @@ interface GroupRowProps {
   group: ServiceGroup;
 }
 
-const GroupRow = ({ group: { name }, agents }:GroupRowProps) => {
+const GroupRow = ({ group, agents }:GroupRowProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const setPanel = useSetPanelContext();
   return (
     <div tw="rounded-lg border border-monochrome-dark bg-monochrome-black text-monochrome-dark-tint text-14 leading-20">
       <Layout css={[tw`border-monochrome-dark`, isOpen && tw`border-b`]}>
@@ -111,56 +115,48 @@ const GroupRow = ({ group: { name }, agents }:GroupRowProps) => {
             height={16}
           />
         </div>
-        <Column title={name}>{name}</Column>
+        <Column title={group.name}>{group.name}</Column>
         <Column title="Multiservice">Multiservice</Column>
         <Button
           primary
           size="small"
-        ><Icons.Register width={16} height={16} /> Register
+          onClick={() => setPanel({ type: "GROUP_REGISTRATION", payload: group })}
+        >
+          <Icons.Register width={16} height={16} /> Register
         </Button>
       </Layout>
-      {isOpen && agents.map((agent) => <GroupAgentRow key={agent.id} {...agent} />)}
+      {isOpen && agents.map((agent) => (
+        <Layout key={agent.id}>
+          <AgentRow agent={agent} />
+        </Layout>
+      ))}
     </div>
   );
 };
 
-const AgentRow = ({ name, agentType, id }:Agent) => {
+const AgentRow = ({ agent }: { agent: Agent}) => {
   const setPanel = useSetPanelContext();
-
+  const { name, agentType } = agent;
   return (
-    <Layout tw="rounded-lg bg-monochrome-black box-border border border-monochrome-dark text-monochrome-dark-tint text-14 leading-20">
+    <>
       <Column tw="col-start-2" title={name}>{name}</Column>
       <Column title={agentType}>{agentType}</Column>
       <Button
-        onClick={() => setPanel({ type: agentType === "Java" ? "JAVA_AGENT_REGISTRATION" : "JS_AGENT_REGISTRATION", payload: id })}
+        onClick={() => setPanel({ type: agentType === "Java" ? "JAVA_AGENT_REGISTRATION" : "JS_AGENT_REGISTRATION", payload: agent })}
         primary
         size="small"
       >
         <Icons.Register width={16} height={16} /> Register
       </Button>
-    </Layout>
-  );
-};
-
-const GroupAgentRow = ({ id, name, agentType }:Agent) => {
-  const setPanel = useSetPanelContext();
-  return (
-    <Layout>
-      <Column tw="col-start-2" title={name}>{name}</Column>
-      <Column title={agentType}>{agentType}</Column>
-      <Button
-        onClick={() => setPanel({ type: agentType === "Java" ? "JAVA_AGENT_REGISTRATION" : "JS_AGENT_REGISTRATION", payload: id })}
-        secondary
-        size="small"
-      >
-        <Icons.Register width={16} height={16} /> Register
-      </Button>
-    </Layout>
+    </>
   );
 };
 
 const Layout = styled.div`
   ${tw`grid items-center grid-cols-[28px 3fr 1fr 104px] h-[60px] px-4`}
+  ${({ bordered }: { bordered?: boolean }) => bordered
+    && tw`rounded-lg bg-monochrome-black box-border border border-monochrome-dark text-monochrome-dark-tint text-14 leading-20
+  `}
 `;
 
 const Column = styled.div`

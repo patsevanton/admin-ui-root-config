@@ -16,21 +16,27 @@
 import React from "react";
 import axios from "axios";
 import {
-  sizeLimit, required, composeValidators,
+  requiredArray, sizeLimit, required, composeValidators, parsePackages, formatPackages,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { Agent } from "types";
 import {
-  JsSystemSettingsRegistrationStep, InstallPluginsStep, JsGeneralRegistrationStep,
+  GroupSystemSettingsRegistrationStep, InstallPluginsStep, GroupGeneralRegistrationStep,
 } from "./steps";
 import { PanelProps } from "../panel-props";
 import { Stepper } from "./stepper";
 
-export const JsAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => (
+export const GroupRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => (
   <Stepper
-    label="Agent Registration"
-    initialValues={payload}
+    label="Service Group Registration"
+    initialValues={{
+      ...payload,
+      systemSettings: {
+        ...payload.systemSettings,
+        packages: formatPackages(payload.systemSettings?.packages),
+      },
+    }}
     onSubmit={registerAgent}
     steps={[
       {
@@ -41,14 +47,18 @@ export const JsAgentRegistrationPanel = ({ isOpen, onClosePanel, payload }: Pane
           sizeLimit({ name: "environment" }),
           sizeLimit({ name: "description", min: 3, max: 256 }),
         ),
-        component: <JsGeneralRegistrationStep />,
+        component: <GroupGeneralRegistrationStep />,
       },
       {
         stepLabel: "System Settings",
-        validationSchema: composeValidators(
-          required("systemSettings.targetHost", "Target Host"),
-        ),
-        component: <JsSystemSettingsRegistrationStep />,
+        validationSchema: composeValidators(sizeLimit({
+          name: "systemSettings.sessionIdHeaderName",
+          alias: "Session header name",
+          min: 1,
+          max: 256,
+        }),
+        requiredArray("systemSettings.packages", "Path prefix is required.")),
+        component: <GroupSystemSettingsRegistrationStep />,
       },
       {
         stepLabel: "Plugins",
@@ -79,6 +89,9 @@ async function registerAgent({
     environment,
     description,
     plugins,
-    systemSettings,
+    systemSettings: {
+      ...systemSettings,
+      packages: parsePackages(systemSettings?.packages as unknown as string).filter(Boolean),
+    },
   });
 }

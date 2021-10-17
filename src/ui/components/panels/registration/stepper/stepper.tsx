@@ -93,14 +93,14 @@ export const Stepper = ({
           <Form autoComplete="off">
             <PanelWithCloseIcon
               header={(
-                <div tw="space-y-8 pt-6 pb-4">
+                <div tw="space-y-8 pt-6 pb-4 w-[976px]">
                   <div tw="flex justify-between">
                     {label}
                     <Button secondary size="large" type="button" onClick={() => setIsCancelModalOpened(true)}>
                       Return to List
                     </Button>
                   </div>
-                  <div tw="flex gap-6 px-[320px]">
+                  <div tw="flex justify-center gap-6">
                     {steps.map(({ stepLabel }, index) => (
                       <div onClick={() => isValid && goTo(index)}>
                         <StepLabel

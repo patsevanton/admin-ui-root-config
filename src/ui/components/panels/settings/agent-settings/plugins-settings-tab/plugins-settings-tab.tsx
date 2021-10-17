@@ -36,7 +36,7 @@ export const PluginsSettingsTab = ({ agent }: Props) => {
   const { id: agentId = "", buildVersion = "" } = agent;
 
   return (
-    <div tw="space-y-1">
+    <div tw="w-full space-y-1">
       <div tw="flex justify-between text-14 leading-24 text-monochrome-gray">
         <span>Installed plugins on your agent.</span>
         <span>{installedPlugins.length} of {plugins.length} installed</span>

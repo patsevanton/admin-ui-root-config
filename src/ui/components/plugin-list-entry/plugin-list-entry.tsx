@@ -32,7 +32,7 @@ export const PluginCard = ({
 }: Props) => {
   const PluginIcon = Icons[icon] || Icons.Plugins;
   return (
-    <div tw="w-[976px] py-5 px-6 bg-monochrome-dark100 rounded-lg text-14 leading-20">
+    <div tw="py-5 px-6 bg-monochrome-dark100 rounded-lg text-14 leading-20">
       <div tw="flex gap-x-4">
         <div tw="flex gap-x-6 items-center">
           {checkbox}

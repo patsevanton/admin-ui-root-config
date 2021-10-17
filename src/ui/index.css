@@ -1030,10 +1030,6 @@ button:focus {
   width: auto;
 }
 
-.w-\[976px\] {
-  width: 976px;
-}
-
 .w-18 {
   width: 4.5rem;
 }
@@ -1076,6 +1072,10 @@ button:focus {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-\[976px\] {
+  width: 976px;
 }
 
 .w-6 {
@@ -1555,11 +1555,6 @@ button:focus {
   padding-right: 0.5rem;
 }
 
-.px-\[320px\] {
-  padding-left: 320px;
-  padding-right: 320px;
-}
-
 .pt-8 {
   padding-top: 2rem;
 }
@@ -1598,10 +1593,6 @@ button:focus {
 
 .pb-6 {
   padding-bottom: 1.5rem;
-}
-
-.pt-10 {
-  padding-top: 2.5rem;
 }
 
 .text-center {

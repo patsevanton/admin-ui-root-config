@@ -13,4 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { ServiceGroupGeneralRegistrationStep } from "./service-group-general-registration-step";
+export { GroupGeneralRegistrationStep } from "./group-general-registration-step";

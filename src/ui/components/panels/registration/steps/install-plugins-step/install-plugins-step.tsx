@@ -22,12 +22,12 @@ import { PluginCard } from "components";
 import { useAdminConnection } from "hooks";
 import { Plugin } from "types";
 
-export const InstallPluginsStep = (Props: any) => {
+export const InstallPluginsStep = () => {
   const availablePlugins = useAdminConnection<Plugin[]>("/plugins");
 
   if (!availablePlugins) return null;
   return (
-    <div tw="px-6 space-y-2">
+    <div tw="w-full space-y-2">
       <div tw="flex justify-between text-14 leading-24 text-monochrome-gray">
         <span>Choose at least one plugin to install on your Agent (you will also be able to add them later in Agent’s settings):</span>
         <span><Field name="plugins">{({ field }: any) => <span>{field?.value?.length || 0}</span>}</Field> of {availablePlugins.length} selected</span>

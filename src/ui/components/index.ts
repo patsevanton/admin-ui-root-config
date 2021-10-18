@@ -25,7 +25,6 @@ export {
 export { Footer } from "./footer";
 export { Sidebar, SidebarLink } from "./sidebar";
 export { PluginCard } from "./plugin-list-entry";
-export { Step, Wizard } from "./wizard";
 export {
   Navigation,
 } from "./navigation";

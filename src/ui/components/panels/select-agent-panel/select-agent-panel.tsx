@@ -42,7 +42,7 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const groupsAgents = agentsList.filter((agent) => agent.group && agent.status !== AGENT_STATUS.NOT_REGISTERED);
   const groups = groupsList.map((group) => ({
     group,
-    agents: groupsAgents.filter((agent) => group.name === agent.group),
+    agents: groupsAgents.filter((agent) => group.id === agent.group),
   }));
 
   return (
@@ -93,10 +93,10 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   );
 };
 
-const AgentRow = (props: Agent) => {
+const AgentRow = (agent: Agent) => {
   const {
     name = "", description = "", agentType = "", status, id = "", group, buildVersion = "", agentVersion,
-  } = props;
+  } = agent;
   const { agentId } = useRouteParams();
   const { push } = useHistory();
   const setPanel = useSetPanelContext();
@@ -104,9 +104,9 @@ const AgentRow = (props: Agent) => {
   const isRegistering = status === AGENT_STATUS.REGISTERING;
   const isSelectedAgent = agentId === id;
 
-  if (isRegistering) return <RegisteringAgentRow {...props} />;
+  if (isRegistering) return <RegisteringAgentRow {...agent} />;
 
-  if (isPreregisteredAgent) return <PreregisteredAgentRow {...props} />;
+  if (isPreregisteredAgent) return <PreregisteredAgentRow {...agent} />;
 
   const Wrapper = group ? GroupAgentRow : StyledAgentRow;
 
@@ -135,7 +135,7 @@ const AgentRow = (props: Agent) => {
         height={16}
         onClick={((event: any) => {
           event?.stopPropagation();
-          setPanel({ type: "SETTINGS", payload: id });
+          setPanel({ type: "SETTINGS", payload: agent });
         }) as any}
         tw="text-monochrome-white cursor-pointer"
       />
@@ -148,11 +148,12 @@ interface GroupRowProps {
   group: ServiceGroup;
 }
 
-const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", description } }: GroupRowProps) => {
+const GroupRow = ({ agents = [], group }: GroupRowProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { groupId } = useRouteParams();
   const { push } = useHistory();
   const setPanel = useSetPanelContext();
+  const { id = "", name: groupName = "", description } = group;
   const isSelectedGroup = groupId === id;
 
   return (
@@ -192,7 +193,7 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
           tw="text-monochrome-white cursor-pointer"
           onClick={((event: any) => {
             event?.stopPropagation();
-            setPanel({ type: "SETTINGS", payload: id });
+            setPanel({ type: "SETTINGS", payload: { ...group, agentType: "Group" } });
           }) as any}
         />
       </StyledGroupRow>
@@ -201,11 +202,11 @@ const GroupRow = ({ agents = [], group: { id = "", name: groupName = "", descrip
   );
 };
 
-const PreregisteredAgentRow = ({
-  id, name = "", status, description, agentType,
-}: Agent) => {
+const PreregisteredAgentRow = (agent: Agent) => {
   const setPanel = useSetPanelContext();
-
+  const {
+    name = "", status, description, agentType,
+  } = agent;
   return (
     <Row tw="bg-monochrome-black text-opacity-40">
       <CubeWrapper tw="col-start-2">{convertAgentName(name)}</CubeWrapper>
@@ -220,7 +221,7 @@ const PreregisteredAgentRow = ({
         height={16}
         onClick={((event: any) => {
           event?.stopPropagation();
-          setPanel({ type: "SETTINGS", payload: id });
+          setPanel({ type: "SETTINGS", payload: agent });
         }) as any}
         tw="text-monochrome-white cursor-pointer"
       />

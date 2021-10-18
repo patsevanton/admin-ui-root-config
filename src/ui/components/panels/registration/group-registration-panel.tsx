@@ -37,7 +37,7 @@ export const GroupRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelP
         packages: formatPackages(payload.systemSettings?.packages),
       },
     }}
-    onSubmit={registerAgent}
+    onSubmit={registerGroup}
     steps={[
       {
         stepLabel: "General Info",
@@ -76,22 +76,22 @@ export const GroupRegistrationPanel = ({ isOpen, onClosePanel, payload }: PanelP
   />
 );
 
-async function registerAgent({
+async function registerGroup({
   id,
-  name,
-  environment,
-  description,
   plugins,
+  name = "",
   systemSettings,
+  description,
+  environment,
 }: Agent) {
-  await axios.patch(`/agents/${id}`, {
-    name,
-    environment,
-    description,
+  await axios.patch(`/groups/${id}`, {
     plugins,
+    name,
     systemSettings: {
       ...systemSettings,
       packages: parsePackages(systemSettings?.packages as unknown as string).filter(Boolean),
     },
+    description,
+    environment,
   });
 }

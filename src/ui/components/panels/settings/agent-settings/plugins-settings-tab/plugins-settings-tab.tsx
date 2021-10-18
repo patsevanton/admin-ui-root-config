@@ -31,7 +31,7 @@ interface Props {
 }
 
 export const PluginsSettingsTab = ({ agent }: Props) => {
-  const plugins = useAdminConnection<Plugin[]>(`/agents/${agent.id}/plugins`) || [];
+  const plugins = useAdminConnection<Plugin[]>(`/${agent.agentType === "Group" ? "groups" : "agents"}/${agent.id}/plugins`) || [];
   const installedPlugins = plugins.filter((plugin) => !plugin.available);
   const { id: agentId = "", buildVersion = "" } = agent;
 

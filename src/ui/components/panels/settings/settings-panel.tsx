@@ -20,7 +20,6 @@ import {
 } from "@drill4j/ui-kit";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import tw, { styled } from "twin.macro";
-import { useAdminConnection } from "hooks";
 import { Agent } from "types";
 import { PanelProps } from "../panel-props";
 import { PanelWithCloseIcon } from "../panel-with-close-icon";
@@ -33,8 +32,7 @@ import { UnSaveChangesModal } from "./un-save-changes-modal";
 export const SettingsPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => {
   const [activeTab, setActiveTab] = useState("general");
   const [nextTab, setNextTab] = useState("");
-  const agent = useAdminConnection<Agent>(`/api/agents/${payload}`) || {};
-  const SystemSettings = agent.agentType === "Node.js" ? JsSystemSettingsForm : SystemSettingsForm;
+  const SystemSettings = payload.agentType === "Node.js" ? JsSystemSettingsForm : SystemSettingsForm;
 
   const handleSubmit = async (values: Agent) => {
     try {
@@ -51,12 +49,12 @@ export const SettingsPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => 
     <Formik
       onSubmit={handleSubmit}
       initialValues={{
-        ...agent,
+        ...payload,
         systemSettings: {
-          ...agent.systemSettings,
-          packages: (Array.isArray(agent.systemSettings?.packages)
-            ? formatPackages(agent.systemSettings?.packages)
-            : agent.systemSettings?.packages) as any,
+          ...payload.systemSettings,
+          packages: (Array.isArray(payload.systemSettings?.packages)
+            ? formatPackages(payload.systemSettings?.packages)
+            : payload.systemSettings?.packages) as any,
         },
       }}
       validate={getTabValidationSchema(activeTab) as any}
@@ -68,7 +66,7 @@ export const SettingsPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => 
         <PanelWithCloseIcon
           header={(
             <div tw="space-y-8 pt-6 pb-3 w-[1024px]">
-              <div tw="">Settings: {capitalize(payload as string)}</div>
+              <div tw="">Settings: {capitalize(payload.id)}</div>
               <div tw="flex justify-center gap-x-6">
                 {["general", "system", "plugins"].map((tab) => (
                   <Tab
@@ -92,7 +90,7 @@ export const SettingsPanel = ({ isOpen, onClosePanel, payload }: PanelProps) => 
           <Form tw="flex flex-col items-center py-16 space-y-8">
             {activeTab === "general" && <GeneralSettingsForm />}
             {activeTab === "system" && <SystemSettings />}
-            {activeTab === "plugins" && <PluginsSettingsTab agent={agent} />}
+            {activeTab === "plugins" && <PluginsSettingsTab agent={payload} />}
             {activeTab !== "plugins" && (
               <Button
                 tw="min-w-[130px]"
@@ -143,8 +141,10 @@ function saveSettings(activeTab: string, values: Agent): undefined | Promise<any
     };
 
   switch (activeTab) {
-    case "general": return axios.patch(`/agents/${id}/info`, { name, description, environment });
-    case "system": return axios.put(`/agents/${id}/system-settings`, systemSettings);
+    case "general": return agentType === "Group"
+      ? axios.put(`/groups/${id}`, { name, description, environment })
+      : axios.patch(`/agents/${id}/info`, { name, description, environment });
+    case "system": return axios.put(`/${agentType === "Group" ? "groups" : "agents"}/${id}/system-settings`, systemSettings);
     default: return undefined;
   }
 }

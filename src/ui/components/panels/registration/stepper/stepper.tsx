@@ -125,7 +125,7 @@ export const Stepper = ({
                       onClick={goToPrevStep}
                       disabled={!isValid}
                     >
-                      <Icons.StepperArrow rotate={180} width={7} height={12} />
+                      <Icons.Expander width={7} height={12} rotate={180} />
                       Back
                     </Button>
                   )}

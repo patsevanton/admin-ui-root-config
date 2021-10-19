@@ -149,7 +149,7 @@ export const Stepper = ({
                       disabled={!isValid}
                     >
                       Next
-                      <Icons.StepperArrow width={12} height={20} />
+                      <Icons.Expander width={7} height={12} />
                     </Button>
                   )}
                 </div>

@@ -50,7 +50,7 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
       header={(
         <div tw="w-[1024px] flex justify-between items-center h-21">
           Select Agent
-          <Button onClick={() => setPanel({ type: "ADD_AGENT" })} secondary size="small"><Icons.Plus /> Add Agent</Button>
+          <Button onClick={() => setPanel({ type: "ADD_AGENT" })} secondary size="large"><Icons.Plus /> Add Agent</Button>
         </div>
       )}
       isOpen={isOpen}

@@ -78,7 +78,7 @@ export const Notification = ({
       <div className="flex gap-x-4 font-bold h-4">
         <a
           className="link"
-          href={getPagePath({ name: "agentDashboard", params: { buildVersion, agentId } })}
+          href={getPagePath({ name: "agentDashboard", params: { agentId } })}
           target="_blank"
           rel="noopener noreferrer"
           data-test="notification:notification-button-dashboard"

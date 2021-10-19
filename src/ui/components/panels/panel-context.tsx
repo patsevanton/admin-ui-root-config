@@ -26,14 +26,14 @@ export type PanelsType = "NOTIFICATIONS"
 | "GROUP_REGISTRATION"
 | "SETTINGS"
 
-interface Panel {
+export interface PanelType {
   type: PanelsType;
   payload?: any;
 }
 
-export const PanelContext = createContext<Panel | null>(null);
+export const PanelContext = createContext<PanelType | null>(null);
 
-export const SetPanelContext = createContext<Dispatch<SetStateAction<Panel | null>>>(() => {});
+export const SetPanelContext = createContext<Dispatch<SetStateAction<PanelType | null>>>(() => {});
 
 export function usePanelContext() {
   return useContext(PanelContext);
@@ -44,7 +44,7 @@ export function useSetPanelContext() {
 }
 
 export const PanelProvider = ({ children }: {children: React.ReactNode}) => {
-  const [selectedPanel, setSelectedPanel] = useState<Panel | null>(null);
+  const [selectedPanel, setSelectedPanel] = useState<PanelType | null>(null);
 
   return (
     <PanelContext.Provider value={selectedPanel}>

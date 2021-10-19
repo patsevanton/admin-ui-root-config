@@ -18,59 +18,36 @@ import "twin.macro";
 import {
   useParams, Route, Switch,
 } from "react-router-dom";
-import { Icons } from "@drill4j/ui-kit";
 
-import { PluginsLayout } from "layouts";
-import { Plugin as PluginType } from "types/plugin";
 import { ServiceGroup as ServiceGroupType } from "types/service-group";
 import { useAdminConnection } from "hooks";
 import { Agent } from "types/agent";
-import { getPagePath, routes } from "common";
+import { routes } from "common";
+import { useSetPanelContext } from "components";
 import { ServiceGroupHeader } from "./service-group-header";
-import { Sidebar, Link } from "../agent/sidebar";
 import { Dashboard } from "../dashboard";
 import { Plugin } from "./plugin";
 
 export const ServiceGroup = () => {
   const { groupId = "" } = useParams<{ groupId: string, pluginId: string }>();
-  const plugins = useAdminConnection<PluginType[]>(`/groups/${groupId}/plugins`) || [];
   const { name = "" } = useAdminConnection<ServiceGroupType>(`/groups/${groupId}`) || {};
   const agentsList = useAdminConnection<Agent[]>("/api/agents") || [];
+  const setPanel = useSetPanelContext();
   const agentCount = agentsList.filter((agent) => agent.group === groupId).length;
 
-  const pluginsList: Link[] = [
-    {
-      id: "dashboard",
-      name: "Dashboard",
-      path: getPagePath({ name: "serviceGroupDashboard", params: { groupId } }),
-    },
-    ...plugins.map(({ id = "", name: pluginName = "" }) => ({
-      id,
-      name: pluginName as keyof typeof Icons,
-      path: getPagePath({ name: "serviceGroupPlugin", params: { groupId, pluginId: id } }),
-    })),
-  ];
-
   return (
-    <PluginsLayout
-      sidebar={(
-        <Sidebar
-          links={pluginsList}
-          matchParams={{ path: routes.serviceGroupDashboard }}
-        />
-      )}
-      header={<ServiceGroupHeader name={name} agentsCount={agentCount} />}
-    >
+    <div tw="flex flex-col w-full">
+      <ServiceGroupHeader name={name} agentsCount={agentCount} />
       <div tw="w-full h-full">
         <Switch>
           <Route
             exact
             path={routes.serviceGroupDashboard}
-            render={() => <Dashboard id={groupId} isGroup />}
+            render={() => <Dashboard id={groupId} isGroup setPanel={setPanel} />}
           />
           <Route path={routes.serviceGroupPlugin} component={Plugin} />
         </Switch>
       </div>
-    </PluginsLayout>
+    </div>
   );
 };

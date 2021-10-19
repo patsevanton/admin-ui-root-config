@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Icons } from "@drill4j/ui-kit";
 import "twin.macro";
 
-import { getPagePath } from "common";
 import LogoSvg from "./service-group-logo.svg";
 
 interface Props {
@@ -26,27 +25,23 @@ interface Props {
   agentsCount: number;
 }
 
-export const ServiceGroupHeader = ({ agentsCount, name }: Props) => {
-  const { groupId = "" } = useParams<{ groupId: string }>();
-
-  return (
-    <div tw="flex items-center w-full h-28">
-      <img src={LogoSvg} tw="ml-6" alt="" />
-      <div tw="flex items-center justify-between w-full h-full mx-6">
-        <div tw="flex flex-col gap-y-1">
-          <div tw="text-32 leading-40">{name}</div>
-          <div tw="text-14 leading-20">
-            Agents&nbsp;<span tw="text-monochrome-default">{agentsCount}</span>
-          </div>
+export const ServiceGroupHeader = ({ agentsCount, name }: Props) => (
+  <div tw="flex items-center w-full h-28">
+    <img src={LogoSvg} tw="ml-6" alt="" />
+    <div tw="flex items-center justify-between w-full h-full mx-6">
+      <div tw="flex flex-col gap-y-1">
+        <div tw="text-32 leading-40">{name}</div>
+        <div tw="text-14 leading-20">
+          Agents&nbsp;<span tw="text-monochrome-default">{agentsCount}</span>
         </div>
-        <Link tw="link" to={getPagePath({ name: "serviceGroupGeneralSettings", params: { groupId } })}>
-          <Icons.Settings
-            width={32}
-            height={32}
-            data-test="service-group-header:settings-button"
-          />
-        </Link>
       </div>
+      <Link tw="link" to="/">
+        <Icons.Settings
+          width={32}
+          height={32}
+          data-test="service-group-header:settings-button"
+        />
+      </Link>
     </div>
-  );
-};
+  </div>
+);

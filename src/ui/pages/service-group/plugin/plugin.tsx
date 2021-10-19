@@ -16,15 +16,18 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
+import { getAppNames, registerApplication } from "single-spa";
 import "twin.macro";
 
 import { getPagePath } from "common";
-import { getAppNames, registerApplication } from "single-spa";
 import { usePluginUrls } from "hooks";
+import { useSetPanelContext } from "components";
+import { Agent } from "types";
 
 export const Plugin = () => {
   const { pluginId } = useParams<{ pluginId: string; }>();
   const paths = usePluginUrls();
+  const setPanel = useSetPanelContext();
 
   useEffect(() => {
     if (!paths) return;
@@ -35,14 +38,10 @@ export const Plugin = () => {
       return;
     }
     registerAgentPlugin(pluginId, paths[pluginId], {
-      getAgentPluginPath: ({ agentId, buildVersion, path = "" }:
-      { agentId: string; buildVersion: string; path?: string }) => `${getPagePath(
-        { name: "agentPlugin", params: { agentId, buildVersion, pluginId } },
-      )}${path}`,
-      getAgentDashboardPath: ({ agentId, buildVersion }: { agentId: string; buildVersion: string; }) => getPagePath(
-        { name: "agentDashboard", params: { agentId, buildVersion } },
+      getAgentDashboardPath: ({ agentId }: { agentId: string; }) => getPagePath(
+        { name: "agentDashboard", params: { agentId } },
       ),
-      getAgentSettingsPath: (agentId: string) => getPagePath({ name: "agentGeneralSettings", params: { agentId } }),
+      openSettingsPanel: (agent: Agent) => setPanel({ type: "SETTINGS", payload: agent }),
     });
   }, [pluginId, paths]);
 

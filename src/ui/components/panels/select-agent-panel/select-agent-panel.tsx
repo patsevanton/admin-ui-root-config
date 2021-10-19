@@ -95,7 +95,7 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
 
 const AgentRow = (agent: Agent) => {
   const {
-    name = "", description = "", agentType = "", status, id = "", group, buildVersion = "", agentVersion,
+    name = "", description = "", agentType = "", status, id = "", group, agentVersion,
   } = agent;
   const { agentId } = useRouteParams();
   const { push } = useHistory();
@@ -117,7 +117,7 @@ const AgentRow = (agent: Agent) => {
         if (!String(window.getSelection())) {
           push(getPagePath({
             name: "agentDashboard",
-            params: { agentId: id, buildVersion },
+            params: { agentId: id },
           }));
         }
       }}
@@ -149,8 +149,8 @@ interface GroupRowProps {
 }
 
 const GroupRow = ({ agents = [], group }: GroupRowProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { groupId } = useRouteParams();
+  const { groupId, agentId: selectedAgentId } = useRouteParams();
+  const [isOpen, setIsOpen] = useState(agents.some(agent => agent.id === selectedAgentId || agent.status === AGENT_STATUS.REGISTERING));
   const { push } = useHistory();
   const setPanel = useSetPanelContext();
   const { id = "", name: groupName = "", description } = group;
@@ -205,15 +205,12 @@ const GroupRow = ({ agents = [], group }: GroupRowProps) => {
 const PreregisteredAgentRow = (agent: Agent) => {
   const setPanel = useSetPanelContext();
   const {
-    name = "", status, description, agentType,
+    name = "", description, agentType,
   } = agent;
   return (
-    <Row tw="bg-monochrome-black text-opacity-40">
+    <Row tw="text-opacity-40">
       <CubeWrapper tw="col-start-2">{convertAgentName(name)}</CubeWrapper>
-      <NameColumn title={name}>
-        <AgentStatusBadge status={status} />
-        <span>Preregistered {name}</span>
-      </NameColumn>
+      <NameColumn title={name}>{name}      </NameColumn>
       <Column title={description}>{description}</Column>
       <Column title={agentType}>{agentType}</Column>
       <Icons.Settings

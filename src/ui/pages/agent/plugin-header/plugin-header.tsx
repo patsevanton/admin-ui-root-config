@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 import React from "react";
-import { useHistory, matchPath, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Spinner, Icons, capitalize, snakeToSpaces,
 } from "@drill4j/ui-kit";
 import tw, { styled, css } from "twin.macro";
 
 import { AGENT_STATUS } from "common/constants";
-import { getPagePath, routes } from "common";
 import { AgentStatus } from "types/agent-status";
 import LogoSvg from "./logo.svg";
 
@@ -83,48 +82,35 @@ const AgentStatusWrapper = styled.div(
   ],
 );
 
-export const PluginHeader = ({ agentName, agentStatus }: Props) => {
-  const {
-    location: { pathname },
-  } = useHistory();
-  const { params: { agentId = "" } = {} } =
-    matchPath<{ buildVersion: string; agentId: string }>(pathname, {
-      path: routes.agentDashboard,
-    }) || {};
-
-  return (
-    <div tw="flex w-full h-28">
-      <div tw="flex justify-between items-center w-full h-full px-6">
-        <div className="flex items-center w-full">
-          <LogoWrapper>
-            <img tw="absolute bottom-0 left-0" src={LogoSvg} alt="" />
-          </LogoWrapper>
-          <AgentInfo>
-            <div className="text-ellipsis text-32 leading-40" title={agentName}>
-              {agentName}
+export const PluginHeader = ({ agentName, agentStatus }: Props) => (
+  <div tw="flex w-full h-28">
+    <div tw="flex justify-between items-center w-full h-full px-6">
+      <div className="flex items-center w-full">
+        <LogoWrapper>
+          <img tw="absolute bottom-0 left-0" src={LogoSvg} alt="" />
+        </LogoWrapper>
+        <AgentInfo>
+          <div className="text-ellipsis text-32 leading-40" title={agentName}>
+            {agentName}
+          </div>
+          <div className="flex items-center w-full">
+            <AgentStatusWrapper status={agentStatus}>
+              {capitalize(snakeToSpaces(agentStatus))}
+            </AgentStatusWrapper>
+            <div className="flex items-center ml-2">
+              {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
             </div>
-            <div className="flex items-center w-full">
-              <AgentStatusWrapper status={agentStatus}>
-                {capitalize(snakeToSpaces(agentStatus))}
-              </AgentStatusWrapper>
-              <div className="flex items-center ml-2">
-                {agentStatus === AGENT_STATUS.BUSY && <Spinner />}
-              </div>
-            </div>
-          </AgentInfo>
-        </div>
-        <SettingsButton
-          tw="link"
-          to={getPagePath({
-            name: "agentGeneralSettings",
-            params: { agentId },
-          })}
-          disabled={agentStatus === AGENT_STATUS.OFFLINE}
-          data-test="plugin-header:settings-button"
-        >
-          <Icons.Settings />
-        </SettingsButton>
+          </div>
+        </AgentInfo>
       </div>
+      <SettingsButton
+        tw="link"
+        to=""
+        disabled={agentStatus === AGENT_STATUS.OFFLINE}
+        data-test="plugin-header:settings-button"
+      >
+        <Icons.Settings />
+      </SettingsButton>
     </div>
-  );
-};
+  </div>
+);

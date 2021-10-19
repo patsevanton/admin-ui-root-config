@@ -28,13 +28,14 @@ import { PanelStub } from "../../panel-stub";
 export const NotificationsPanel = ({ isOpen, onClosePanel }: PanelProps) => {
   const [errorMessage, setErrorMessage] = useState("");
   const notifications = useAdminConnection<NotificationType[]>("/notifications") || [];
+  const unreadNotifications = notifications.filter(({ read }) => !read).length;
 
   return (
     <PanelWithCloseIcon
       header={(
         <div tw="w-[400px] flex justify-between items-center h-20">
           <span>Notifications</span>
-          <span tw="text-monochrome-gray">{notifications.length}</span>
+          <span tw="text-monochrome-gray">{unreadNotifications}</span>
         </div>
       )}
       isOpen={isOpen}

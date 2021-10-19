@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { AGENT_STATUS, routes } from "common";
 import { NoAgentSelectedStub, NoAgentsRegisteredStub, PrivateRoute } from "components";
 import { useAdminConnection, useRouteParams } from "hooks";
@@ -39,7 +39,6 @@ export const PageSwitcher = () => {
 
   return (
     <Switch>
-      <Route exact path="/" render={() => <Redirect to={routes.agentsTable} />} />
       <PrivateRoute path={[routes.agentPlugin, routes.agentDashboard]} component={AgentPage} />
       <PrivateRoute path={routes.builds} component={Builds} />
       <PrivateRoute

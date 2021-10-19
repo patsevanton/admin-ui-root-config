@@ -24,11 +24,13 @@ import {
 import { getPagePath, routes } from "common";
 import { Plugin } from "types";
 import { CubeWithTooltip } from "../cubes";
+import { usePanelContext } from "../panels";
 
 export const PluginsSelector = () => {
   const { agentId, groupId, buildVersion } = useRouteParams();
   const plugins = useAdminConnection<Plugin[]>(agentId ? `/agents/${agentId}/plugins` : `/groups/${groupId}/plugins`) || [];
   const { pathname } = useLocation();
+  const selectedPanel = usePanelContext();
   const { params: { pluginId: selectedPluginId = "" } = {} } = matchPath<{
     pluginId?: string; }>(pathname, { path: [routes.agentPlugin, routes.serviceGroupPlugin] }) || {};
 
@@ -46,7 +48,7 @@ export const PluginsSelector = () => {
 
         return (
           <Link to={getPagePath(pageObject as any)} key={pluginId}>
-            <CubeWithTooltip tooltip={name} isActive={selectedPluginId === pluginId}>
+            <CubeWithTooltip tooltip={name} isActive={selectedPluginId === pluginId && selectedPanel?.type !== "SELECT_AGENT"}>
               <Icon width={24} height={24} />
             </CubeWithTooltip>
           </Link>

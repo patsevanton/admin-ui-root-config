@@ -23,23 +23,32 @@ import { convertAgentName } from "utils";
 import { IndicatorInEdge } from "components/indicator-in-edge";
 import { CubeWithTooltip } from "../cubes";
 import { AgentStatusBadge } from "../agent-status-badge";
+import { usePanelContext } from "../panels";
+
+interface Props {
+  isSelectedPanelOpen?: boolean;
+}
 
 export const SelectedEntity = () => {
   const { agentId, groupId } = useRouteParams();
+  const selectedPanel = usePanelContext();
 
   if (!agentId && !groupId) {
     return <div />; // need that layout can display correct
   }
 
-  return agentId ? <SelectedAgent /> : <SelectedGroup />;
+  return agentId
+    ? <SelectedAgent isSelectedPanelOpen={selectedPanel?.type === "SELECT_AGENT"} />
+    : <SelectedGroup isSelectedPanelOpen={selectedPanel?.type === "SELECT_AGENT"} />;
 };
 
-const SelectedAgent = () => {
+const SelectedAgent = ({ isSelectedPanelOpen }: Props) => {
   const {
-    name = "", id = "", buildVersion = "", status,
+    name = "", id = "", status,
   } = useAgent();
   const { pathname } = useLocation();
   const { isExact } = matchPath(pathname, { path: routes.agentDashboard }) || {};
+
   return (
     <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "agentDashboard", params: { agentId: id } })}>
       <IndicatorInEdge
@@ -48,7 +57,7 @@ const SelectedAgent = () => {
         indicatorContent={<AgentStatusBadge status={status} />}
         style={{ bottom: "3px", right: "3px" }}
       >
-        <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
+        <CubeWithTooltip tooltip={name} isActive={isExact && !isSelectedPanelOpen} tw="text-14 text-monochrome-medium-tint">
           {convertAgentName(name)}
         </CubeWithTooltip>
       </IndicatorInEdge>
@@ -56,13 +65,14 @@ const SelectedAgent = () => {
   );
 };
 
-const SelectedGroup = () => {
+const SelectedGroup = ({ isSelectedPanelOpen }: Props) => {
   const { name = "", id = "" } = useGroup();
   const { pathname } = useLocation();
   const { isExact } = matchPath(pathname, { path: routes.serviceGroupDashboard }) || {};
+
   return (
     <Link tw="bg-monochrome-dark100 rounded" to={getPagePath({ name: "serviceGroupDashboard", params: { groupId: id } })}>
-      <CubeWithTooltip tooltip={name} isActive={isExact} tw="text-14 text-monochrome-medium-tint">
+      <CubeWithTooltip tooltip={name} isActive={isExact && !isSelectedPanelOpen} tw="text-14 text-monochrome-medium-tint">
         {convertAgentName(name)}
       </CubeWithTooltip>
     </Link>

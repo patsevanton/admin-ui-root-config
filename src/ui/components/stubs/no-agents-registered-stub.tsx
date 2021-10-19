@@ -31,7 +31,7 @@ export const NoAgentsRegisteredStub = () => {
           <span>
             Run your application with Drill4J Agent using&nbsp;
             <a
-              tw="text-blue-default font-semibold"
+              tw="inline-flex items-center gap-x-1 text-blue-default font-semibold"
               href="https://drill4j.github.io/how-to-start/"
               rel="noopener noreferrer"
               target="_blank"

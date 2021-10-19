@@ -79,7 +79,7 @@ export const AddAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
             <span>
               Run your application with Drill4J Agent using&nbsp;
               <a
-                tw="text-blue-default font-semibold"
+                tw="inline-flex items-center gap-x-1 text-blue-default font-semibold"
                 href="https://drill4j.github.io/how-to-start/"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -136,14 +136,15 @@ const GroupRow = ({ group, agents }:GroupRowProps) => {
 
 const AgentRow = ({ agent }: { agent: Agent}) => {
   const setPanel = useSetPanelContext();
-  const { name, agentType } = agent;
+  const { name, agentType, group } = agent;
   return (
     <>
       <Column tw="col-start-2" title={name}>{name}</Column>
       <Column title={agentType}>{agentType}</Column>
       <Button
         onClick={() => setPanel({ type: agentType === "Java" ? "JAVA_AGENT_REGISTRATION" : "JS_AGENT_REGISTRATION", payload: agent })}
-        primary
+        primary={!group}
+        secondary={Boolean(group)}
         size="small"
       >
         <Icons.Register width={16} height={16} /> Register

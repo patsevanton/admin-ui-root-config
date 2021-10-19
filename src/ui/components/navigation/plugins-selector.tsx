@@ -49,7 +49,7 @@ export const PluginsSelector = () => {
         return (
           <Link to={getPagePath(pageObject as any)} key={pluginId}>
             <CubeWithTooltip tooltip={name} isActive={selectedPluginId === pluginId && selectedPanel?.type !== "SELECT_AGENT"}>
-              <Icon width={24} height={24} />
+              <Icon width={24} height={24} viewBox="0 0 24 24" />
             </CubeWithTooltip>
           </Link>
         );

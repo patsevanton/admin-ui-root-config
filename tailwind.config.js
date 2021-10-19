@@ -250,6 +250,16 @@ module.exports = {
           overflow: "hidden",
           textOverflow: "ellipsis",
         },
+        ".action-icon": {
+          color: "#e3e6e8",
+          cursor: "pointer",
+        },
+        ".action-icon:hover": {
+          color: "#f8f9fb",
+        },
+        ".action-icon:active": {
+          color: "#a4acb3",
+        },
       };
 
       addUtilities(newUtilities);

@@ -205,15 +205,12 @@ const GroupRow = ({ agents = [], group }: GroupRowProps) => {
 const PreregisteredAgentRow = (agent: Agent) => {
   const setPanel = useSetPanelContext();
   const {
-    name = "", status, description, agentType,
+    name = "", description, agentType,
   } = agent;
   return (
-    <Row tw="bg-monochrome-black text-opacity-40">
+    <Row tw="text-opacity-40">
       <CubeWrapper tw="col-start-2">{convertAgentName(name)}</CubeWrapper>
-      <NameColumn title={name}>
-        <AgentStatusBadge status={status} />
-        <span>Preregistered {name}</span>
-      </NameColumn>
+      <NameColumn title={name}>{name}      </NameColumn>
       <Column title={description}>{description}</Column>
       <Column title={agentType}>{agentType}</Column>
       <Icons.Settings

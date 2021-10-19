@@ -103,7 +103,7 @@ const GroupRow = ({ group, agents }:GroupRowProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const setPanel = useSetPanelContext();
   return (
-    <div tw="rounded-lg border border-monochrome-dark bg-monochrome-black text-monochrome-dark-tint text-14 leading-20">
+    <div tw="rounded-lg border border-monochrome-dark text-monochrome-dark-tint text-14 leading-20">
       <Layout css={[tw`border-monochrome-dark`, isOpen && tw`border-b`]}>
         <div
           tw="flex items-center justify-center cursor-pointer"
@@ -155,7 +155,7 @@ const AgentRow = ({ agent }: { agent: Agent}) => {
 const Layout = styled.div`
   ${tw`grid items-center grid-cols-[28px 3fr 1fr 104px] h-[60px] px-4`}
   ${({ bordered }: { bordered?: boolean }) => bordered
-    && tw`rounded-lg bg-monochrome-black box-border border border-monochrome-dark text-monochrome-dark-tint text-14 leading-20
+    && tw`rounded-lg box-border border border-monochrome-dark text-monochrome-dark-tint text-14 leading-20
   `}
 `;
 

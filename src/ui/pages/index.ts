@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { AgentsPage } from "./agents-page";
 export { LoginPage } from "./login-page";
 export { NotFoundPage } from "./not-found-page";
 export { Plugin, AgentPage } from "./agent";

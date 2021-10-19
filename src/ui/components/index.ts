@@ -23,7 +23,6 @@ export {
   ErrorFallback,
 } from "./error-fallback";
 export { Footer } from "./footer";
-export { Sidebar, SidebarLink } from "./sidebar";
 export { PluginCard } from "./plugin-list-entry";
 export {
   Navigation,

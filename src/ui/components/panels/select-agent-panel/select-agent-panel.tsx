@@ -95,7 +95,7 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
 
 const AgentRow = (agent: Agent) => {
   const {
-    name = "", description = "", agentType = "", status, id = "", group, buildVersion = "", agentVersion,
+    name = "", description = "", agentType = "", status, id = "", group, agentVersion,
   } = agent;
   const { agentId } = useRouteParams();
   const { push } = useHistory();
@@ -149,8 +149,8 @@ interface GroupRowProps {
 }
 
 const GroupRow = ({ agents = [], group }: GroupRowProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { groupId } = useRouteParams();
+  const { groupId, agentId: selectedAgentId } = useRouteParams();
+  const [isOpen, setIsOpen] = useState(agents.some(agent => agent.id === selectedAgentId || agent.status === AGENT_STATUS.REGISTERING));
   const { push } = useHistory();
   const setPanel = useSetPanelContext();
   const { id = "", name: groupName = "", description } = group;

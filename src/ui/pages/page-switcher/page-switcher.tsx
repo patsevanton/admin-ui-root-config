@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { AGENT_STATUS, routes } from "common";
 import { NoAgentSelectedStub, NoAgentsRegisteredStub, PrivateRoute } from "components";
 import { useAdminConnection, useRouteParams } from "hooks";

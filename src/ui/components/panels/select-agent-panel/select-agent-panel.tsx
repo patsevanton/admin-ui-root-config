@@ -71,13 +71,13 @@ export const SelectAgentPanel = ({ isOpen, onClosePanel }: PanelProps) => {
         </div>
       ) : (
         <PanelStub
-          icon={<NoAgentsSvg />}
+          icon={<NoAgentsSvg className="text-monochrome-dark-tint text-opacity-40" />}
           title="No registered agents at the moment"
           message={(
             <span>
               Run your application with Drill4J Agent using&nbsp;
               <a
-                tw="text-blue-default font-semibold"
+                tw="inline-flex items-center gap-x-1 text-blue-default font-semibold"
                 href="https://drill4j.github.io/how-to-start/"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -137,7 +137,7 @@ const AgentRow = (agent: Agent) => {
           event?.stopPropagation();
           setPanel({ type: "SETTINGS", payload: agent });
         }) as any}
-        tw="text-monochrome-white cursor-pointer"
+        tw="action-icon w-6 h-6"
       />
     </Wrapper>
   );
@@ -170,19 +170,16 @@ const GroupRow = ({ agents = [], group }: GroupRowProps) => {
           }
         }}
       >
-        <div
-          tw="flex items-center justify-center cursor-pointer"
+        <Icons.Expander
+          tw="action-icon flex items-center justify-center w-6 h-6"
           onClick={((event: any) => {
             event?.stopPropagation();
             setIsOpen(!isOpen);
           }) as any}
-        >
-          <Icons.Expander
-            rotate={isOpen ? 90 : 0}
-            width={9}
-            height={16}
-          />
-        </div>
+          rotate={isOpen ? 90 : 0}
+          width={9}
+          height={16}
+        />
         <CubeWrapper isActive={isSelectedGroup} title={groupName}>{convertAgentName(groupName)}</CubeWrapper>
         <Column tw="text-monochrome-medium-tint" title={groupName}>{groupName}</Column>
         <Column title={description}>{description}</Column>
@@ -190,7 +187,7 @@ const GroupRow = ({ agents = [], group }: GroupRowProps) => {
         <Icons.Settings
           width={16}
           height={16}
-          tw="text-monochrome-white cursor-pointer"
+          tw="action-icon w-6 h-6"
           onClick={((event: any) => {
             event?.stopPropagation();
             setPanel({ type: "SETTINGS", payload: { ...group, agentType: "Group" } });
@@ -220,7 +217,7 @@ const PreregisteredAgentRow = (agent: Agent) => {
           event?.stopPropagation();
           setPanel({ type: "SETTINGS", payload: agent });
         }) as any}
-        tw="text-monochrome-white cursor-pointer"
+        tw="action-icon w-6 h-6"
       />
     </Row>
   );

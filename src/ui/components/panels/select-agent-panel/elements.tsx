@@ -18,7 +18,7 @@ import tw, { styled, css } from "twin.macro";
 import { Cube } from "../../cubes";
 
 export const Layout = styled.div`
-  ${tw`grid items-center grid-cols-[28px 44px 3fr 4fr 112px 16px] h-[60px] px-4`}
+  ${tw`grid items-center grid-cols-[24px 48px 3fr 4fr 112px 24px] h-[60px] px-4`}
 `;
 
 export const Row = styled(Layout)`
@@ -36,14 +36,15 @@ export const GroupAgentRow = styled(AgentRow)(({ selected }:{ selected?: boolean
 ]);
 
 export const GroupRow = styled(AgentRow)<{ isOpen: boolean; }>(({ isOpen, selected }) => [
+  isOpen && tw`rounded-br-none rounded-bl-none`,
   isOpen && !selected && css`
     border-bottom: 1px solid #444244;
   `,
-  isOpen && tw`rounded-br-none rounded-bl-none`,
+  isOpen && !selected && tw`hover:rounded-lg`,
 ]);
 
 export const CubeWrapper = styled(Cube)`
-  ${tw`ml-2 text-monochrome-medium-tint cursor-default`}
+  ${tw`ml-3 text-monochrome-medium-tint cursor-default`}
   ${({ isActive }) => !isActive && tw`bg-monochrome-dark hover:bg-monochrome-dark`}
 `;
 

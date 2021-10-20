@@ -32,13 +32,15 @@ export const Navigation = () => (
       <SelectAgent />
       <SelectedEntity />
       <PluginsSelector />
-      <Notifications />
-      <Logout />
+      <div tw="mt-2 space-y-2">
+        <Notifications />
+        <Logout />
+      </div>
     </ActionsWrapper>
   </div>
 );
 
 const ActionsWrapper = styled.div`
   ${tw`grid gap-y-4 py-4 flex-grow`}
-  grid-template-rows: repeat(2, 36px) 1fr repeat(2, 36px);
+  grid-template-rows: repeat(2, 36px) 1fr 80px;
 `;

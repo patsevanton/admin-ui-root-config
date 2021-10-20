@@ -15,8 +15,12 @@
  */
 import React from "react";
 
-export const NoAgentsSvg = () => (
-  <svg width="208px" height="184px" viewBox="0 0 208 184" version="1.1" xmlns="http://www.w3.org/2000/svg">
+interface Props {
+  className?: string;
+}
+
+export const NoAgentsSvg = ({ className }: Props) => (
+  <svg width="208px" height="184px" viewBox="0 0 208 184" version="1.1" xmlns="http://www.w3.org/2000/svg" className={className}>
     <g id="R1:-Admin" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="1.1.0.A.Agents.Empty" transform="translate(-577.000000, -305.000000)" fill="currentColor">
         {/* eslint-disable-next-line max-len */}

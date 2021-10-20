@@ -27,7 +27,7 @@ interface Props {
 export const CubeWithTooltip = ({
   isActive, children, tooltip, onClick,
 }: Props) => (
-  <Tooltip message={tooltip} position="right">
+  <Tooltip message={tooltip} position="right" tw="ml-1">
     <Cube isActive={isActive} onClick={onClick}>
       {children}
     </Cube>

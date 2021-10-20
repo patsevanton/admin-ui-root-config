@@ -68,10 +68,10 @@ export const AgentPage = () => {
       <Switch>
         <Route
           exact
-          path={routes.agentDashboard}
+          path={`*${routes.agentDashboard}`}
           render={() => <Dashboard id={agentId} buildVersion={buildVersion} />}
         />
-        <Route path={routes.agentPlugin} component={Plugin} />
+        <Route path={`*${routes.agentPlugin}`} component={Plugin} />
       </Switch>
     </PluginsLayout>
   );

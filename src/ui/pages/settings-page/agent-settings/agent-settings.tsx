@@ -62,15 +62,15 @@ export const AgentSettings = () => {
       </div>
       <Switch>
         <Route
-          path={routes.agentSystemSettings}
+          path={`*${routes.agentSystemSettings}`}
           render={() => <SystemSettings agent={agent} />}
         />
         <Route
-          path={routes.agentPluginsSettings}
+          path={`*${routes.agentPluginsSettings}`}
           render={() => <PluginsSettingsTab agent={agent} />}
         />
         <Route
-          path={routes.agentGeneralSettings}
+          path={`*${routes.agentGeneralSettings}`}
           render={() => <GeneralSettingsForm agent={agent} />}
         />
       </Switch>

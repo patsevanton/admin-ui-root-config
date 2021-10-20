@@ -57,15 +57,15 @@ export const ServiceGroupSettings = () => {
       </div>
       <Switch>
         <Route
-          path={routes.serviceGroupSystemSettings}
+          path={`*${routes.serviceGroupSystemSettings}`}
           render={() => <SystemSettingsForm agent={serviceGroup} />}
         />
         <Route
-          path={routes.serviceGroupPluginsSettings}
+          path={`*${routes.serviceGroupPluginsSettings}`}
           render={() => <PluginsSettingsTab agent={serviceGroup} />}
         />
         <Route
-          path={routes.serviceGroupGeneralSettings}
+          path={`*${routes.serviceGroupGeneralSettings}`}
           render={() => <ServiceGroupGeneralSettingsForm serviceGroup={serviceGroup} />}
         />
       </Switch>

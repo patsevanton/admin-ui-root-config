@@ -23,11 +23,12 @@ export const SettingsPage = () => (
   <Switch>
     <Route
       component={AgentSettings}
-      path={[routes.agentGeneralSettings, routes.agentPluginsSettings, routes.agentSystemSettings]}
+      path={[routes.agentGeneralSettings, routes.agentPluginsSettings, routes.agentSystemSettings].map((route) => `*${route}`)}
     />
     <Route
       component={ServiceGroupSettings}
-      path={[routes.serviceGroupGeneralSettings, routes.serviceGroupSystemSettings, routes.serviceGroupPluginsSettings]}
+      path={[routes.serviceGroupGeneralSettings, routes.serviceGroupSystemSettings, routes.serviceGroupPluginsSettings]
+        .map((route) => `*${route}`)}
     />
   </Switch>
 );

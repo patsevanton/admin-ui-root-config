@@ -40,26 +40,27 @@ const Root = () => (
     <TypographyStyles />
     <LayoutStyles />
     <NotificationManager />
-    <Route exact path={routes.login} component={LoginPage} />
+    <Route exact path={`*${routes.login}`} component={LoginPage} />
     <AppLayout footer={<Footer />}>
       <Switch>
         <Route exact path="/" render={() => <Redirect to={routes.agentsTable} />} />
-        <PrivateRoute path={[routes.agentPlugin, routes.agentDashboard]} component={AgentPage} />
-        <PrivateRoute path={routes.builds} component={Builds} />
+        <PrivateRoute path={[routes.agentPlugin, routes.agentDashboard].map((route) => `*${route}`)} component={AgentPage} />
+        <PrivateRoute path={`*${routes.builds}`} component={Builds} />
         <PrivateRoute
-          path={[routes.serviceGroupPlugin, routes.serviceGroupDashboard]}
+          path={[routes.serviceGroupPlugin, routes.serviceGroupDashboard].map((route) => `*${route}`)}
           component={ServiceGroup}
         />
         <Switch>
-          <PrivateRoute exact path={routes.agentsTable} component={AgentsPage} />
+          <PrivateRoute exact path={`*${routes.agentsTable}`} component={AgentsPage} />
           <PrivateRoute
             path={[routes.agentGeneralSettings, routes.agentPluginsSettings, routes.agentSystemSettings,
-              routes.serviceGroupGeneralSettings, routes.serviceGroupSystemSettings, routes.serviceGroupPluginsSettings]}
+              routes.serviceGroupGeneralSettings, routes.serviceGroupSystemSettings, routes.serviceGroupPluginsSettings]
+              .map((route) => `*${route}`)}
             component={SettingsPage}
           />
-          <PrivateRoute exact path={routes.agentRegistration} component={AgentRegistrationPage} />
-          <PrivateRoute exact path={routes.serviceGroupRegistration} component={ServiceGroupRegistrationPage} />
-          <PrivateRoute path={routes.agentPreregistration} component={() => <AgentRegistrationPage isOfflineAgent />} />
+          <PrivateRoute exact path={`*${routes.agentRegistration}`} component={AgentRegistrationPage} />
+          <PrivateRoute exact path={`*${routes.serviceGroupRegistration}`} component={ServiceGroupRegistrationPage} />
+          <PrivateRoute path={`*${routes.agentPreregistration}`} component={() => <AgentRegistrationPage isOfflineAgent />} />
         </Switch>
       </Switch>
     </AppLayout>

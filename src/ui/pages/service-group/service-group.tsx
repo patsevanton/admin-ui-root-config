@@ -65,10 +65,10 @@ export const ServiceGroup = () => {
         <Switch>
           <Route
             exact
-            path={routes.serviceGroupDashboard}
+            path={`*${routes.serviceGroupDashboard}`}
             render={() => <Dashboard id={groupId} isGroup />}
           />
-          <Route path={routes.serviceGroupPlugin} component={Plugin} />
+          <Route path={`*${routes.serviceGroupPlugin}`} component={Plugin} />
         </Switch>
       </div>
     </PluginsLayout>

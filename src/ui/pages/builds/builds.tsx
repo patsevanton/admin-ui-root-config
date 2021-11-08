@@ -45,6 +45,7 @@ export const Builds = () => {
                   <Link
                     tw="link text-ellipsis"
                     to={getPagePath({ name: "agentDashboard", params: { agentId, buildVersion } })}
+                    data-test="builds-table:buildVersion"
                   >
                     <Typography.MiddleEllipsis>
                       <span>{buildVersion}</span>

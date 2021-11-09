@@ -17,6 +17,7 @@ import React from "react";
 import { Spinner, Inputs } from "@drill4j/ui-kit";
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
 import axios from "axios";
+import "twin.macro";
 
 import { AGENT_STATUS } from "common/constants";
 import { Agent } from "types/agent";
@@ -29,13 +30,13 @@ interface Props {
 
 export const AgentStatusToggle = ({ className, agent }: Props) => (
   <div className={className}>
-    <div className="flex items-center w-full" data-test="agent-status-toggle">
+    <div tw="flex items-center w-full h-4" data-test="agent-status-toggle">
       <Inputs.Toggler
         value={
           agent.status === AGENT_STATUS.ONLINE ||
             agent.status === AGENT_STATUS.BUSY
         }
-        label={toggleLabel(agent.status)}
+        label={<span tw="block mt-[2px]">{toggleLabel(agent.status)}</span>}
         onChange={async () => {
           try {
             await axios.post(`/agents/${agent.id}/toggle`);

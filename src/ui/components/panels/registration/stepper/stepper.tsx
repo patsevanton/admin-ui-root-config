@@ -20,7 +20,7 @@ import {
 import "twin.macro";
 
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
-import { useSetPanelContext } from "components";
+import { usePanelContext, useSetPanelContext } from "components";
 import { CancelAgentRegistrationModal } from "../cancel-agent-registration-modal";
 import { StepLabel } from "./step-label";
 import { PanelWithCloseIcon } from "../../panel-with-close-icon";
@@ -49,6 +49,7 @@ export const Stepper = ({
   setIsOpen,
 }: Props) => {
   const setPanel = useSetPanelContext();
+  const { payload: { id } = [] } = usePanelContext() || {};
   const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
   const isLastStep = steps.length - 1;
@@ -70,9 +71,11 @@ export const Stepper = ({
   });
 
   useEffect(() => {
-    const nameField = document.querySelector("input[name=name]") as HTMLInputElement;
-    nameField?.focus();
-    nameField?.select();
+    if (id) { // if id is not exist in mean that we on preregistration panel
+      const nameField = document.querySelector("input[name=name]") as HTMLInputElement;
+      nameField?.focus();
+      nameField?.select();
+    }
   }, []);
 
   if (!initialValues) return null;

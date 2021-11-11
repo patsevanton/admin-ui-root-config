@@ -15,22 +15,26 @@
  */
 import React from "react";
 import {
-  Field, DarkFormGroup, Fields, DisabledFormGroup,
+  Field, DarkFormGroup, Fields, DisabledFormGroup, useFormikContext,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
-export const GroupGeneralRegistrationStep = () => (
-  <div tw="space-y-8">
-    <DisabledFormGroup fields={[{ label: "SERVICE GROUP ID", name: "id" }]} />
-    <DarkFormGroup label="Service Group Name">
-      <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" />
-    </DarkFormGroup>
-    <DarkFormGroup label="Description" optional>
-      <Field
-        name="description"
-        component={Fields.DarkTextarea}
-        placeholder="Add agent's description"
-      />
-    </DarkFormGroup>
-  </div>
-);
+export const GroupGeneralRegistrationStep = () => {
+  const { values: { disableFocus } } = useFormikContext();
+
+  return (
+    <div tw="space-y-8">
+      <DisabledFormGroup fields={[{ label: "SERVICE GROUP ID", name: "id" }]} />
+      <DarkFormGroup label="Service Group Name">
+        <Field name="name" component={Fields.DarkInput} placeholder="Enter agent's name" focus={!disableFocus} select={!disableFocus} />
+      </DarkFormGroup>
+      <DarkFormGroup label="Description" optional>
+        <Field
+          name="description"
+          component={Fields.DarkTextarea}
+          placeholder="Add agent's description"
+        />
+      </DarkFormGroup>
+    </div>
+  );
+};

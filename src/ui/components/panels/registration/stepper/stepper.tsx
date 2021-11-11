@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Formik, Form, Button, Icons, FormValidator,
 } from "@drill4j/ui-kit";
 import "twin.macro";
 
 import { sendNotificationEvent } from "@drill4j/send-notification-event";
-import { usePanelContext, useSetPanelContext } from "components";
+import { useSetPanelContext } from "components";
 import { CancelAgentRegistrationModal } from "../cancel-agent-registration-modal";
 import { StepLabel } from "./step-label";
 import { PanelWithCloseIcon } from "../../panel-with-close-icon";
@@ -49,7 +49,6 @@ export const Stepper = ({
   setIsOpen,
 }: Props) => {
   const setPanel = useSetPanelContext();
-  const { payload: { id } = [] } = usePanelContext() || {};
   const [isCancelModalOpened, setIsCancelModalOpened] = useState(false);
   const [stepNumber, setStepNumber] = useState(0);
   const isLastStep = steps.length - 1;
@@ -69,14 +68,6 @@ export const Stepper = ({
     if (index - prevStepNumber === 1) return prevStepNumber + 1;
     return prevStepNumber;
   });
-
-  useEffect(() => {
-    if (id) { // if id is not exist in mean that user on preregistration panel
-      const nameField = document.querySelector("input[name=name]") as HTMLInputElement;
-      nameField?.focus();
-      nameField?.select();
-    }
-  }, []);
 
   if (!initialValues) return null;
 
@@ -98,7 +89,7 @@ export const Stepper = ({
         validate={currentValidationSchema}
         validateOnMount
       >
-        {({ isValid }) => (
+        {({ isValid, setFieldValue }) => (
           <Form autoComplete="off">
             <PanelWithCloseIcon
               header={(
@@ -111,7 +102,11 @@ export const Stepper = ({
                   </div>
                   <div tw="flex justify-center gap-6">
                     {steps.map(({ stepLabel }, index) => (
-                      <div onClick={() => isValid && goTo(index)}>
+                      <div onClick={() => {
+                        isValid && goTo(index);
+                        setFieldValue("disableFocus", true);
+                      }}
+                      >
                         <StepLabel
                           key={stepLabel}
                           isActive={index === stepNumber}

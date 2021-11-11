@@ -71,7 +71,7 @@ export const Stepper = ({
   });
 
   useEffect(() => {
-    if (id) { // if id is not exist in mean that we on preregistration panel
+    if (id) { // if id is not exist in mean that user on preregistration panel
       const nameField = document.querySelector("input[name=name]") as HTMLInputElement;
       nameField?.focus();
       nameField?.select();

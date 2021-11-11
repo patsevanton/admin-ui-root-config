@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Formik, Form, Button, Icons, FormValidator,
 } from "@drill4j/ui-kit";
@@ -68,6 +68,12 @@ export const Stepper = ({
     if (index - prevStepNumber === 1) return prevStepNumber + 1;
     return prevStepNumber;
   });
+
+  useEffect(() => {
+    const nameField = document.querySelector("input[name=name]") as HTMLInputElement;
+    nameField?.focus();
+    nameField?.select();
+  }, []);
 
   if (!initialValues) return null;
 

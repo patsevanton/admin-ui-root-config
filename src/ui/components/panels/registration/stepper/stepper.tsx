@@ -89,7 +89,7 @@ export const Stepper = ({
         validate={currentValidationSchema}
         validateOnMount
       >
-        {({ isValid }) => (
+        {({ isValid, setFieldValue }) => (
           <Form autoComplete="off">
             <PanelWithCloseIcon
               header={(
@@ -102,7 +102,11 @@ export const Stepper = ({
                   </div>
                   <div tw="flex justify-center gap-6">
                     {steps.map(({ stepLabel }, index) => (
-                      <div onClick={() => isValid && goTo(index)}>
+                      <div onClick={() => {
+                        isValid && goTo(index);
+                        setFieldValue("disableFocus", true);
+                      }}
+                      >
                         <StepLabel
                           key={stepLabel}
                           isActive={index === stepNumber}

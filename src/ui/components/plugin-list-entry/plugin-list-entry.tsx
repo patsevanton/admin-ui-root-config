@@ -37,7 +37,7 @@ export const PluginCard = ({
         <div tw="flex gap-x-6 items-center">
           {checkbox}
           <PluginIconWrapper>
-            <PluginIcon />
+            <PluginIcon width={24} height={24} viewBox="" />
           </PluginIconWrapper>
         </div>
         <div tw="space-y-2">
@@ -56,7 +56,7 @@ export const PluginCard = ({
 };
 
 const PluginIconWrapper = styled.div`
-  ${tw`w-18 p-5 bg-monochrome-dark text-monochrome-default rounded-lg`}
+  ${tw`w-[68px] h-[68px] flex items-center justify-center bg-monochrome-dark text-monochrome-default rounded-lg`}
 `;
 
 const Label = styled.div`

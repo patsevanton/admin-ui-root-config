@@ -44,7 +44,7 @@ export const Sidebar = ({ links }: Props) => {
         const Icon = Icons[name] || Icons.Plugins;
         return (
           <Tooltip message={<div>{name}</div>} position="right" key={id}>
-            <ReactRouterLink to={path}>
+            <ReactRouterLink to={path} data-test={`sidebar:link:${name}`}>
               <SidebarLink isActive={id === "dashboard" ? !pathname.match("dashboard\\/\\w") : pathname.includes(path)}>
                 <Icon />
               </SidebarLink>

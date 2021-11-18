@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -eou pipefail
 
 if [ -z "$AUTH_HTPASSWD" ]
 then

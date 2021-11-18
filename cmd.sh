@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
+set -e
 
 if [ -z "$AUTH_HTPASSWD" ]
 then
     echo "Variable AUTH_HTPASSWD is empty"
-    trap 'exit 0' SIGTERM
-    while true; do :; done
+    exit 0
 else
     echo "Variable AUTH_HTPASSWD is NOT empty"
     /bin/bash ./parse-plugin-env.sh && \

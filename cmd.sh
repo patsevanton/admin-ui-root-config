@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$AUTH_HTPASSWD" ]
 then
-    echo "$AUTH_HTPASSWD is empty"
-    exit 1
+    echo "Variable AUTH_HTPASSWD is empty"
+    trap 'exit 0' SIGTERM
+    while true; do :; done
 else
-    echo "$AUTH_HTPASSWD is NOT empty"
+    echo "Variable AUTH_HTPASSWD is NOT empty"
     /bin/bash ./parse-plugin-env.sh && \
     /wait \
     && echo "$AUTH_HTPASSWD" \

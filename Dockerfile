@@ -15,9 +15,7 @@ RUN npm run build
 FROM nginx:1.17.6-alpine-perl
 RUN apk update && apk add apache2-utils
 ENV UPSTREAM "drill-admin:8090"
-ENV AUTH_HTPASSWD "$AUTH_HTPASSWD"
-RUN echo "$AUTH_HTPASSWD"
-RUN htpasswd -c -b /etc/nginx/.htpasswd admin "$AUTH_HTPASSWD"
+ENV AUTH_HTPASSWD $AUTH_HTPASSWD
 # support running as arbitrary user which belogs to the root group
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/ /etc/nginx/
 RUN addgroup nginx root
@@ -33,4 +31,4 @@ COPY nginx /etc/nginx/
 RUN chgrp -R 0 /usr/share/nginx/html && chmod -R g=u /usr/share/nginx/html
 
 EXPOSE 8080
-CMD /bin/bash ./parse-plugin-env.sh && /wait && /bin/sh -c "envsubst < /etc/nginx/upsteam.conf.template > /etc/nginx/upstream.conf && exec nginx -g 'daemon off;'"
+CMD /bin/bash ./parse-plugin-env.sh && /wait && echo "$AUTH_HTPASSWD" && htpasswd -c -b /etc/nginx/.htpasswd admin "$AUTH_HTPASSWD" && /bin/sh -c "envsubst < /etc/nginx/upsteam.conf.template > /etc/nginx/upstream.conf && exec nginx -g 'daemon off;'"

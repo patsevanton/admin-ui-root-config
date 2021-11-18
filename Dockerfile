@@ -28,7 +28,8 @@ RUN chmod +x ./parse-plugin-env.sh
 COPY --from=build /app/dist /usr/share/nginx/html
 RUN rm -v /etc/nginx/nginx.conf
 COPY nginx /etc/nginx/
+COPY cmd.sh /cmd.sh
 RUN chgrp -R 0 /usr/share/nginx/html && chmod -R g=u /usr/share/nginx/html
 
 EXPOSE 8080
-CMD /bin/bash ./parse-plugin-env.sh && /wait && echo "$AUTH_HTPASSWD" && htpasswd -c -b /etc/nginx/.htpasswd admin "$AUTH_HTPASSWD" && /bin/sh -c "envsubst < /etc/nginx/upsteam.conf.template > /etc/nginx/upstream.conf && exec nginx -g 'daemon off;'"
+CMD /cmd.sh

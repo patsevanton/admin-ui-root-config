@@ -15,6 +15,7 @@ RUN npm run build
 FROM nginx:1.17.6-alpine-perl
 RUN apk update && apk add apache2-utils
 ENV UPSTREAM "drill-admin:8090"
+ENV AUTH_HTPASSWD "$AUTH_HTPASSWD"
 RUN htpasswd -c -b /etc/nginx/.htpasswd admin "$AUTH_HTPASSWD"
 # support running as arbitrary user which belogs to the root group
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx /usr/share/nginx/ /etc/nginx/
